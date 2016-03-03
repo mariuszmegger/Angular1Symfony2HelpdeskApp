@@ -1,3 +1,13 @@
+helpdesk_backend:
+    resource: "@HelpdeskBackendBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+helpdesk_frontend:
+    resource: "@HelpdeskFrontendBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
