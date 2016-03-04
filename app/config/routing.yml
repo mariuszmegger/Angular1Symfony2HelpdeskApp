@@ -1,3 +1,8 @@
+helpdesk_common:
+    resource: "@HelpdeskCommonBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 helpdesk_backend:
     resource: "@HelpdeskBackendBundle/Controller/"
     type:     annotation
