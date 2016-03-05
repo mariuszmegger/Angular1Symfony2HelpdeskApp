@@ -4,7 +4,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     watch: {
         live: {
-          files: ['src/HelpdeskBundle/Resources/views/parts/*', 'src/HelpdeskBundle/Resources/views/*', 'src/HelpdeskBundle/Resources/js/*.js', 'src/HelpdeskBundle/Resources/css/*.css'],
+          files: ['src/HelpdeskBundle/Resources/views/parts/**/*', 'src/HelpdeskBundle/Resources/views/*', 'src/HelpdeskBundle/Resources/js/*.js', 'src/HelpdeskBundle/Resources/css/*.css'],
           options: {  
             livereload: true
           }
@@ -38,8 +38,8 @@ module.exports = function(grunt) {
     },
     uglify: {
       build: {
-        src: 'js/app.js',
-        dest: 'js/app.min.js'
+        src: 'src/HelpdeskBundle/Resources/js/app.js',
+        dest: 'src/HelpdeskBundle/Resources/js/app.min.js'
       }
     },
       cssmin: {
