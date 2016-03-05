@@ -5,13 +5,13 @@ namespace HelpdeskCommonBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class DefaultController extends Controller
+class LayoutController extends Controller
 {
     /**
      * @Route("/")
      */
     public function indexAction()
     {
-        return $this->render('HelpdeskCommonBundle:Default:index.html.twig');
+        return $this->render('HelpdeskCommonBundle:Layout:index.html.twig');
     }
 }

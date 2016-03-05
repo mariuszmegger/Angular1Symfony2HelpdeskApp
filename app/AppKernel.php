@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new HelpdeskFrontendBundle\HelpdeskFrontendBundle(),
             new HelpdeskBackendBundle\HelpdeskBackendBundle(),
             new HelpdeskCommonBundle\HelpdeskCommonBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
