@@ -4,13 +4,13 @@ module.exports = function(grunt) {
   grunt.initConfig({
     watch: {
         live: {
-          files: ['*.php', 'parts/*.php', 'js/*.js', 'css/stylesheets/*.css'],
+          files: ['src/HelpdeskBundle/Resources/views/parts/*', 'src/HelpdeskBundle/Resources/views/*', 'src/HelpdeskBundle/Resources/js/*.js', 'src/HelpdeskBundle/Resources/css/*.css'],
           options: {  
             livereload: true
           }
         },
         sass: {
-          files: ['css/sass/*'],
+          files: ['src/HelpdeskBundle/Resources/css/scss/*'],
           tasks: ['sass']
         }
     },
@@ -21,9 +21,9 @@ module.exports = function(grunt) {
             files: [
                 {
           expand: true,     // Enable dynamic expansion.
-          cwd: 'css/sass',      // Src matches are relative to this path.
+          cwd: 'src/HelpdeskBundle/Resources/css/scss/',      // Src matches are relative to this path.
           src: ['*.scss'], // Actual pattern(s) to match.
-          dest: 'css/stylesheets',   // Destination path prefix.
+          dest: 'src/HelpdeskBundle/Resources/css/',   // Destination path prefix.
           ext: '.css',   // Dest filepaths will have this extension.
           extDot: 'first'   // Extensions in filenames begin after the first dot
         }

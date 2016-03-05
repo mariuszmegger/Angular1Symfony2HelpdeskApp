@@ -1,21 +1,9 @@
-helpdesk_common:
-    resource: "@HelpdeskCommonBundle/Controller/"
+
+helpdesk:
+    resource: "@HelpdeskBundle/Controller/"
     type:     annotation
     prefix:   /
 
-helpdesk_backend:
-    resource: "@HelpdeskBackendBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-helpdesk_frontend:
-    resource: "@HelpdeskFrontendBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
 
 # app/config/routing.yml
 fos_user_security:
