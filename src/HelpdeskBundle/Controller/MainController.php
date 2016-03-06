@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class MainController extends Controller
 {
     /**
-     * @Route("/frontend")
+     * @Route("/")
      */
     public function indexAction()
     {
@@ -16,7 +16,7 @@ class MainController extends Controller
     }
 
     /**
-     * @Route("/backend")
+     * @Route("/admin")
      */
     public function backendAction()
     {
