@@ -10,7 +10,7 @@ module.exports = function(grunt) {
           }
         },
         sass: {
-          files: ['src/HelpdeskBundle/Resources/css/scss/*'],
+          files: ['src/HelpdeskBundle/Resources/public/css/scss/*'],
           tasks: ['sass']
         }
     },
@@ -21,9 +21,9 @@ module.exports = function(grunt) {
             files: [
                 {
           expand: true,     // Enable dynamic expansion.
-          cwd: 'src/HelpdeskBundle/Resources/public/css/scss/',      // Src matches are relative to this path.
+          cwd: 'src/HelpdeskBundle/Resources/public/css/scss',      // Src matches are relative to this path.
           src: ['*.scss'], // Actual pattern(s) to match.
-          dest: 'src/HelpdeskBundle/Resources/public/css/',   // Destination path prefix.
+          dest: 'src/HelpdeskBundle/Resources/public/css',   // Destination path prefix.
           ext: '.css',   // Dest filepaths will have this extension.
           extDot: 'first'   // Extensions in filenames begin after the first dot
         }
