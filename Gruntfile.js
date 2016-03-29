@@ -4,13 +4,13 @@ module.exports = function(grunt) {
   grunt.initConfig({
     watch: {
         live: {
-          files: ['*.php', 'parts/*.php', 'js/*.js', 'css/stylesheets/*.css'],
-          options: {  
+          files: ['src/HelpdeskBundle/Resources/views/parts/**/*', 'src/HelpdeskBundle/Resources/views/*', 'src/HelpdeskBundle/Resources/public/js/*.js', 'src/HelpdeskBundle/Resources/public/css/*.css'],
+          options: {
             livereload: true
           }
         },
         sass: {
-          files: ['css/sass/*'],
+          files: ['src/HelpdeskBundle/Resources/public/css/scss/**'],
           tasks: ['sass']
         }
     },
@@ -21,9 +21,9 @@ module.exports = function(grunt) {
             files: [
                 {
           expand: true,     // Enable dynamic expansion.
-          cwd: 'css/sass',      // Src matches are relative to this path.
+          cwd: 'src/HelpdeskBundle/Resources/public/css/scss',      // Src matches are relative to this path.
           src: ['*.scss'], // Actual pattern(s) to match.
-          dest: 'css/stylesheets',   // Destination path prefix.
+          dest: 'src/HelpdeskBundle/Resources/public/css',   // Destination path prefix.
           ext: '.css',   // Dest filepaths will have this extension.
           extDot: 'first'   // Extensions in filenames begin after the first dot
         }
@@ -38,17 +38,17 @@ module.exports = function(grunt) {
     },
     uglify: {
       build: {
-        src: 'js/app.js',
-        dest: 'js/app.min.js'
+        src: 'src/HelpdeskBundle/Resources/public/js/app.js',
+        dest: 'src/HelpdeskBundle/Resources/public/js/app.min.js'
       }
     },
       cssmin: {
           target: {
               files: [{
                   expand: true,
-                  cwd: 'css/stylesheets',
+                  cwd: 'src/HelpdeskBundle/Resources/public/css',
                   src: ['*.css', '!*.min.css'],
-                  dest: 'css/stylesheets',
+                  dest: 'src/HelpdeskBundle/Resources/public/css',
                   ext: '.min.css'
               }]
           }
@@ -60,9 +60,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-sass');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   // Default task(s).
   grunt.registerTask('default', ['watch']);
   grunt.registerTask('do_ugly', ['uglify']);
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
+
 
 };

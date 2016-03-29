@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta title="Angular Amigos Helpdesk">
+        <meta charset="UTF-8">
+
+        {% block stylesheets %}
+            <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+            <link href="{{ asset('bundles/helpdesk/css/font-awesome.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('bundles/helpdesk/css/main.css') }}" type="text/css" rel="stylesheet" />
+        {% endblock %}
+    </head>
+    <body>
+            {% block header %}
+            {% endblock %}
+            {% block sidebar %}
+            {% endblock %}
+            {% block main %}
+            {% endblock %}
+            {% block footer %}
+            {% endblock %}
+        {% block javascripts %}
+            <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+            <script src="{{ asset('bundles/helpdesk/js/app.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>

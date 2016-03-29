@@ -1,0 +1,171 @@
+/*
+  Amigos Helpdesk
+  Authors: Mariusz Megger, Wojciech Placzek
+  Version: 1.0.0
+*/
+/* BASE - Base styles, variables, mixins, etc. */
+.clearfix:before, .clearfix:after, .dl-horizontal dd:before, .dl-horizontal dd:after, .container:before, .container:after, .container-fluid:before, .container-fluid:after, .row:before, .row:after, .form-horizontal .form-group:before, .form-horizontal .form-group:after, .btn-toolbar:before, .btn-toolbar:after, .btn-group-vertical > .btn-group:before, .btn-group-vertical > .btn-group:after, .nav:before, .nav:after, .navbar:before, .navbar:after, .navbar-header:before, .navbar-header:after, .navbar-collapse:before, .navbar-collapse:after, .pager:before, .pager:after, .panel-body:before, .panel-body:after, .modal-footer:before, .modal-footer:after {
+  content: " ";
+  display: table; }
+
+#wrapper {
+  height: auto;
+  min-height: 100%;
+  position: relative; }
+
+@media all and (max-width: 767px) {
+  /* ------------------ Navbar --------------------*/
+  .page-navbar .navbar-brand {
+    width: 60px;
+    text-align: center; }
+  #header .navbar-nav li {
+    display: inline-block; } }
+
+@media all and (max-width: 500px) {
+  /* ------------------ Header --------------------*/
+  .page-navbar .navbar-nav > li > a {
+    padding: 15px; }
+  .page-navbar .navbar-brand {
+    display: none; } }
+
+/* MODULES - Individual sites components */
+.page-navbar .navbar-brand img {
+  display: inline-block; }
+
+#header .navbar-nav {
+  margin: 0;
+  height: 50px;
+  float: left; }
+
+#header .navbar-nav.navbar-right {
+  float: right; }
+
+#header .navbar-nav li {
+  display: inline-block; }
+
+#header .navbar-nav li.open .dropdown-menu {
+  position: absolute;
+  background-color: #ffffff;
+  float: left;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.175); }
+
+#header .navbar-nav li.open .dropdown-menu li {
+  display: block; }
+
+/*
+* paddings, paragraphs, margins
+*/
+/* LAYOUTS - Page layout styles */
+.page-content .page-content-wrapper {
+  float: left;
+  width: 100%;
+  height: auto;
+  position: relative;
+  overflow: hidden; }
+
+.page-content.sidebar-page {
+  margin-left: 210px; }
+
+.page-content.collapsed-sidebar {
+  margin-left: 60px; }
+
+.page-content {
+  min-height: 100%;
+  padding-top: 50px; }
+
+.page-content .page-content-inner {
+  position: relative;
+  padding: 0 20px; }
+
+.page-navbar.header-fixed {
+  position: fixed; }
+
+.page-navbar {
+  width: 100%;
+  float: left;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  background-color: #ffffff;
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15); }
+
+.page-navbar .navbar-brand {
+  width: 210px;
+  color: #ffffff;
+  background-color: #303946;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bold;
+  padding: 1px 15px;
+  font-size: 21px; }
+
+.page-sidebar {
+  width: 210px;
+  position: absolute;
+  height: auto;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  padding-top: 50px;
+  z-index: 2; }
+
+.page-sidebar:after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 210px;
+  background-color: #303946;
+  z-index: -1; }
+
+.sidebar-panel {
+  margin: 0;
+  width: 100%;
+  height: auto;
+  float: left;
+  position: relative; }
+
+.sidebar-panel:before, .sidebar-panel:after {
+  content: " ";
+  display: table; }
+
+.page-sidebar .side-nav .nav > li a {
+  padding: 10px 20px 9px;
+  color: #8b929a;
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  line-height: 20px;
+  letter-spacing: 0.3px;
+  transition: background;
+  transition-duration: 0.4s; }
+
+.page-sidebar.collapse-sidebar {
+  bottom: auto; }
+
+#right-sidebar.sidebar-fixed {
+  position: fixed; }
+
+#right-sidebar {
+  width: 210px;
+  height: auto;
+  z-index: 10;
+  float: right;
+  padding-top: 50px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 2;
+  display: block; }
+
+.sidebar-panel .sidebar-panel-title {
+  font-size: 13px;
+  padding: 8px 15px 8px 17px;
+  margin: 0;
+  background-color: #455264;
+  color: #ffffff;
+  border-top: 1px solid #2e3743;
+  border-bottom: 1px solid #2e3743; }

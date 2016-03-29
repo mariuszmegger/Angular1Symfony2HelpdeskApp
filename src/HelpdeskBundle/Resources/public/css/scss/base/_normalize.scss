@@ -1,0 +1,22 @@
+@media all and (max-width: 767px) {
+  /* ------------------ Navbar --------------------*/
+  .page-navbar .navbar-brand {
+    width: 60px;
+    text-align: center;
+  }
+
+  #header .navbar-nav li {
+      display: inline-block;
+  }
+
+}
+
+@media all and (max-width: 500px) {
+  /* ------------------ Header --------------------*/
+  .page-navbar .navbar-nav > li > a {
+    padding: 15px;
+  }
+  .page-navbar .navbar-brand {
+    display: none;
+  }
+}

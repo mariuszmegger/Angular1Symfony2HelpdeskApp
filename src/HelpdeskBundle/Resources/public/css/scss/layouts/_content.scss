@@ -1,0 +1,25 @@
+.page-content .page-content-wrapper {
+    float: left;
+    width: 100%;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-content.sidebar-page {
+    margin-left: 210px;
+}
+
+.page-content.collapsed-sidebar {
+    margin-left: 60px;
+}
+
+.page-content {
+    min-height: 100%;
+    padding-top: 50px;
+}
+
+.page-content .page-content-inner {
+    position: relative;
+    padding: 0 20px;
+}

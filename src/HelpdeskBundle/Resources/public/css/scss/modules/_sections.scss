@@ -1,0 +1,23 @@
+.page-navbar .navbar-brand img {
+    display: inline-block;
+  }
+  #header .navbar-nav {
+    margin: 0;
+    height: 50px;
+    float: left;
+  }
+  #header .navbar-nav.navbar-right {
+    float: right;
+  }
+  #header .navbar-nav li {
+    display: inline-block;
+  }
+  #header .navbar-nav li.open .dropdown-menu {
+    position: absolute;
+    background-color: #ffffff;
+    float: left;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.175);
+  }
+  #header .navbar-nav li.open .dropdown-menu li {
+    display: block;
+  }
