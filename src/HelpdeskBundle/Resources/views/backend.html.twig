@@ -1,6 +1,386 @@
 {% extends 'HelpdeskBundle::layout.html.twig' %}
 
+{% block navbar %}
+  {{ parent() }}
+  <!-- .page-navbar -->
+  <div id="header" class="page-navbar header-fixed">
+      <!-- .navbar-brand -->
+      <a href="#" class="navbar-brand">
+        <i class="fa fa-bolt"></i>
+        <span>&nbsp; Amigos Helpdesk</span>
+      </a>
+      <!-- /.navbar-brand -->
+      <!-- .no-collapse -->
+      <div class="navbar-no-collapse">
+          <!-- top left nav -->
+          <ul class="nav navbar-nav">
+              <li class="toggle-sidebar">
+                  <a href="#">
+                      <i class="fa fa-reorder"></i>
+                      <span class="sr-only">&nbsp; Zwiń boczny panel</span>
+                  </a>
+              </li>
+          </ul>
+          <!-- / top left nav -->
+          <!-- top right nav -->
+          <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                  <a href="#" data-toggle="dropdown">
+                      <i class="fa fa-bell-o"></i>
+                      <span class="sr-only">Powiadomienia</span>
+                      <span class="badge">8</span>
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li><a href="#" class="dropdown-menu-header">Powiadomienia</a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i class="fa fa-exclamation-circle text-danger">
+                          </i>&nbsp; Incydenty wygasające <span class="badge">0</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i class="fa fa-exclamation-triangle text-danger">
+                          </i>&nbsp; Żądania wygasające <span class="badge">5</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i class="fa fa-arrow-circle-o-down">
+                          </i>&nbsp; Incydenty cofnięte <span class="badge">2</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="fa fa-arrow-circle-down">
+                        </i>&nbsp; Żądania cofnięte <span class="badge">1</span>
+                      </a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="fa fa-user">
+                        </i>&nbsp; Nowe zdarzenie moje <span class="badge">1</span>
+                      </a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="fa fa-users">
+                        </i>&nbsp; Nowe zdarzenie grupy <span class="badge">1</span>
+                      </a>
+                      </li>
+                      <li>
+                        <a href="#" class="view-all">
+                          <span>Pokaż wszystkie</span>
+                        </a>
+                      </li>
+                  </ul>
+              </li>
+              <li class="dropdown">
+                  <a href="#" data-toggle="dropdown">
+                      <i class="fa fa-cog"></i>
+                      <span class="sr-only">Ustawienia</span>
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li><a href="#" class="dropdown-menu-header">Miejsce na ustawienia</a>
+                      </li>
+                  </ul>
+              </li>
+              <li>
+                  <a href="#">
+                      <i class="fa fa-power-off"></i>
+                      <span class="sr-only">Wyloguj</span>
+                  </a>
+              </li>
+              <li>
+                  <a id="toggle-right-sidebar" href="#" title="Ukryj prawy sidebar">
+                      <i class="fa fa-caret-square-o-right"></i>
+                      <span class="sr-only">Ukryj prawy sidebar</span>
+                  </a>
+              </li>
+          </ul>
+          <!-- / top right nav -->
+      </div>
+      <!-- /.no-collapse -->
+  </div>
+  <!-- / page-navbar -->
+{% endblock %}
+
+{% block sidebar %}
+<!-- #wrapper -->
+  <div id="wrapper">
+    <aside id="sidebar" class="page-sidebar">
+        <!-- .sidebar-inner -->
+        <div class="sidebar-inner">
+                <!--  .sidebar-panel -->
+                <!-- / .sidebar-panel -->
+                <!--  .sidebar-panel -->
+                <div class="side-nav">
+                  <ul class="nav">
+                    <li class="hover-li">
+                      <a href="/#/dashboard" >
+                        <span class="txt">Dashboard</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="side-nav">
+                  <ul class="nav">
+                    <li class="hover-li">
+                      <a href="/#/users" class="active">
+                        <span class="txt">Users</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="side-nav">
+                  <ul class="nav">
+                    <li class="hover-li">
+                      <a href="/#/units" class="active">
+                        <span class="txt">Units</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="side-nav">
+                  <ul class="nav">
+                    <li class="hover-li">
+                      <a href="/#/support_lines" class="active">
+                        <span class="txt">Support Lines</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="side-nav">
+                  <ul class="nav">
+                    <li class="hover-li">
+                      <a href="/#/operators" class="active">
+                        <span class="txt">Operators</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="side-nav">
+                  <ul class="nav">
+                    <li class="hover-li">
+                      <a href="/#/categories" class="active">
+                        <span class="txt">Categories</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="side-nav">
+                  <ul class="nav">
+                    <li class="hover-li">
+                      <a href="/#/settings" class="active">
+                        <span class="txt">Settings</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+        <!-- / .sidebar-inner -->
+    </aside>
+{% endblock %}
+
 {% block content %}
     {{ parent() }}
-    aaaaaaaaaaaaaaaaa
+    <aside id="right-sidebar" class="right-sidebar sidebar-fixed">
+        <!-- .sidebar-inner -->
+        <div class="sidebar-inner">
+                <div class="tabs">
+                    <!-- .rs tabs -->
+                    <ul id="rstab" class="nav nav-tabs nav-justified">
+                        <li class="active">
+                            <a href="#activity" data-toggle="tab"><i class="glyphicon glyphicon-bullhorn"></i> </a>
+                        </li>
+                        <li>
+                            <a href="#users" data-toggle="tab"><i class="fa fa-comments"></i> </a>
+                        </li>
+                    </ul>
+                    <div id="rstab-content" class="tab-content">
+                        <div class="tab-pane fade active in" id="timeline">
+                          timeline
+                        </div>
+                        <div class="tab-pane fade" id="chat">
+                        <div class="chat">
+                              chat
+                        </div>
+                    </div>
+                </div>
+                <!-- / .rs tabs -->
+        </div>
+        <!-- / .sidebar-inner -->
+    </aside>
+    <!-- .page-content -->
+    <div class="page-content clearfix sidebar-page">
+        <!-- .page-content-wrapper -->
+        <div class="page-content-wrapper">
+            <div class="page-content-inner">
+                <!-- .page-content-inner -->
+                <!-- TEST -->
+                <div class="main">
+                          <h1 class="page-header">Dashboard</h1>
+
+                          <div class="row placeholders">
+                            <div class="col-xs-6 col-sm-3 placeholder">
+                              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                              <h4>Label</h4>
+                              <span class="text-muted">Something else</span>
+                            </div>
+                            <div class="col-xs-6 col-sm-3 placeholder">
+                              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                              <h4>Label</h4>
+                              <span class="text-muted">Something else</span>
+                            </div>
+                            <div class="col-xs-6 col-sm-3 placeholder">
+                              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                              <h4>Label</h4>
+                              <span class="text-muted">Something else</span>
+                            </div>
+                            <div class="col-xs-6 col-sm-3 placeholder">
+                              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                              <h4>Label</h4>
+                              <span class="text-muted">Something else</span>
+                            </div>
+                          </div>
+
+                          <h2 class="sub-header">Section title</h2>
+                          <div class="table-responsive">
+                            <table class="table table-striped">
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Header</th>
+                                  <th>Header</th>
+                                  <th>Header</th>
+                                  <th>Header</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>1,001</td>
+                                  <td>Lorem</td>
+                                  <td>ipsum</td>
+                                  <td>dolor</td>
+                                  <td>sit</td>
+                                </tr>
+                                <tr>
+                                  <td>1,002</td>
+                                  <td>amet</td>
+                                  <td>consectetur</td>
+                                  <td>adipiscing</td>
+                                  <td>elit</td>
+                                </tr>
+                                <tr>
+                                  <td>1,003</td>
+                                  <td>Integer</td>
+                                  <td>nec</td>
+                                  <td>odio</td>
+                                  <td>Praesent</td>
+                                </tr>
+                                <tr>
+                                  <td>1,003</td>
+                                  <td>libero</td>
+                                  <td>Sed</td>
+                                  <td>cursus</td>
+                                  <td>ante</td>
+                                </tr>
+                                <tr>
+                                  <td>1,004</td>
+                                  <td>dapibus</td>
+                                  <td>diam</td>
+                                  <td>Sed</td>
+                                  <td>nisi</td>
+                                </tr>
+                                <tr>
+                                  <td>1,005</td>
+                                  <td>Nulla</td>
+                                  <td>quis</td>
+                                  <td>sem</td>
+                                  <td>at</td>
+                                </tr>
+                                <tr>
+                                  <td>1,006</td>
+                                  <td>nibh</td>
+                                  <td>elementum</td>
+                                  <td>imperdiet</td>
+                                  <td>Duis</td>
+                                </tr>
+                                <tr>
+                                  <td>1,007</td>
+                                  <td>sagittis</td>
+                                  <td>ipsum</td>
+                                  <td>Praesent</td>
+                                  <td>mauris</td>
+                                </tr>
+                                <tr>
+                                  <td>1,008</td>
+                                  <td>Fusce</td>
+                                  <td>nec</td>
+                                  <td>tellus</td>
+                                  <td>sed</td>
+                                </tr>
+                                <tr>
+                                  <td>1,009</td>
+                                  <td>augue</td>
+                                  <td>semper</td>
+                                  <td>porta</td>
+                                  <td>Mauris</td>
+                                </tr>
+                                <tr>
+                                  <td>1,010</td>
+                                  <td>massa</td>
+                                  <td>Vestibulum</td>
+                                  <td>lacinia</td>
+                                  <td>arcu</td>
+                                </tr>
+                                <tr>
+                                  <td>1,011</td>
+                                  <td>eget</td>
+                                  <td>nulla</td>
+                                  <td>Class</td>
+                                  <td>aptent</td>
+                                </tr>
+                                <tr>
+                                  <td>1,012</td>
+                                  <td>taciti</td>
+                                  <td>sociosqu</td>
+                                  <td>ad</td>
+                                  <td>litora</td>
+                                </tr>
+                                <tr>
+                                  <td>1,013</td>
+                                  <td>torquent</td>
+                                  <td>per</td>
+                                  <td>conubia</td>
+                                  <td>nostra</td>
+                                </tr>
+                                <tr>
+                                  <td>1,014</td>
+                                  <td>per</td>
+                                  <td>inceptos</td>
+                                  <td>himenaeos</td>
+                                  <td>Curabitur</td>
+                                </tr>
+                                <tr>
+                                  <td>1,015</td>
+                                  <td>sodales</td>
+                                  <td>ligula</td>
+                                  <td>in</td>
+                                  <td>libero</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                <!-- TEST -->   
+            </div>
+            <!-- / .page-content-inner -->
+        </div>
+        <!-- / .page-content-wrapper -->
+    </div>
+    <!-- / .page-content -->
+{% endblock %}
+
+{% block footer %}
+    footer
+  </div>
+<!-- / #wrapper -->
 {% endblock %}
