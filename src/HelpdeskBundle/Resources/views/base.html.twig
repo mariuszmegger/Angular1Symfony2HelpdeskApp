@@ -11,7 +11,7 @@
             <link href="{{ asset('bundles/helpdesk/css/main.css') }}" type="text/css" rel="stylesheet" />
         {% endblock %}
     </head>
-    <body>
+    <body ng-app="helpdeskModule">
             {% block header %}
             {% endblock %}
             {% block sidebar %}
@@ -23,7 +23,8 @@
         {% block javascripts %}
             <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
-            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+            <script src="https://code.angularjs.org/1.4.7/angular.min.js"></script>
+            <script src="https://code.angularjs.org/1.4.7/angular-route.min.js"></script>
             <script src="{{ asset('bundles/helpdesk/js/app.js') }}"></script>
         {% endblock %}
     </body>

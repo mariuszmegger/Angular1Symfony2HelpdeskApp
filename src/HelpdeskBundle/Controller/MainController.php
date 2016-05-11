@@ -8,15 +8,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class MainController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="homepage")
      */
     public function indexAction()
     {
-        return $this->render('HelpdeskBundle::frontend.html.twig');
+        return $this->render('HelpdeskBundle::backend.html.twig');
     }
 
     /**
-     * @Route("/admin")
+     * @Route("/admin", name="admin")
      */
     public function backendAction()
     {

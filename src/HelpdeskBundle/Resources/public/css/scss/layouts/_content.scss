@@ -23,3 +23,57 @@
     position: relative;
     padding: 0 20px;
 }
+.right-sidebar{
+    display:none !important;
+}
+.main{
+    padding-top:30px;
+   
+    i{
+        /*color:green;*/
+    }
+    table{
+        margin-top:20px;
+        z-index:99999 !important;
+         tr{
+                td{
+                    text-align:center;
+                    vertical-align:middle;
+                    &:last-child{
+                        width:80px;
+                        i{
+                            font-size:23px;
+                        }
+                    }
+                }
+            }
+        thead{
+            tr{
+                td{
+                    background-color:#303946;
+                    color:white;
+                }
+            }
+        }
+        tbody{
+            tr{
+                td{
+                    text-align:center;
+                    vertical-align:middle;
+                    &:last-child{
+                        width:80px;
+                        font-size:23px;
+                        i.fa-pencil-square{
+                           color:red; 
+                        }
+                        i.fa-trash{
+                           color:blue; 
+                           
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
+}
