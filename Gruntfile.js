@@ -4,7 +4,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     watch: {
         live: {
-          files: ['src/HelpdeskBundle/Resources/views/parts/**/*', 'src/HelpdeskBundle/Resources/views/*', 'src/HelpdeskBundle/Resources/public/js/*.js', 'src/HelpdeskBundle/Resources/public/css/*.css'],
+          files: ['src/HelpdeskBundle/Resources/views/parts/**/*', 'web/bundles/templates/**/*', 'src/HelpdeskBundle/Resources/views/*', 'src/HelpdeskBundle/Resources/public/js/*.js', 'src/HelpdeskBundle/Resources/public/css/*.css'],
           options: {
             livereload: true
           }
