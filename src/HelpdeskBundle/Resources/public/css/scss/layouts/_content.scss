@@ -29,9 +29,6 @@
 .main{
     padding-top:30px;
    
-    i{
-        /*color:green;*/
-    }
     table{
         margin-top:20px;
         z-index:99999 !important;
@@ -74,6 +71,19 @@
                     }
                 }
             }
+        }
+    }
+    .formHeader{
+        margin-left:62px;
+        margin-bottom:10px;
+        h1{
+            font-size:30px !important;
+        }
+        
+    }   
+    form{
+        label{
+            width:100%;
         }
     }
 }

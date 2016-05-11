@@ -82,8 +82,6 @@
 
 .main {
   padding-top: 30px; }
-  .main i {
-    /*color:green;*/ }
   .main table {
     margin-top: 20px;
     z-index: 99999 !important; }
@@ -107,6 +105,13 @@
           color: red; }
         .main table tbody tr td:last-child i.fa-trash {
           color: blue; }
+  .main .formHeader {
+    margin-left: 62px;
+    margin-bottom: 10px; }
+    .main .formHeader h1 {
+      font-size: 30px !important; }
+  .main form label {
+    width: 100%; }
 
 .page-navbar.header-fixed {
   position: fixed; }
