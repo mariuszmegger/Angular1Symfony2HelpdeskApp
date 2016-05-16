@@ -45,7 +45,7 @@ class Categories
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_date", type="date")
+     * @ORM\Column(name="created_date", type="datetime")
      */
     private $createdDate;
 

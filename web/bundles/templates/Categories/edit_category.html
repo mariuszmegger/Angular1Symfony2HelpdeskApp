@@ -1,7 +1,8 @@
-<div class="container">
+<div class="container+fluid">
     <div class="row" ng-controller="CategoriesController">
-        <div class="col-sm-6 leftBox">
-            <div class="formHeader col-sm-10">
+        {{category}}
+        <div class="col-sm-5 leftBox">
+            <div class="contentBoxHeader col-sm-10">
                 <h1>Edit Category </h1>
             </div>
             <form class="form-horizontal" ng-form="addCategory">
@@ -25,13 +26,14 @@
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-primary">Edit Category</button>
+                    </div>
                 </div>
             </form>
         </div>
-        </div>
+        <div class="col-sm-1 "></div>
         <div class="col-sm-6 rightBox">
             <div class="col-sm-12">
-                <div class="formHeader col-sm-10">
+                <div class="contentBoxHeader col-sm-10">
                     <h1>CategoryDetails </h1>
                 </div>
             </div>
@@ -48,3 +50,5 @@
         </div>
     </div>
 </div>
+
+

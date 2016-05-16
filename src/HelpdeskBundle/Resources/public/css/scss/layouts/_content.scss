@@ -28,22 +28,21 @@
 }
 .main{
     padding-top:30px;
-   
+
     table{
-        margin-top:20px;
         z-index:99999 !important;
-         tr{
-                td{
-                    text-align:center;
-                    vertical-align:middle;
-                    &:last-child{
-                        width:80px;
-                        i{
-                            font-size:23px;
-                        }
+        tr{
+            td{
+                text-align:center;
+                vertical-align:middle;
+                &:last-child{
+                    width:80px;
+                    i{
+                        font-size:23px;
                     }
                 }
             }
+        }
         thead{
             tr{
                 td{
@@ -61,29 +60,51 @@
                         width:80px;
                         font-size:23px;
                         i.fa-pencil-square{
-                           color:red; 
+                            color:red; 
                         }
                         i.fa-trash{
-                           color:blue; 
-                           
+                            color:blue; 
+
                         }
-                        
+
                     }
                 }
             }
         }
     }
-    .formHeader{
-        margin-left:62px;
-        margin-bottom:10px;
-        h1{
-            font-size:30px !important;
-        }
-        
-    }   
+
     form{
         label{
             width:100%;
         }
+    }
+    .rightBox {
+        .contentBoxHeader{
+            margin-bottom:11px;
+            margin-left:10px;
+            h1{
+                font-size:30px !important;
+            }
+        }
+        ul{
+            list-style:none;
+            li{
+                font-size: 16px;
+                padding:10px 0;
+                font-weight:bold;
+
+            }
+        }
+    }
+    .leftBox{
+        .contentBoxHeader{
+            margin-left:78px;
+            margin-bottom:20px;
+            h1{
+                font-size:30px !important;
+            }
+
+        }  
+
     }
 }

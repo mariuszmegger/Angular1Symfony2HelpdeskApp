@@ -83,7 +83,6 @@
 .main {
   padding-top: 30px; }
   .main table {
-    margin-top: 20px;
     z-index: 99999 !important; }
     .main table tr td {
       text-align: center;
@@ -105,13 +104,24 @@
           color: red; }
         .main table tbody tr td:last-child i.fa-trash {
           color: blue; }
-  .main .formHeader {
-    margin-left: 62px;
-    margin-bottom: 10px; }
-    .main .formHeader h1 {
-      font-size: 30px !important; }
   .main form label {
     width: 100%; }
+  .main .rightBox .contentBoxHeader {
+    margin-bottom: 11px;
+    margin-left: 10px; }
+    .main .rightBox .contentBoxHeader h1 {
+      font-size: 30px !important; }
+  .main .rightBox ul {
+    list-style: none; }
+    .main .rightBox ul li {
+      font-size: 16px;
+      padding: 10px 0;
+      font-weight: bold; }
+  .main .leftBox .contentBoxHeader {
+    margin-left: 78px;
+    margin-bottom: 20px; }
+    .main .leftBox .contentBoxHeader h1 {
+      font-size: 30px !important; }
 
 .page-navbar.header-fixed {
   position: fixed; }
