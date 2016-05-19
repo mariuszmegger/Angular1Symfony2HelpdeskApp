@@ -1,5 +1,6 @@
 <div class="container+fluid">
     <div class="row" ng-controller="CategoriesController">
+      <div class="alert" ng-class="{true:'alert-success', false:'alert-danger'}[data == 1]">{{ message }}</div>
         <div class="col-sm-5 leftBox">
             <div class="contentBoxHeader col-sm-10">
                 <h1>Add Category </h1>
@@ -49,5 +50,3 @@
         </div>
     </div>
 </div>
-
-

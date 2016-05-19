@@ -15,7 +15,7 @@ class MainController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('HelpdeskBundle::backend.html.twig');
+        return $this->render('HelpdeskBundle::frontend.html.twig');
     }
 
     /**
@@ -25,29 +25,45 @@ class MainController extends Controller
     {
         return $this->render('HelpdeskBundle::backend.html.twig');
     }
-    
-    
+
+
     /**
      * @Route("/ajaxCategories", name="ajaxCategories")
      */
     public function ajaxAction(Request $request)
     {
+      try{
         $content = json_decode($request->getContent(),true);
         $name = $content['name'];
-        $isActive  = (isset($content['isActive']) === true)? 1:0; 
+        $isActive  = (isset($content['isActive']) === true)? 1:0;
         $name  = $content['name'];
         $dt = new \DateTime('now');
-//        $dt = date('Y-m-d H:i:s');
-//        $dt = $dt->format('Y-m-d H:i:s');
         $category = new Categories();
         $category->setName($name);
         $category->setIsActive($isActive);
         $category->setCreatedBy(1);
         $category->setCreatedDate($dt);
         $em = $this->getDoctrine()->getManager();
-        $em->persist($category);
-        $em->flush();
-        var_dump($em);
-        die;
+        $duplicated = $this->getDoctrine()->getRepository('HelpdeskBundle:Categoriesa')->findByName($name);
+        if(!$duplicated){
+          $em->persist($category);
+          $em->flush();
+
+          $response['code'] = ($category->getId())? 1:0;
+          $response['message'] = '';
+        }else{
+          $response['code'] = 0;
+          $response['message'] = 'Category exists';
+        }
+        $response = json_encode($response);
+        echo $response;
+      }catch(Exception $e){
+        $log.$e->getMessage();
+        $response['code'] = 0;
+        $response['message'] = 'Connection error category not added';
+        $response = json_encode($response);
+        echo $response;
+      }
+      die;
     }
 }

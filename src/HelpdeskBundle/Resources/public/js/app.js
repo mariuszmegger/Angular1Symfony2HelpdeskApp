@@ -32,7 +32,7 @@ $(document).ready(function () {
                         controller: 'OperatorsController'
                     })
                     .when('/categories', {
-                        templateUrl: 'bundles/templates/Categories/categoriesList.html',
+                        templateUrl: 'bundlesa/templates/Categories/categoriesList.html',
                         controller: 'CategoriesController'
                     })
                     .when('/add_category', {
@@ -41,10 +41,6 @@ $(document).ready(function () {
                     })
                     .when('/edit_category', {
                         templateUrl: 'bundles/templates/Categories/edit_category.html',
-                        controller: 'CategoriesController'
-                    })
-                    .when('/categories', {
-                        templateUrl: 'bundles/templates/Categories/CategoriesList.html',
                         controller: 'CategoriesController'
                     })
                     .when('/settings', {
@@ -76,8 +72,9 @@ $(document).ready(function () {
             $scope.test = 'Operators';
 
         }]);
-    app.controller('CategoriesController', ['$scope', '$http','$log', function ($scope, $http, $log) {
+    app.controller('CategoriesController', ['$scope', '$http', function ($scope, $http ) {
             $scope.test = 'Categories';
+            $scope.message = '';
 
         $scope.saveCategory = function(){
             $http({
@@ -88,16 +85,13 @@ $(document).ready(function () {
                     'isActive':$scope.categoryIsActive
                 }
             }).then(function successCallback(response) {
-                var data = response.data;
-                data = angular.fromJson(data);
-                $scope.category = data.categoryId;
-                $log.response;
-                // this callback will be called asynchronously
-                // when the response is available
+                // response.data = 1;
+                $scope.data = response.data.code
+
+                $scope.message = (response.data.code == 1)? 'Category Added':'Taka kategoria juz istnieje ';
             }, function errorCallback(response) {
-                $scope.category = response;
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
+              $scope.data = 0;
+              $scope.message = 'Wystąpił błąd s'
             });
         }
 
