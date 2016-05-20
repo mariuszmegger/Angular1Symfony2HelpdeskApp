@@ -80,8 +80,13 @@
 .right-sidebar {
   display: none !important; }
 
+.alert {
+  visibility: hidden;
+  opacity: 0;
+  transition: all linear 1s; }
+
 .main {
-  padding-top: 30px; }
+  padding-top: 10px; }
   .main table {
     z-index: 99999 !important; }
     .main table tr td {

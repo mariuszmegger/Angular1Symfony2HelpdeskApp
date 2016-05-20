@@ -1,5 +1,5 @@
 
-(function () {
-    var app = angular.module('helpdeskModule', ['ngRoute']);
-
-})();
+// (function () {
+//     var app = angular.module('helpdeskModule', ['ngRoute']);
+//
+// })();

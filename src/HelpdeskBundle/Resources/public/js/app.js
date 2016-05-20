@@ -32,7 +32,7 @@ $(document).ready(function () {
                         controller: 'OperatorsController'
                     })
                     .when('/categories', {
-                        templateUrl: 'bundlesa/templates/Categories/categoriesList.html',
+                        templateUrl: 'bundles/templates/Categories/categoriesList.html',
                         controller: 'CategoriesController'
                     })
                     .when('/add_category', {
@@ -72,37 +72,85 @@ $(document).ready(function () {
             $scope.test = 'Operators';
 
         }]);
-    app.controller('CategoriesController', ['$scope', '$http', function ($scope, $http ) {
+    app.controller('CategoriesController', ['$scope', '$http', '$log','$timeout','$location','ajaxLoader', function ($scope, $http, $log, $timeout, $location, ajaxLoader ) {
             $scope.test = 'Categories';
             $scope.message = '';
 
+
         $scope.saveCategory = function(){
-            $http({
-                method: 'POST',
-                url: '/app_dev.php/ajaxCategories',
-                data:{
-                    'name':$scope.categoryName,
-                    'isActive':$scope.categoryIsActive
+          var data = {
+              'name':$scope.categoryName,
+              'isActive':$scope.categoryIsActive
+          }
+          ajaxLoader.setCategory('/app_dev.php/ajaxCategories', data)
+          .then(function(response){
+             data = response.data.code
+             message = (response.data.code == 1)? 'Category Added':'Category exists ';
+            $log.error($scope.message)
+            $scope.myStyle={
+              visibility:'visible',
+              opacity:'1'
+            }
+            // if(response.data.code == 1){
+            //     $location.path('/categories');
+            // }
+
+            $timeout(function(){
+                $scope.myStyle={
+                  visibility:'hidden',
+                  opacity:'0'
                 }
-            }).then(function successCallback(response) {
-                // response.data = 1;
-                $scope.data = response.data.code
-
-                $scope.message = (response.data.code == 1)? 'Category Added':'Taka kategoria juz istnieje ';
-            }, function errorCallback(response) {
-              $scope.data = 0;
-              $scope.message = 'Wystąpił błąd s'
-            });
-        }
+            }, 3000)
 
 
+          // function(response){
+          //   $scope.data = 0;
+          //   $scope.message = 'Connection error category not added'
+          //   $scope.myStyle={
+          //     visibility:'visible',
+          //     opacity:'1'
+          //   }
+          //   $timeout(function(){
+          //       $scope.myStyle={
+          //         visibility:'hidden',
+          //         opacity:'0'
+          //       }
+          //   }, 3000)
+          // }
+        // )
 
+      })
+      $scope.data = data
+      $scope.message = message
+$log.error($scope.message);
+}
         }]);
-    app.controller('SettingsController', ['$scope', function ($scope) {
-            $scope.test = 'Settings';
 
-        }]);
+        app.factory('ajaxLoader', ['$http', '$log','$timeout','$location', function($http, $log, $timeout, $location){
 
+          // successCallback = successCallback||function(){};
+          // errorCallback = errorCallback||function(){};
+          this.setCategory = function(url,data){
+              return $http.post(url, data).then(function(response){
+                return response;
+              });
+          }
+           return this;
+            // return function(url,data, succesCallback, errorCallback){
+            //     succesCallback = succesCallback||function(){};
+            //     errorCallback = errorCallback||function(){};
+            //     $http.post(url, data).then(succesCallback, errorCallback);
+            //     $http({
+            //         method: method,
+            //         url: url,
+            //         data:data
+            //     }).then(succesCallback, errorCallback)
+            // }
+        }])
+        app.controller('SettingsController', ['$scope', function ($scope) {
+                $scope.test = 'Settings';
+
+            }]);
 
 
 })();

@@ -36,7 +36,6 @@ class MainController extends Controller
         $content = json_decode($request->getContent(),true);
         $name = $content['name'];
         $isActive  = (isset($content['isActive']) === true)? 1:0;
-        $name  = $content['name'];
         $dt = new \DateTime('now');
         $category = new Categories();
         $category->setName($name);
@@ -44,7 +43,7 @@ class MainController extends Controller
         $category->setCreatedBy(1);
         $category->setCreatedDate($dt);
         $em = $this->getDoctrine()->getManager();
-        $duplicated = $this->getDoctrine()->getRepository('HelpdeskBundle:Categoriesa')->findByName($name);
+        $duplicated = $this->getDoctrine()->getRepository('HelpdeskBundle:Categories')->findByName($name);
         if(!$duplicated){
           $em->persist($category);
           $em->flush();
@@ -55,15 +54,12 @@ class MainController extends Controller
           $response['code'] = 0;
           $response['message'] = 'Category exists';
         }
-        $response = json_encode($response);
-        echo $response;
       }catch(Exception $e){
-        $log.$e->getMessage();
         $response['code'] = 0;
         $response['message'] = 'Connection error category not added';
-        $response = json_encode($response);
-        echo $response;
       }
+      $response = json_encode($response);
+      echo $response;
       die;
     }
 }

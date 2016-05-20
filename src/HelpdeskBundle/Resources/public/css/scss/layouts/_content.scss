@@ -26,8 +26,14 @@
 .right-sidebar{
     display:none !important;
 }
+.alert{
+  visibility:hidden ;
+  opacity:0;
+  transition: all linear 1s;
+}
+
 .main{
-    padding-top:30px;
+    padding-top:10px;
 
     table{
         z-index:99999 !important;
@@ -60,10 +66,10 @@
                         width:80px;
                         font-size:23px;
                         i.fa-pencil-square{
-                            color:red; 
+                            color:red;
                         }
                         i.fa-trash{
-                            color:blue; 
+                            color:blue;
 
                         }
 
@@ -104,7 +110,7 @@
                 font-size:30px !important;
             }
 
-        }  
+        }
 
     }
 }
