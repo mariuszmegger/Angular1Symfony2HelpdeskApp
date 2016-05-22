@@ -55,8 +55,6 @@ class MainController extends Controller
           $response['message'] = 'Category exists';
         }
       }catch(Exception $e){
-        $response['code'] = 0;
-        $response['message'] = 'Connection error category not added';
       }
       $response = json_encode($response);
       echo $response;
