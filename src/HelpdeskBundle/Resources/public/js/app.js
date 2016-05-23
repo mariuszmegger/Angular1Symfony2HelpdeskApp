@@ -84,9 +84,9 @@ $(document).ready(function () {
           }
           ajaxLoader.setCategory('/app_dev.php/ajaxCategories', data)
           .then(function(response){
-             data = response.data.code
-             message = (response.data.code == 1)? 'Category Added':'Category exists ';
-            $log.error($scope.message)
+            $log.error(response)
+            $scope.data = response.code
+            $scope.message = (response.code == 1)? 'Category Added':'Category exists ';
             $scope.myStyle={
               visibility:'visible',
               opacity:'1'
@@ -118,24 +118,32 @@ $(document).ready(function () {
           //   }, 3000)
           // }
         // )
-
       })
-      $scope.data = data
-      $scope.message = message
 $log.error($scope.message);
 }
         }]);
 
-        app.factory('ajaxLoader', ['$http', '$log','$timeout','$location', function($http, $log, $timeout, $location){
+        app.factory('ajaxLoader', ['$http', '$q', function($http, $q){
 
           // successCallback = successCallback||function(){};
           // errorCallback = errorCallback||function(){};
-          this.setCategory = function(url,data){
-              return $http.post(url, data).then(function(response){
-                return response;
-              });
+          var factory = {};
+           var _categoryList = factory.setCategory = function(url,data){
+            var defer = $q.defer();
+            $http.post(url, data).
+            success(function(response) {
+            // alter data if needed
+              defer.resolve(response);
+            }).
+            error(function(data, status, headers, config) {
+                defer.reject();
+            });
+            return defer.promise;
           }
-           return this;
+          console.log(_categoryList);
+           return {
+             categoryList : _categoryList
+           };
             // return function(url,data, succesCallback, errorCallback){
             //     succesCallback = succesCallback||function(){};
             //     errorCallback = errorCallback||function(){};
