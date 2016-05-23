@@ -5,7 +5,7 @@
             <h1>{{ test}}  <a href="#/add_category"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></h1>
         </div>
         <div class="col-sm-12">
-            <table class="table table-bordered">
+            <table ng-if="categories" ng-cloak class="table table-bordered categoryTable">
                 <thead>
                     <tr>
                         <td>Id</td>
@@ -17,56 +17,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td><a href="#/edit_category"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td><a href="#/edit_category"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td><a href="#/edit_category"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td><a href="#/edit_category"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td><a href="#/edit_category"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td>Lorem Ipsum</td>
-                        <td><a href="#/edit_category"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></td>
+                  <tr ng-repeat="category in categories">
+                      <td>{{category.id}}</td>
+                      <td>{{category.name}}</td>
+                      <td>{{category.createdBy}}</td>
+                      <td>{{category.createdDate | date}}</td>
+                      <td>{{category.isActive === 1? "Yes":"No"}}</td>
+                      <td><a href="#/edit_category"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></td>
                     </tr>
                 </tbody>
             </table>
+
         </div>
     </div>
+    <div   ng-if="!categories" class="categoryTableInfo panel alert-info"> Category list is empty</div>
 </div>

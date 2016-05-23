@@ -36,7 +36,7 @@ class MainController extends Controller
         $content = json_decode($request->getContent(),true);
         $name = $content['name'];
         $isActive  = (isset($content['isActive']) === true)? 1:0;
-        $dt = new \DateTime('now');
+        $dt =  date('Y-m-d H:i:s');
         $category = new Categories();
         $category->setName($name);
         $category->setIsActive($isActive);
@@ -55,11 +55,34 @@ class MainController extends Controller
           $response['message'] = 'Category exists';
         }
       }catch(Exception $e){
-        $response['code'] = 0;
-        $response['message'] = 'Connection error category not added';
       }
       $response = json_encode($response);
       echo $response;
       die;
     }
+
+    /**
+     * @Route("/ajaxGetCategories", name="ajaxGetCategories")
+     */
+    public function ajaxGetCategories(Request $request)
+    {
+      try{
+        $response = $this->getDoctrine()
+               ->getRepository('HelpdeskBundle:Categories')
+               ->createQueryBuilder('e')
+               ->select('e')
+               ->getQuery()
+               ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+         if(empty($response)){
+           $response = false;
+           die;
+         }
+      }catch(Exception $e){
+        $response = $e->getMessage();
+    }
+    $response = json_encode($response);
+    echo $response;
+    die;
+  }
+
 }

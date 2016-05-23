@@ -43,9 +43,9 @@ class Categories
     private $createdBy;
 
     /**
-     * @var \DateTime
+     * @var \string
      *
-     * @ORM\Column(name="created_date", type="datetime")
+     * @ORM\Column(name="created_date", type="string")
      */
     private $createdDate;
 
@@ -53,7 +53,7 @@ class Categories
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -76,7 +76,7 @@ class Categories
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -99,7 +99,7 @@ class Categories
     /**
      * Get isActive
      *
-     * @return integer 
+     * @return integer
      */
     public function getIsActive()
     {
@@ -122,7 +122,7 @@ class Categories
     /**
      * Get createdBy
      *
-     * @return integer 
+     * @return integer
      */
     public function getCreatedBy()
     {
@@ -145,7 +145,7 @@ class Categories
     /**
      * Get createdDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedDate()
     {

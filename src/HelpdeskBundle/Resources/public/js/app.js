@@ -10,97 +10,137 @@ $(document).ready(function () {
     var app = angular.module('helpdeskModule', ['ngRoute']);
 
     app.config(['$routeProvider', function ($routeProvider) {
-            $routeProvider.
-                    when('/dashboard', {
-                        templateUrl: 'bundles/templates/Dashboard/dashboard.html',
-                        controller: 'DashboardController'
-                    }).
-                    when('/users', {
-                        templateUrl: 'bundles/templates/Users/usersList.html',
-                        controller: 'UsersController'
-                    }).
-                    when('/units', {
-                        templateUrl: 'bundles/templates/Units/unitsList.html',
-                        controller: 'UnitsController'
-                    }).
-                    when('/support_lines', {
-                        templateUrl: 'bundles/templates/SupportLines/supportLinesList.html',
-                        controller: 'SupportLinesController'
-                    })
-                    .when('/operators', {
-                        templateUrl: 'bundles/templates/Operators/OperatorsList.html',
-                        controller: 'OperatorsController'
-                    })
-                    .when('/categories', {
-                        templateUrl: 'bundles/templates/Categories/categoriesList.html',
-                        controller: 'CategoriesController'
-                    })
-                    .when('/add_category', {
-                        templateUrl: 'bundles/templates/Categories/add_category.html',
-                        controller: 'CategoriesController'
-                    })
-                    .when('/edit_category', {
-                        templateUrl: 'bundles/templates/Categories/edit_category.html',
-                        controller: 'CategoriesController'
-                    })
-                    .when('/settings', {
-                        templateUrl: 'bundles/templates/Settings/SettingsList.html',
-                        controller: 'SettingsController'
-                    }).
-                    otherwise({
-                        redirectTo: '/dashboard'
-                    });
-        }]);
+        $routeProvider.
+            when('/dashboard', {
+                templateUrl: 'bundles/templates/Dashboard/dashboard.html',
+                controller: 'DashboardController'
+            }).
+            when('/users', {
+                templateUrl: 'bundles/templates/Users/usersList.html',
+                controller: 'UsersController'
+            }).
+            when('/units', {
+                templateUrl: 'bundles/templates/Units/unitsList.html',
+                controller: 'UnitsController'
+            }).
+            when('/support_lines', {
+                templateUrl: 'bundles/templates/SupportLines/supportLinesList.html',
+                controller: 'SupportLinesController'
+            })
+            .when('/operators', {
+                templateUrl: 'bundles/templates/Operators/OperatorsList.html',
+                controller: 'OperatorsController'
+            })
+            .when('/categories', {
+                templateUrl: 'bundles/templates/Categories/categoriesList.html',
+                controller: 'CategoriesController'
+            })
+            .when('/add_category', {
+                templateUrl: 'bundles/templates/Categories/add_category.html',
+                controller: 'CategoriesController'
+            })
+            .when('/edit_category', {
+                templateUrl: 'bundles/templates/Categories/edit_category.html',
+                controller: 'CategoriesController'
+            })
+            .when('/settings', {
+                templateUrl: 'bundles/templates/Settings/SettingsList.html',
+                controller: 'SettingsController'
+            }).
+            otherwise({
+                redirectTo: '/dashboard'
+            });
+    }]);
 
     app.controller('DashboardController', ['$scope', function ($scope) {
-            $scope.test = 'Dashboard';
-        }]);
+        $scope.test = 'Dashboard';
+    }]);
 
     app.controller('UsersController', ['$scope', function ($scope) {
-            $scope.test = 'Users';
+        $scope.test = 'Users';
 
-        }]);
+    }]);
     app.controller('UnitsController', ['$scope', function ($scope) {
-            $scope.test = 'Units';
+        $scope.test = 'Units';
 
-        }]);
+    }]);
     app.controller('SupportLinesController', ['$scope', function ($scope) {
-            $scope.test = 'SupportLines';
+        $scope.test = 'SupportLines';
 
-        }]);
+    }]);
     app.controller('OperatorsController', ['$scope', function ($scope) {
-            $scope.test = 'Operators';
+        $scope.test = 'Operators';
 
-        }]);
-    app.controller('CategoriesController', ['$scope', '$http', '$log','$timeout','$location','ajaxLoader', function ($scope, $http, $log, $timeout, $location, ajaxLoader ) {
-            $scope.test = 'Categories';
-            $scope.message = '';
-
-
-        $scope.saveCategory = function(){
-          var data = {
-              'name':$scope.categoryName,
-              'isActive':$scope.categoryIsActive
-          }
-          ajaxLoader.setCategory('/app_dev.php/ajaxCategories', data)
-          .then(function(response){
-            $log.error(response)
-            $scope.data = response.code
-            $scope.message = (response.code == 1)? 'Category Added':'Category exists ';
-            $scope.myStyle={
-              visibility:'visible',
-              opacity:'1'
+    }]);
+    app.controller('CategoriesController', ['$scope', '$http', '$log', '$timeout', '$location', 'ajaxLoader', function ($scope, $http, $log, $timeout, $location, ajaxLoader) {
+        $scope.message = '';
+        $scope.test = 'Categories';
+        $scope.categories = false;
+        $scope.saveCategory = function () {
+            var data = {
+                'name': $scope.categoryName,
+                'isActive': $scope.categoryIsActive
             }
-            // if(response.data.code == 1){
-            //     $location.path('/categories');
-            // }
+            var serviceResponse = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxCategories', data);
+            serviceResponse.then(function (response) {
+                    $scope.data = response.data.code
+                    $scope.message = (response.data.code == 1) ? 'Category Added' : response.data.message;
+                    $scope.myStyle = {
+                        visibility: 'visible',
+                        opacity: '1'
+                    }
+//                    if(response.data.code == 1){
+//                         $location.path('/categories');
+//                    }
+                },function(response){
+                    $scope.message = 'Connection error category not added'
+                    $scope.myStyle={
+                        visibility:'visible',
+                        opacity:'1'
+                    }
+
+                    $log.error(response)
+                })
 
             $timeout(function(){
                 $scope.myStyle={
-                  visibility:'hidden',
-                  opacity:'0'
+                    visibility:'hidden',
+                    opacity:'0'
                 }
             }, 3000)
+        }
+
+        // $scope.getCategories = function(){
+          var serviceResponse2 = ajaxLoader.makeRequest('GET','/app_dev.php/ajaxGetCategories', data = null);
+          serviceResponse2.then(function (response) {
+            if(response != false){
+                $scope.categories = response.data;
+            }
+            else{
+              $scope.categories = false;
+            }
+
+          }, function(response){
+
+        })
+          // return false
+        // }
+    }]);
+
+    app.factory('ajaxLoader', ['$http', function ($http) {
+
+        var __makeRequest = function(method,url,data){
+            return $http({method:method,url:url, data:data})
+        }
+        return {
+            makeRequest : __makeRequest
+        }
+
+    }])
+    app.controller('SettingsController', ['$scope', function ($scope) {
+        $scope.test = 'Settings';
+
+    }]);
 
 
           // function(response){
@@ -118,47 +158,6 @@ $(document).ready(function () {
           //   }, 3000)
           // }
         // )
-      })
-$log.error($scope.message);
-}
-        }]);
-
-        app.factory('ajaxLoader', ['$http', '$q', function($http, $q){
-
-          // successCallback = successCallback||function(){};
-          // errorCallback = errorCallback||function(){};
-          var factory = {};
-           var _categoryList = factory.setCategory = function(url,data){
-            var defer = $q.defer();
-            $http.post(url, data).
-            success(function(response) {
-            // alter data if needed
-              defer.resolve(response);
-            }).
-            error(function(data, status, headers, config) {
-                defer.reject();
-            });
-            return defer.promise;
-          }
-          console.log(_categoryList);
-           return {
-             categoryList : _categoryList
-           };
-            // return function(url,data, succesCallback, errorCallback){
-            //     succesCallback = succesCallback||function(){};
-            //     errorCallback = errorCallback||function(){};
-            //     $http.post(url, data).then(succesCallback, errorCallback);
-            //     $http({
-            //         method: method,
-            //         url: url,
-            //         data:data
-            //     }).then(succesCallback, errorCallback)
-            // }
-        }])
-        app.controller('SettingsController', ['$scope', function ($scope) {
-                $scope.test = 'Settings';
-
-            }]);
 
 
 })();

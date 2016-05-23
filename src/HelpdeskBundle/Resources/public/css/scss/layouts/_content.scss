@@ -34,7 +34,10 @@
 
 .main{
     padding-top:10px;
-
+.categoryTableInfo{
+    // display:none;
+    // visibility: hidden;
+}
     table{
         z-index:99999 !important;
         tr{
