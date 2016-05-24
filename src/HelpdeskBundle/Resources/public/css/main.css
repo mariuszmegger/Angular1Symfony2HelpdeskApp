@@ -96,6 +96,8 @@
         width: 80px; }
         .main table tr td:last-child i {
           font-size: 23px; }
+    .main table thead tr .sort-btn {
+      cursor: pointer; }
     .main table thead tr td {
       background-color: #303946;
       color: white; }

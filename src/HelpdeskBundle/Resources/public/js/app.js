@@ -7,49 +7,51 @@ $(document).ready(function () {
 });
 
 (function () {
-    var app = angular.module('helpdeskModule', ['ngRoute']);
+    var app = angular.module('helpdeskModule', ['ngRoute', 'helpdeskService']);
 
     app.config(['$routeProvider', function ($routeProvider) {
+      // $httpProvider.defaults.cache = true;
         $routeProvider.
-            when('/dashboard', {
+            when('/admin-dashboard', {
                 templateUrl: 'bundles/templates/Dashboard/dashboard.html',
                 controller: 'DashboardController'
             }).
-            when('/users', {
+            when('/admin-users', {
                 templateUrl: 'bundles/templates/Users/usersList.html',
                 controller: 'UsersController'
             }).
-            when('/units', {
+            when('/admin-units', {
                 templateUrl: 'bundles/templates/Units/unitsList.html',
                 controller: 'UnitsController'
             }).
-            when('/support_lines', {
+            when('/admin-support_lines', {
                 templateUrl: 'bundles/templates/SupportLines/supportLinesList.html',
                 controller: 'SupportLinesController'
             })
-            .when('/operators', {
+            .when('/admin-operators', {
                 templateUrl: 'bundles/templates/Operators/OperatorsList.html',
                 controller: 'OperatorsController'
             })
-            .when('/categories', {
+            .when('/admin-categories', {
                 templateUrl: 'bundles/templates/Categories/categoriesList.html',
                 controller: 'CategoriesController'
             })
-            .when('/add_category', {
+            .when('/admin-add_category', {
                 templateUrl: 'bundles/templates/Categories/add_category.html',
                 controller: 'CategoriesController'
             })
-            .when('/edit_category', {
+            .when('/admin-edit_category', {
                 templateUrl: 'bundles/templates/Categories/edit_category.html',
                 controller: 'CategoriesController'
             })
-            .when('/settings', {
+            .when('/admin-settings', {
                 templateUrl: 'bundles/templates/Settings/SettingsList.html',
                 controller: 'SettingsController'
             }).
             otherwise({
-                redirectTo: '/dashboard'
+                redirectTo: '/admin-dashboard'
             });
+            // $locationProvider.html5Mode(true);
     }]);
 
     app.controller('DashboardController', ['$scope', function ($scope) {
@@ -76,6 +78,11 @@ $(document).ready(function () {
         $scope.message = '';
         $scope.test = 'Categories';
         $scope.categories = false;
+        $scope.orderByColumn = 'id';
+        $scope.orderByDir = true;
+        $scope.filterBy = {
+        };
+
         $scope.saveCategory = function () {
             var data = {
                 'name': $scope.categoryName,
@@ -123,18 +130,24 @@ $(document).ready(function () {
           }, function(response){
 
         })
-          // return false
-        // }
-    }]);
 
-    app.factory('ajaxLoader', ['$http', function ($http) {
+        $scope.changeOrder = function(columnName){
+            if($scope.orderByColumn == columnName){
+                $scope.orderByDir = !$scope.orderByDir;
+              }else{
+                $scope.orderByColumn = columnName
+                $scope.orderByDir = false;
+              }
+        }
 
-        var __makeRequest = function(method,url,data){
-            return $http({method:method,url:url, data:data})
+        $scope.isOrderedBy = function(columnName){
+           return ($scope.orderByColumn == columnName);
         }
-        return {
-            makeRequest : __makeRequest
+
+        $scope.isOrderedReverse = function(){
+          return !$scope.orderByDir;
         }
+
 
     }])
     app.controller('SettingsController', ['$scope', function ($scope) {

@@ -54,6 +54,9 @@
         }
         thead{
             tr{
+              .sort-btn{
+                cursor: pointer;
+              }
                 td{
                     background-color:#303946;
                     color:white;

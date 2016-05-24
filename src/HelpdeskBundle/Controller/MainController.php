@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\BrowserKit\Response;
 use HelpdeskBundle\Entity\Categories;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MainController extends Controller
 {
@@ -15,7 +16,8 @@ class MainController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('HelpdeskBundle::frontend.html.twig');
+        // return $this->render('HelpdeskBundle::frontend.html.twig');
+        return $this->render('HelpdeskBundle::backend.html.twig');
     }
 
     /**
@@ -75,14 +77,19 @@ class MainController extends Controller
                ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
          if(empty($response)){
            $response = false;
-           die;
+          //  die;
          }
       }catch(Exception $e){
         $response = $e->getMessage();
     }
-    $response = json_encode($response);
-    echo $response;
-    die;
+    $responseContainer = new JsonResponse();
+    $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
+    $responseContainer->setData($response);
+
+    return $responseContainer;
+    // $responseContainer = json_encode($response);
+    // echo $response;
+    // die;
   }
 
 }

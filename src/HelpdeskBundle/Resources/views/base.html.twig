@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 
-<html>
+<html ng-app="helpdeskModule">
     <head>
         <meta title="Angular Amigos Helpdesk">
         <meta charset="UTF-8">
+        <!-- <base href="/"> -->
 
         {% block stylesheets %}
             <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -11,7 +12,7 @@
             <link href="{{ asset('bundles/helpdesk/css/main.css') }}" type="text/css" rel="stylesheet" />
         {% endblock %}
     </head>
-    <body ng-app="helpdeskModule">
+    <body >
             {% block header %}
             {% endblock %}
             {% block sidebar %}
@@ -25,8 +26,9 @@
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
             <script src="https://code.angularjs.org/1.4.7/angular.min.js"></script>
             <script src="https://code.angularjs.org/1.4.7/angular-route.min.js"></script>
-            <script src="{{ asset('bundles/helpdesk/js/app.js') }}"></script>
             <script src="{{ asset('bundles/helpdesk/js/services.js') }}"></script>
+            <script src="{{ asset('bundles/helpdesk/js/app.js') }}"></script>
+
 
         {% endblock %}
     </body>
