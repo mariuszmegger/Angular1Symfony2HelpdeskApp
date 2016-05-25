@@ -97,7 +97,8 @@
         .main table tr td:last-child i {
           font-size: 23px; }
     .main table thead tr .sort-btn {
-      cursor: pointer; }
+      cursor: pointer;
+      display: block; }
     .main table thead tr td {
       background-color: #303946;
       color: white; }

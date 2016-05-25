@@ -1,10 +1,7 @@
 <div class="container">
     <div class="row" ng-controller="CategoriesController">
         <div class="alert "  ng-style="myStyle" ng-class="{true:'alert-success', false:'alert-danger'}[data == 1]">{{ message }}</div>
-        <div class="col-sm-4">
-            <h1>{{ test}}  <a href="#/admin-add_category"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></h1>
-        </div>
-        <div class="col-sm-12"></div>
+
         <div class="col-sm-2"><label for="categoryName">Category name:</label></div>
         <div class="col-sm-3">
           <label > <input placeholder="search" class="form-control" type="text" id="categoryName" ng-model="filterBy.name">
@@ -12,14 +9,28 @@
         <div class="col-sm-1"><label for="isActive">Is Active:</label></div>
         <div class="col-sm-3">
           <select ng-model="filterBy.isActive" id="isActive" class="form-control" name="isActive">
-            <option value=""></option>
+            <option value="">All</option>
             <option value="1">Yes</option>
             <option value="0">No</option>
           </select>
       </div>
+        <div class="col-sm-12">
+            <h1>{{ test}}  <a href="#/admin-add_category"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></h1>
+        </div>
+        <div class="col-sm-12"></div>
 
 
-        <div class="col-sm-1"></div>
+
+        <div class="col-sm-2">
+          <select ng-model="limitRec" id="length" class="form-control dataLength" name="length">
+            <option selected="selected" value="1">1</option>
+            <option value="10">10</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+        <div class="col-sm-8"></div>
+        <div class="col-sm-2"><input type="text" ng-model="searchText">  </div>
         <div class="col-sm-12">
             <table ng-if="categories " ng-cloak class="table table-bordered categoryTable">
                 <thead>
@@ -73,7 +84,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="category in categories | filter: filterBy | orderBy: orderByColumn : orderByDir">
+                  <tr ng-repeat="category in categories | filter: filterBy | filter: searchText | limitTo: limitRec | orderBy: orderByColumn : orderByDir">
                       <td>{{category.id}}</td>
                       <td>{{category.name}}</td>
                       <td>{{category.createdBy}}</td>
