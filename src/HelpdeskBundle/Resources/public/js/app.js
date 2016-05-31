@@ -82,13 +82,13 @@ $(document).ready(function () {
         $scope.orderByDir = true;
         $scope.filterBy = {
         };
-        $scope.limitRec = 100;
+        $scope.limitRec = 5;
         $scope.bigTotalItems = 0;
         $scope.bigCurrentPage = 1;
-        $scope.bigCurrentPage = $scope.bigTotalItems / $scope.limitRec;
+
+//        $scope.bigCurrentPage = $scope.bigTotalItems / $scope.limitRec;
 
         console.log($scope.bigTotalItems);
-        console.log($scope.limitRec);
         console.log($scope.bigCurrentPage);
 
         $scope.saveCategory = function () {
@@ -131,7 +131,7 @@ $(document).ready(function () {
             if(response != false){
                 $scope.categories = response.data;
                 $scope.bigTotalItems = response.data.length;
-                $scope.bigCurrentPage = Math.ceil($scope.bigTotalItems / $scope.limitRec);
+//                $scope.bigCurrentPage = Math.ceil($scope.bigTotalItems / $scope.limitRec);
                 console.log($scope.bigCurrentPage);
             }
             else{
