@@ -7,7 +7,7 @@ $(document).ready(function () {
 });
 
 (function () {
-    var app = angular.module('helpdeskModule', ['ngRoute', 'helpdeskService']);
+    var app = angular.module('helpdeskModule', ['ngRoute','ui.bootstrap', 'helpdeskService', 'helpdeskDirective', 'helpdeskFilter']);
 
     app.config(['$routeProvider', function ($routeProvider) {
       // $httpProvider.defaults.cache = true;
@@ -82,6 +82,14 @@ $(document).ready(function () {
         $scope.orderByDir = true;
         $scope.filterBy = {
         };
+        $scope.limitRec = 100;
+        $scope.bigTotalItems = 0;
+        $scope.bigCurrentPage = 1;
+        $scope.bigCurrentPage = $scope.bigTotalItems / $scope.limitRec;
+
+        console.log($scope.bigTotalItems);
+        console.log($scope.limitRec);
+        console.log($scope.bigCurrentPage);
 
         $scope.saveCategory = function () {
             var data = {
@@ -122,6 +130,9 @@ $(document).ready(function () {
           serviceResponse2.then(function (response) {
             if(response != false){
                 $scope.categories = response.data;
+                $scope.bigTotalItems = response.data.length;
+                $scope.bigCurrentPage = Math.ceil($scope.bigTotalItems / $scope.limitRec);
+                console.log($scope.bigCurrentPage);
             }
             else{
               $scope.categories = false;
@@ -130,6 +141,11 @@ $(document).ready(function () {
           }, function(response){
 
         })
+        $scope.pageChanged = function(){
+            console.log($scope.bigTotalItems);
+            console.log($scope.limitRec);
+            console.log($scope.bigCurrentPage);
+        }
 
         $scope.changeOrder = function(columnName){
             if($scope.orderByColumn == columnName){
@@ -147,6 +163,7 @@ $(document).ready(function () {
         $scope.isOrderedReverse = function(){
           return !$scope.orderByDir;
         }
+
 
 
     }])

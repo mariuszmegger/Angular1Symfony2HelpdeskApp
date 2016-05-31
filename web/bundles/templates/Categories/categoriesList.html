@@ -94,7 +94,7 @@
                     </tr>
                 </tbody>
             </table>
-
+            <uib-pagination total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="limitRec" ng-change="pageChanged()" class="pagination-sm" boundary-link-numbers="true" rotate="false"></uib-pagination>
         </div>
     </div>
     <div   ng-if="!categories" class="categoryTableInfo panel alert-info"> Category list is empty</div>
