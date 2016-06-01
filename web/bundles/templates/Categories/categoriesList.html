@@ -22,7 +22,7 @@
 
 
         <div class="col-sm-2">
-          <select ng-model="limitRec" id="length" class="form-control dataLength" name="length">
+          <select ng-model="itemsPerPage" id="length" class="form-control dataLength" name="length" ng-change="pageChanged();">
             <option selected="selected" value="1">1</option>
             <option value="10">10</option>
             <option value="50">50</option>
@@ -30,7 +30,7 @@
           </select>
         </div>
         <div class="col-sm-8"></div>
-        <div class="col-sm-2"><input type="text" ng-model="searchText">  </div>
+        <div class="col-sm-2"><input type="text" ng-model="searchText" ng-change="getCategories()">  </div>
         <div class="col-sm-12">
             <table ng-if="categories " ng-cloak class="table table-bordered categoryTable">
                 <thead>
@@ -84,17 +84,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="category in categories | filter: filterBy | filter: bigCurrentPage | filter: searchText | limitTo: limitRec | orderBy: orderByColumn : orderByDir">
+                  <tr ng-repeat="category in filteredCategories |  filter: filterBy | filter: searchText | orderBy: orderByColumn : orderByDir">
                       <td>{{category.id}}</td>
                       <td>{{category.name}}</td>
                       <td>{{category.createdBy}}</td>
                       <td>{{category.createdDate | date : 'longdate'}}</td>
                       <td>{{category.isActive === 1? "Yes":"No"}}</td>
                       <td><a href="#/admin-edit_category"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></td>
-                    </tr>
+                  </tr>
                 </tbody>
             </table>
-            <uib-pagination total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="limitRec" ng-change="pageChanged()" class="pagination-sm" boundary-link-numbers="true" rotate="false"></uib-pagination>
+            <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="itemsPerPage" ng-change="pageChanged()" class="pagination-sm" boundary-link-numbers="true" rotate="false"></uib-pagination>
+            total Items: {{totalItems}}<br />
+            Items per page: {{itemsPerPage}}<br />
+            Current Page: {{currentPage}}
         </div>
     </div>
     <div   ng-if="!categories" class="categoryTableInfo panel alert-info"> Category list is empty</div>

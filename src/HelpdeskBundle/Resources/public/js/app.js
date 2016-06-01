@@ -82,14 +82,14 @@ $(document).ready(function () {
         $scope.orderByDir = true;
         $scope.filterBy = {
         };
-        $scope.limitRec = 5;
-        $scope.bigTotalItems = 0;
-        $scope.bigCurrentPage = 1;
+        $scope.itemsPerPage = 10;
+        $scope.totalItems = 0;
+        $scope.currentPage = 1;
 
 //        $scope.bigCurrentPage = $scope.bigTotalItems / $scope.limitRec;
 
-        console.log($scope.bigTotalItems);
-        console.log($scope.bigCurrentPage);
+        // console.log($scope.totalItems);
+        // console.log($scope.currentPage);
 
         $scope.saveCategory = function () {
             var data = {
@@ -125,14 +125,31 @@ $(document).ready(function () {
             }, 3000)
         }
 
-        // $scope.getCategories = function(){
+        $scope.getCategories = function(){
           var serviceResponse2 = ajaxLoader.makeRequest('GET','/app_dev.php/ajaxGetCategories', data = null);
           serviceResponse2.then(function (response) {
             if(response != false){
                 $scope.categories = response.data;
-                $scope.bigTotalItems = response.data.length;
-//                $scope.bigCurrentPage = Math.ceil($scope.bigTotalItems / $scope.limitRec);
-                console.log($scope.bigCurrentPage);
+                $scope.totalItems = response.data.length;
+
+               $scope.$watch('currentPage + itemsPerPage', function() {
+                var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
+                  end = begin + $scope.itemsPerPage;
+
+                $scope.filteredCategories = $scope.categories.slice(begin, end);
+
+                $scope.pageCount = function () {
+                  return Math.ceil($scope.filteredCategories.length / $scope.itemsPerPage);
+                };
+                console.log($scope.filteredCategories);
+                console.log($scope.currentPage);
+                console.log($scope.totalItems);
+                console.log($scope.itemsPerPage);
+              });
+
+                // console.log($scope.currentPage);
+                // console.log($scope.totalItems);
+                // console.log($scope.categories);
             }
             else{
               $scope.categories = false;
@@ -141,11 +158,12 @@ $(document).ready(function () {
           }, function(response){
 
         })
+      }
         $scope.pageChanged = function(){
-            console.log($scope.bigTotalItems);
-            console.log($scope.limitRec);
-            console.log($scope.bigCurrentPage);
+            $scope.getCategories();
         }
+
+
 
         $scope.changeOrder = function(columnName){
             if($scope.orderByColumn == columnName){
@@ -164,7 +182,7 @@ $(document).ready(function () {
           return !$scope.orderByDir;
         }
 
-
+        $scope.getCategories();
 
     }])
     app.controller('SettingsController', ['$scope', function ($scope) {
