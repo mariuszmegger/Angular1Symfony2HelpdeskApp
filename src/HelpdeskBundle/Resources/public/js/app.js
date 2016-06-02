@@ -7,7 +7,7 @@ $(document).ready(function () {
 });
 
 (function () {
-    var app = angular.module('helpdeskModule', ['ngRoute','ui.bootstrap', 'helpdeskService', 'helpdeskDirective', 'helpdeskFilter']);
+    var app = angular.module('helpdeskModule', ['ngRoute','datatables','datatables.columnfilter','datatables.bootstrap', 'ui.bootstrap', 'helpdeskService', 'helpdeskDirective', 'helpdeskFilter']);
 
     app.config(['$routeProvider', function ($routeProvider) {
       // $httpProvider.defaults.cache = true;
@@ -74,17 +74,24 @@ $(document).ready(function () {
         $scope.test = 'Operators';
 
     }]);
-    app.controller('CategoriesController', ['$scope', '$http', '$log', '$timeout', '$location', 'ajaxLoader', function ($scope, $http, $log, $timeout, $location, ajaxLoader) {
+    app.controller('CategoriesController', ['$scope', '$http', '$log', '$timeout', '$location', 'ajaxLoader','DTOptionsBuilder', 'DTColumnBuilder', function ($scope, $http, $log, $timeout, $location, ajaxLoader, DTOptionsBuilder, DTColumnBuilder) {
         $scope.message = '';
         $scope.test = 'Categories';
         $scope.categories = false;
-        $scope.orderByColumn = 'id';
-        $scope.orderByDir = true;
         $scope.filterBy = {
         };
-        $scope.itemsPerPage = 10;
-        $scope.totalItems = 0;
-        $scope.currentPage = 1;
+
+        var vm = this;
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers')
+            .withBootstrap()
+        console.log($scope.dtOptions);
+
+        // $scope.orderByColumn = 'id';
+        // $scope.orderByDir = true;
+
+        // $scope.itemsPerPage = 10;
+        // $scope.totalItems = 0;
+        // $scope.currentPage = 1;
 
 //        $scope.bigCurrentPage = $scope.bigTotalItems / $scope.limitRec;
 
@@ -129,23 +136,26 @@ $(document).ready(function () {
           var serviceResponse2 = ajaxLoader.makeRequest('GET','/app_dev.php/ajaxGetCategories', data = null);
           serviceResponse2.then(function (response) {
             if(response != false){
+              if(!$scope.filteredCategories){
                 $scope.categories = response.data;
-                $scope.totalItems = response.data.length;
+              }
 
-               $scope.$watch('currentPage + itemsPerPage', function() {
-                var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
-                  end = begin + $scope.itemsPerPage;
-
-                $scope.filteredCategories = $scope.categories.slice(begin, end);
-
-                $scope.pageCount = function () {
-                  return Math.ceil($scope.filteredCategories.length / $scope.itemsPerPage);
-                };
-                console.log($scope.filteredCategories);
-                console.log($scope.currentPage);
-                console.log($scope.totalItems);
-                console.log($scope.itemsPerPage);
-              });
+              //   $scope.totalItems = response.data.length;
+               //
+              //  $scope.$watch('currentPage + itemsPerPage', function() {
+              //   var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
+              //     end = begin + $scope.itemsPerPage;
+               //
+              //   $scope.filteredCategories = $scope.categories.slice(begin, end);
+               //
+              //   $scope.pageCount = function () {
+              //     return Math.ceil($scope.filteredCategories.length / $scope.itemsPerPage);
+              //   };
+              //   console.log($scope.filteredCategories);
+              //   console.log($scope.currentPage);
+              //   console.log($scope.totalItems);
+              //   console.log($scope.itemsPerPage);
+              // });
 
                 // console.log($scope.currentPage);
                 // console.log($scope.totalItems);
@@ -159,28 +169,44 @@ $(document).ready(function () {
 
         })
       }
-        $scope.pageChanged = function(){
-            $scope.getCategories();
+        $scope.filterChanged = function(){
+          console.log($scope.filterBy)
         }
+// mechanical filter
+        // $scope.filterByName = function(){
+        //   $scope.getCategories()
+        //   if($scope.filterBy !=={}){
+        //
+        //     $scope.filteredCategories = [];
+        //     angular.forEach($scope.categories, function(value,key){
+        //         if(value.name.indexOf($scope.filterBy.name) !== -1){
+        //           $scope.filteredCategories.push(value)
+        //         }
+        //     })
+        //       $scope.categories = $scope.filteredCategories;
+        //
+        //   }
+        // }
 
 
 
-        $scope.changeOrder = function(columnName){
-            if($scope.orderByColumn == columnName){
-                $scope.orderByDir = !$scope.orderByDir;
-              }else{
-                $scope.orderByColumn = columnName
-                $scope.orderByDir = false;
-              }
-        }
 
-        $scope.isOrderedBy = function(columnName){
-           return ($scope.orderByColumn == columnName);
-        }
+        // $scope.changeOrder = function(columnName){
+        //     if($scope.orderByColumn == columnName){
+        //         $scope.orderByDir = !$scope.orderByDir;
+        //       }else{
+        //         $scope.orderByColumn = columnName
+        //         $scope.orderByDir = false;
+        //       }
+        // }
 
-        $scope.isOrderedReverse = function(){
-          return !$scope.orderByDir;
-        }
+        // $scope.isOrderedBy = function(columnName){
+        //    return ($scope.orderByColumn == columnName);
+        // }
+        //
+        // $scope.isOrderedReverse = function(){
+        //   return !$scope.orderByDir;
+        // }
 
         $scope.getCategories();
 

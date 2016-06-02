@@ -2,18 +2,18 @@
     <div class="row" ng-controller="CategoriesController">
         <div class="alert "  ng-style="myStyle" ng-class="{true:'alert-success', false:'alert-danger'}[data == 1]">{{ message }}</div>
 
-        <div class="col-sm-2"><label for="categoryName">Category name:</label></div>
-        <div class="col-sm-3">
-          <label > <input placeholder="search" class="form-control" type="text" id="categoryName" ng-model="filterBy.name">
+       <!-- <div class="col-sm-2"><label for="categoryName">Category name:</label></div>
+         <div class="col-sm-3">
+          <label > <input placeholder="search" class="form-control" type="text" id="categoryName" ng-model="filterBy.name" ng-change="filterByName()">
        </div>
         <div class="col-sm-1"><label for="isActive">Is Active:</label></div>
         <div class="col-sm-3">
-          <select ng-model="filterBy.isActive" id="isActive" class="form-control" name="isActive">
+          <select ng-model="filterBy.isActive" id="isActive" class="form-control" name="isActive" ng-change="filterChanged()">
             <option value="">All</option>
             <option value="1">Yes</option>
             <option value="0">No</option>
           </select>
-      </div>
+      </div> -->
         <div class="col-sm-12">
             <h1>{{ test}}  <a href="#/admin-add_category"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></h1>
         </div>
@@ -21,18 +21,17 @@
 
 
 
-        <div class="col-sm-2">
+        <!-- <div class="col-sm-2">
           <select ng-model="itemsPerPage" id="length" class="form-control dataLength" name="length" ng-change="pageChanged();">
             <option selected="selected" value="1">1</option>
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
-        </div>
+        </div> -->
         <div class="col-sm-8"></div>
-        <div class="col-sm-2"><input type="text" ng-model="searchText" ng-change="getCategories()">  </div>
         <div class="col-sm-12">
-            <table ng-if="categories " ng-cloak class="table table-bordered categoryTable">
+            <table ng-if="categories " ng-cloak class="table table-bordered categoryTable" datatable="" dt-options="dtOptions" >
                 <thead>
                     <tr>
                         <td>
@@ -84,7 +83,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="category in filteredCategories |  filter: filterBy | filter: searchText | orderBy: orderByColumn : orderByDir">
+                  <tr ng-repeat="category in categories | filter:filterBy" >
                       <td>{{category.id}}</td>
                       <td>{{category.name}}</td>
                       <td>{{category.createdBy}}</td>
@@ -94,10 +93,11 @@
                   </tr>
                 </tbody>
             </table>
-            <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="itemsPerPage" ng-change="pageChanged()" class="pagination-sm" boundary-link-numbers="true" rotate="false"></uib-pagination>
+            {{filterBy | json}}
+            <!-- <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="itemsPerPage" ng-change="pageChanged()" class="pagination-sm" boundary-link-numbers="true" rotate="false"></uib-pagination>
             total Items: {{totalItems}}<br />
             Items per page: {{itemsPerPage}}<br />
-            Current Page: {{currentPage}}
+            Current Page: {{currentPage}} -->
         </div>
     </div>
     <div   ng-if="!categories" class="categoryTableInfo panel alert-info"> Category list is empty</div>
