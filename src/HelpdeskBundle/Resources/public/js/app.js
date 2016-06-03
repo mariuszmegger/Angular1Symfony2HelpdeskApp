@@ -7,7 +7,7 @@ $(document).ready(function () {
 });
 
 (function () {
-    var app = angular.module('helpdeskModule', ['ngRoute','datatables','datatables.columnfilter','datatables.bootstrap', 'ui.bootstrap', 'helpdeskService', 'helpdeskDirective', 'helpdeskFilter']);
+    var app = angular.module('helpdeskModule', ['ngRoute','datatables','datatables.light-columnfilter','datatables.bootstrap', 'ui.bootstrap', 'helpdeskService', 'helpdeskDirective', 'helpdeskFilter']);
 
     app.config(['$routeProvider', function ($routeProvider) {
       // $httpProvider.defaults.cache = true;
@@ -81,11 +81,47 @@ $(document).ready(function () {
         $scope.filterBy = {
         };
 
-        var vm = this;
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers')
+        $scope.propagteTable = function(){
+          var data = {
+              'name': 'testName',
+              'isActive': 'testActive'
+          }
+          var vm = this;
+          $scope.dtOptions = DTOptionsBuilder.newOptions()
+          .withOption('ajax', {
+          // Either you specify the AjaxDataProp here
+            dataSrc: data,
+            url: '/app_dev.php/ajaxGetCategories',
+            type: 'GET'
+          })
+            .withOption('processing', true)
+            .withOption('serverSide', true)
+            .withPaginationType('full_numbers')
             .withBootstrap()
-        console.log($scope.dtOptions);
 
+          $scope.dtColumns = [
+             DTColumnBuilder.newColumn('id').withTitle('ID').withOption('width', '5%'),
+             DTColumnBuilder.newColumn('name').withTitle('name'),
+             DTColumnBuilder.newColumn('createdBy').withTitle('createdBy'),
+             DTColumnBuilder.newColumn('createdDate').withTitle('createdDate'),
+             DTColumnBuilder.newColumn('isActive').withTitle('isActive').renderWith(function(data, type, full) {
+               if(data == 1){
+                 return 'YES';
+               }
+               else{
+                 return 'NO'
+               }
+             }),
+             DTColumnBuilder.newColumn('operations').withTitle('Operations').notSortable()
+               .renderWith(function(data, type, full) {
+                  return '<a href="#/admin-edit_category"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>';
+             })
+        ]
+    }
+
+                //  DTColumnBuilder.newColumn('operations').withTitle('operations')
+console.log($scope.dtOptions);
+$scope.propagteTable()
         // $scope.orderByColumn = 'id';
         // $scope.orderByDir = true;
 
@@ -136,9 +172,7 @@ $(document).ready(function () {
           var serviceResponse2 = ajaxLoader.makeRequest('GET','/app_dev.php/ajaxGetCategories', data = null);
           serviceResponse2.then(function (response) {
             if(response != false){
-              if(!$scope.filteredCategories){
                 $scope.categories = response.data;
-              }
 
               //   $scope.totalItems = response.data.length;
                //
@@ -208,7 +242,7 @@ $(document).ready(function () {
         //   return !$scope.orderByDir;
         // }
 
-        $scope.getCategories();
+        // $scope.getCategories();
 
     }])
     app.controller('SettingsController', ['$scope', function ($scope) {
