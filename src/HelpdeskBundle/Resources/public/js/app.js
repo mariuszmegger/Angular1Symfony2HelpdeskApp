@@ -40,7 +40,7 @@ $(document).ready(function () {
                 templateUrl: 'bundles/templates/Categories/add_category.html',
                 controller: 'CategoriesController'
             })
-            .when('/admin-edit_category', {
+            .when('/admin-edit_category:id', {
                 templateUrl: 'bundles/templates/Categories/edit_category.html',
                 controller: 'CategoriesController'
             })
@@ -54,6 +54,10 @@ $(document).ready(function () {
             // $locationProvider.html5Mode(true);
     }]);
 
+    app.controller('MainController', ['$scope', function ($scope) {
+        $scope.testMain = 'test main';
+    }]);
+    
     app.controller('DashboardController', ['$scope', function ($scope) {
         $scope.test = 'Dashboard';
     }]);
@@ -74,26 +78,43 @@ $(document).ready(function () {
         $scope.test = 'Operators';
 
     }]);
-    app.controller('CategoriesController', ['$scope', '$http', '$log', '$timeout', '$location', 'ajaxLoader','DTOptionsBuilder', 'DTColumnBuilder', function ($scope, $http, $log, $timeout, $location, ajaxLoader, DTOptionsBuilder, DTColumnBuilder) {
+    app.controller('CategoriesController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder) {
+
+        authentication.auth()
+
         $scope.message = '';
         $scope.test = 'Categories';
         $scope.categories = false;
-        $scope.filterBy = {
-        };
+        $scope.filterBy = {}
+        $scope.companyName = '';
+        $scope.companyIsActive = '';
+        console.log($scope.companyName);
 
-        $scope.propagteTable = function(){
-          var data = {
-              'name': 'testName',
-              'isActive': 'testActive'
+
+
+          $scope.saveCompanyName = function(name){
+            $scope.companyName = name;
+            $scope.propagateTable($scope.companyName, $scope.companyIsActive);
           }
-          var vm = this;
+          $scope.saveCompanyisActive = function(isActive){
+            $scope.companyIsActive = isActive;
+            $scope.propagateTable($scope.companyName, $scope.companyIsActive);
+          }
+
+          $scope.propagateTable = function(name, active){
+
+          var startData = {
+              'name': name ,
+              'isActive': active
+          }
+
           $scope.dtOptions = DTOptionsBuilder.newOptions()
           .withOption('ajax', {
-          // Either you specify the AjaxDataProp here
-            dataSrc: data,
             url: '/app_dev.php/ajaxGetCategories',
-            type: 'GET'
+            type: 'GET',
+            data: startData
           })
+            .withDataProp('data')
             .withOption('processing', true)
             .withOption('serverSide', true)
             .withPaginationType('full_numbers')
@@ -102,9 +123,9 @@ $(document).ready(function () {
           $scope.dtColumns = [
              DTColumnBuilder.newColumn('id').withTitle('ID').withOption('width', '5%'),
              DTColumnBuilder.newColumn('name').withTitle('name'),
-             DTColumnBuilder.newColumn('createdBy').withTitle('createdBy'),
-             DTColumnBuilder.newColumn('createdDate').withTitle('createdDate'),
-             DTColumnBuilder.newColumn('isActive').withTitle('isActive').renderWith(function(data, type, full) {
+             DTColumnBuilder.newColumn('created_by').withTitle('createdBy'),
+             DTColumnBuilder.newColumn('created_date').withTitle('createdDate'),
+             DTColumnBuilder.newColumn('is_active').withTitle('isActive').renderWith(function(data, type, full) {
                if(data == 1){
                  return 'YES';
                }
@@ -114,14 +135,14 @@ $(document).ready(function () {
              }),
              DTColumnBuilder.newColumn('operations').withTitle('Operations').notSortable()
                .renderWith(function(data, type, full) {
-                  return '<a href="#/admin-edit_category"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>';
+                  return '<a href="#/admin-edit_category:'+full.id+'"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>';
              })
         ]
-    }
 
+    }
+$scope.propagateTable($scope.companyName, $scope.companyIsActive);
                 //  DTColumnBuilder.newColumn('operations').withTitle('operations')
-console.log($scope.dtOptions);
-$scope.propagteTable()
+// $scope.propagateTable(name,isActive)
         // $scope.orderByColumn = 'id';
         // $scope.orderByDir = true;
 
@@ -167,6 +188,31 @@ $scope.propagteTable()
                 }
             }, 3000)
         }
+        console.log($routeParams);
+
+        $scope.getOneCategory = function(id){
+          var id = id.replace(':',' ');
+          var data = {
+            'id': id
+          }
+          var serviceResponse3 = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxGetOneCategory', data);
+          serviceResponse3.then(function (response) {
+            if(response.data != false){
+                $scope.singleCategory = response.data[0];
+
+            }
+            else{
+                $location.path('/admin-categories');
+            }
+        })
+      }
+      if($routeParams.id){
+        $scope.getOneCategory($routeParams.id)
+      }
+
+      $scope.checkIsActive = function(is_active){
+        if(is_active === 1){ return true } else{ return false};
+      }
 
         $scope.getCategories = function(){
           var serviceResponse2 = ajaxLoader.makeRequest('GET','/app_dev.php/ajaxGetCategories', data = null);

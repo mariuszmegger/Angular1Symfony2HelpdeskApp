@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\BrowserKit\Response;
 use HelpdeskBundle\Entity\Categories;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class MainController extends Controller
 {
@@ -16,12 +17,12 @@ class MainController extends Controller
      */
     public function indexAction()
     {
-        // return $this->render('HelpdeskBundle::frontend.html.twig');
         return $this->render('HelpdeskBundle::backend.html.twig');
     }
 
     /**
      * @Route("/admin", name="admin")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function backendAction()
     {
@@ -37,7 +38,7 @@ class MainController extends Controller
       try{
         $content = json_decode($request->getContent(),true);
         $name = $content['name'];
-        $isActive  = (isset($content['isActive']) === true)? 1:0;
+        $isActive  = (isset($content['isActive']) === true)? 1:2;
         $dt =  date('Y-m-d H:i:s');
         $category = new Categories();
         $category->setName($name);
@@ -68,16 +69,20 @@ class MainController extends Controller
      */
     public function ajaxGetCategories(Request $request)
     {
+      $postData = $request->query->all();
       try{
-        $response = $this->getDoctrine()
-               ->getRepository('HelpdeskBundle:Categories')
-               ->createQueryBuilder('e')
-               ->select('e')
-               ->getQuery()
-               ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+        // $response = $this->getDoctrine()
+        //        ->getRepository('HelpdeskBundle:Categories')
+        //        ->createQueryBuilder('e')
+        //        ->select('e')
+        //        ->getQuery()
+        //        ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+
+
+        $response = $this->getDoctrine()->getRepository('HelpdeskBundle:Categories')->getCategories($postData);
+
          if(empty($response)){
            $response = false;
-          //  die;
          }
       }catch(Exception $e){
         $response = $e->getMessage();
@@ -87,9 +92,28 @@ class MainController extends Controller
     $responseContainer->setData($response);
 
     return $responseContainer;
-    // $responseContainer = json_encode($response);
-    // echo $response;
-    // die;
   }
+
+
+  /**
+   * @Route("/ajaxGetOneCategory", name="ajaxGetOneCategory")
+   */
+   public function ajaxGetOneCategory(Request $request){
+     $content = json_decode($request->getContent(),true);
+     $id = $content['id'];
+     try{
+       $response = $this->getDoctrine()->getRepository('HelpdeskBundle:Categories')->getOneCategory($id);
+     }catch(Exception $e){
+       $response = $e->getMessage();
+     }
+
+    //  var_dump($response) ;
+    //  die;
+     $responseContainer = new JsonResponse();
+     $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
+     $responseContainer->setData($response);
+
+     return $responseContainer;
+   }
 
 }

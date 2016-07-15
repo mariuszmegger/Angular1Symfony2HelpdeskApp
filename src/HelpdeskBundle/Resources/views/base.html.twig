@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html ng-app="helpdeskModule">
+<html >
     <head>
         <meta title="Angular Amigos Helpdesk">
         <meta charset="UTF-8">
@@ -12,8 +12,15 @@
             <link href="{{ asset('bundles/helpdesk/css/angular-datatables.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('bundles/helpdesk/css/main.css') }}" type="text/css" rel="stylesheet" />
         {% endblock %}
+
+    <script>
+        var userData = {
+          'user': {{ app.user.roles|json_encode|raw }},
+          'userName': '{{ app.user.username }}'
+        };
+    </script>
     </head>
-    <body >
+    <body ng-app="helpdeskModule">
             {% block header %}
             {% endblock %}
             {% block sidebar %}

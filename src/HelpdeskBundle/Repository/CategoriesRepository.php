@@ -12,4 +12,75 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategoriesRepository extends EntityRepository
 {
+  public function getCategories($data){
+
+      $complexResult = array();
+      $limit = $data['length'];
+      $offset = $data['start'];
+      $search = ''.$data['search']['value'].'';
+      $orderByColumn = $data['order'][0]['column'];
+      $orderByDirection = $data['order'][0]['dir'];
+      $nameSearch = (isset($data['name']))? $data['name']: false;
+      $isActiveSearch = (isset($data['isActive']))? $data['isActive']: false;
+
+      $where = ($nameSearch || $isActiveSearch || $search)? 'WHERE ': '';
+
+      if($nameSearch && !($isActiveSearch)){
+        $searchByColumnSql  = 'name LIKE "%'.$nameSearch.'%" ';
+      }
+      else if(!($nameSearch) && $isActiveSearch){
+        $searchByColumnSql  = 'is_active="'.$isActiveSearch.'" ';
+      }
+      else if($nameSearch && $isActiveSearch){
+        $searchByColumnSql  = 'name LIKE "%'.$nameSearch.'%" and is_active="'.$isActiveSearch.'"';
+      }
+      else {
+        $searchByColumnSql = '';
+      }
+
+      if($search){
+        $searchSql = ' name LIKE "%'.$search .'%" or created_by LIKE "%'.$search .'%" or created_date LIKE "%'.$search .'%" or id LIKE "%'.$search .'%"';
+      }else{
+        $searchSql = '';
+      }
+
+      $and = ($search && $searchByColumnSql)? 'and ': '';
+      if($orderByColumn){
+        $columnsList = array('id','name','created_by', 'created_date', 'is_active');
+        $orderByColumn = $columnsList[$orderByColumn];
+        $orderBySql = 'ORDER BY '. $orderByColumn.' '. $orderByDirection;
+      }
+      else{
+        $orderBySql = '';
+      }
+
+      $sql = 'SELECT * FROM categories '.$where .' '.$searchByColumnSql.' '.$and.' '. $searchSql.' '.$orderBySql .'  LIMIT '.$limit.' OFFSET '.$offset;
+      $sqlLength = 'SELECT COUNT(*) AS recordsTotal, COUNT(*) AS recordsFiltered FROM categories '.$where .' '.$searchByColumnSql.''.$and.' '. $searchSql.' '.$orderBySql. '';
+      // .'  LIMIT '.$limit.' OFFSET '.$offset;
+      $stmt = $this->getEntityManager()->getConnection();
+      $result = $stmt->executeQuery($sql);
+      $result = $result->fetchAll();
+      $resultLength = $stmt->executeQuery($sqlLength);
+
+      foreach($resultLength as $resultLengthData){
+        $complexResult['recordsTotal'] = $resultLengthData['recordsTotal'];
+        $complexResult['recordsFiltered'] = $resultLengthData['recordsFiltered'];
+      }
+      // dump($sqlLength);
+      // die;
+      $complexResult['data'] = $result;
+
+      return $complexResult;
+
+      die;
+    }
+  public function getOneCategory($id){
+
+    $sql = 'SELECT * FROM categories WHERE id='.$id ;
+    $stmt = $this->getEntityManager()->getConnection();
+    $result = $stmt->executeQuery($sql);
+    $result = $result->fetchAll();
+    $result = ($result)?$result: false;
+    return $result;
+  }
 }

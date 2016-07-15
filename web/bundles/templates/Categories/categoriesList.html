@@ -4,14 +4,14 @@
 
        <div class="col-sm-2"><label for="categoryName">Category name:</label></div>
          <div class="col-sm-3">
-          <label > <input placeholder="search" class="form-control" type="text" id="categoryName" ng-model="filterBy.name" ng-change="filterByName()">
+          <label > <input placeholder="search" class="form-control" type="text" id="categoryName" ng-model="categoryName" ng-change="saveCompanyName(categoryName)" >
        </div>
         <div class="col-sm-1"><label for="isActive">Is Active:</label></div>
         <div class="col-sm-3">
-          <select ng-model="filterBy.isActive" id="isActive" class="form-control" name="isActive" ng-change="filterChanged()">
+          <select ng-model="categoryIsActive" id="isActive" class="form-control" name="isActive" ng-change="saveCompanyisActive(categoryIsActive)">
             <option value="">All</option>
             <option value="1">Yes</option>
-            <option value="0">No</option>
+            <option value="2">No</option>
           </select>
       </div>
         <div class="col-sm-12">
