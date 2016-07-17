@@ -80,7 +80,7 @@ $(document).ready(function () {
     }]);
     app.controller('CategoriesController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder) {
 
-        authentication.auth()
+//        authentication.auth()
 
         $scope.message = '';
         $scope.test = 'Categories';
