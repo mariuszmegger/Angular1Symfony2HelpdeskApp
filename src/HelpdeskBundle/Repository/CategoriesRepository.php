@@ -15,11 +15,18 @@ class CategoriesRepository extends EntityRepository
   public function getCategories($data){
 
       $complexResult = array();
+      $draw = $data['draw'];
+      $columnsList = array('id','name','created_by', 'created_date', 'is_active');
       $limit = $data['length'];
       $offset = $data['start'];
       $search = ''.$data['search']['value'].'';
       $orderByColumn = $data['order'][0]['column'];
-      $orderByDirection = $data['order'][0]['dir'];
+      if($data['order'][0]['dir']){
+        $orderByDirection = $data['order'][0]['dir'];
+      }
+      if($draw == 1){
+        $orderByDirection = 'DESC';
+      }
       $nameSearch = (isset($data['name']))? $data['name']: false;
       $isActiveSearch = (isset($data['isActive']))? $data['isActive']: false;
 
@@ -51,7 +58,9 @@ class CategoriesRepository extends EntityRepository
         $orderBySql = 'ORDER BY '. $orderByColumn.' '. $orderByDirection;
       }
       else{
-        $orderBySql = '';
+        $orderByColumn = $columnsList[0];
+        $orderBySql = 'ORDER BY '. $orderByColumn.' '. $orderByDirection;
+
       }
 
       $sql = 'SELECT * FROM categories '.$where .' '.$searchByColumnSql.' '.$and.' '. $searchSql.' '.$orderBySql .'  LIMIT '.$limit.' OFFSET '.$offset;

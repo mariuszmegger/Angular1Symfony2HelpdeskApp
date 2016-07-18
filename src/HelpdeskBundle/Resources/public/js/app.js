@@ -57,7 +57,7 @@ $(document).ready(function () {
     app.controller('MainController', ['$scope', function ($scope) {
         $scope.testMain = 'test main';
     }]);
-    
+
     app.controller('DashboardController', ['$scope', function ($scope) {
         $scope.test = 'Dashboard';
     }]);
@@ -83,14 +83,11 @@ $(document).ready(function () {
 //        authentication.auth()
 
         $scope.message = '';
-        $scope.test = 'Categories';
         $scope.categories = false;
         $scope.filterBy = {}
         $scope.companyName = '';
         $scope.companyIsActive = '';
         console.log($scope.companyName);
-
-
 
           $scope.saveCompanyName = function(name){
             $scope.companyName = name;
@@ -107,7 +104,6 @@ $(document).ready(function () {
               'name': name ,
               'isActive': active
           }
-
           $scope.dtOptions = DTOptionsBuilder.newOptions()
           .withOption('ajax', {
             url: '/app_dev.php/ajaxGetCategories',
@@ -138,6 +134,7 @@ $(document).ready(function () {
                   return '<a href="#/admin-edit_category:'+full.id+'"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>';
              })
         ]
+        $scope.dtInstance = {};
 
     }
 $scope.propagateTable($scope.companyName, $scope.companyIsActive);
@@ -157,29 +154,34 @@ $scope.propagateTable($scope.companyName, $scope.companyIsActive);
 
         $scope.saveCategory = function () {
             var data = {
-                'name': $scope.categoryName,
-                'isActive': $scope.categoryIsActive
+                'name': $scope.addCategoryName,
+                'isActive': $scope.addCategoryIsActive
             }
+
             var serviceResponse = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxCategories', data);
             serviceResponse.then(function (response) {
-                    $scope.data = response.data.code
-                    $scope.message = (response.data.code == 1) ? 'Category Added' : response.data.message;
-                    $scope.myStyle = {
-                        visibility: 'visible',
-                        opacity: '1'
-                    }
-//                    if(response.data.code == 1){
-//                         $location.path('/categories');
-//                    }
-                },function(response){
-                    $scope.message = 'Connection error category not added'
-                    $scope.myStyle={
-                        visibility:'visible',
-                        opacity:'1'
-                    }
 
-                    $log.error(response)
-                })
+              $scope.data = response.data.code;
+              $scope.message = (response.data.code == 1) ? 'Category Added' : response.data.message;
+              (response.data.code == 1)? $scope.dtInstance.rerender():''
+              $scope.myStyle = {
+                  visibility: 'visible',
+                  opacity: '1'
+              }
+              $scope.addCategoryName = '';
+              $scope.addCategoryIsActive = '';
+                  //  if(response.data.code == 1){
+                  //       $location.path('/admin-categories');
+                  //  }
+            },function(response){
+                $scope.message = 'Connection error category not added'
+                $scope.myStyle={
+                    visibility:'visible',
+                    opacity:'1'
+                }
+
+                $log.error(response)
+            })
 
             $timeout(function(){
                 $scope.myStyle={
@@ -188,7 +190,6 @@ $scope.propagateTable($scope.companyName, $scope.companyIsActive);
                 }
             }, 3000)
         }
-        console.log($routeParams);
 
         $scope.getOneCategory = function(id){
           var id = id.replace(':',' ');

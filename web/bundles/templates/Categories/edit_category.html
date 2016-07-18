@@ -1,9 +1,7 @@
-<div class="container+fluid">
-    <div class="row" ng-controller="CategoriesController">
-        <div class="col-sm-5 leftBox">
-            <div class="contentBoxHeader col-sm-10">
-                <h1>Edit Category </h1>
-            </div>
+<div class="container">
+    <div class="row " ng-controller="CategoriesController">
+        <div class="col-sm-6 leftBox mainSinglePanel">
+            <div class="col-md-12 mainSinglePanelHeader"><h4>Edit Category</h4></div>
             <form class="form-horizontal" >
                 <div class="form-group">
                     <div class="col-sm-2">
@@ -29,20 +27,31 @@
                 </div>
             </form>
         </div>
-        <div class="col-sm-1 "></div>
-        <div class="col-sm-6 rightBox">
+        <!-- <div class="col-sm-1 "></div> -->
+        <div class="col-sm-6 rightBox mainSinglePanel">
+              <div class="col-md-12 mainSinglePanelHeader"><h4>Category Details</h4></div>
             <div class="col-sm-12">
-                <div class="contentBoxHeader col-sm-10">
-                    <h1>CategoryDetails </h1>
-                </div>
-            </div>
-            <div class="col-sm-12">
-                <ul>
-                    <li>Category Name: {{singleCategory.name}}</li>
-                    <li>Is Active: {{singleCategory.is_active == "1"? "YES":"NO"}}</li>
-                    <li>Created By: {{ singleCategory.created_by }}</li>
-                    <li>Created Date: {{singleCategory.created_date}}</li>
-                </ul>
+              <table class="table table-bordered table-hovered">
+                <thead></thead>
+                  <tbody>
+                    <tr>
+                        <th>Category Name</th>
+                        <th>{{singleCategory.name}}</th>
+                    </tr>
+                    <tr>
+                        <th>Is Active</th>
+                        <th>{{singleCategory.is_active == "1"? "YES":"NO"}}</th>
+                    </tr>
+                    <tr>
+                        <th>Created By</th>
+                        <th>{{ singleCategory.created_by }}</th>
+                    </tr>
+                    <tr>
+                        <th>Created Date</th>
+                        <th>{{singleCategory.created_date}}</th>
+                    </tr>
+                  </tbody>
+              </table>
             </div>
         </div>
     </div>
