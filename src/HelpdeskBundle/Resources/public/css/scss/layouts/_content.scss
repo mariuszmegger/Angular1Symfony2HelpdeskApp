@@ -77,6 +77,15 @@
         }
     }
 }
+.mainSinglePanelHeader{
+  h4{
+      margin-top: 3px;
+      font-family: "Raleway", Helvetica, sans-serif !important;
+      font-weight: 200;
+      color: #23527C;
+      font-size: 24px;
+    }
+}
 .main{
     padding-top:10px;
     .categoriesHeaderContainer{
@@ -133,9 +142,13 @@
                 color: white;
                 background-color: #303946;
                 th{
+                    cursor:pointer;
                     background-color:#303946;
                     color:white;
                     text-align:center;
+                    &:last-child{
+                      cursor:auto;
+                    }
                 }
             }
         }
@@ -164,6 +177,11 @@
     form{
         label{
             width:100%;
+        }
+        .formMessageWrapper{
+          // text-align:center;
+          margin-top:10px;
+          margin-left:10px;
         }
     }
     .rightBox {

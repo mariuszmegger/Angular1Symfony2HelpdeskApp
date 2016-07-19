@@ -36,9 +36,9 @@ class Categories
     private $isActive;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="created_by", type="integer")
+     * @ORM\Column(name="created_by", type="string", length=255)
      */
     private $createdBy;
 
@@ -109,7 +109,7 @@ class Categories
     /**
      * Set createdBy
      *
-     * @param integer $createdBy
+     * @param string $createdBy
      * @return Categories
      */
     public function setCreatedBy($createdBy)

@@ -104,13 +104,16 @@
                 <div class="col-md-12 mainSinglePanelHeader"><h4>Add Category</h4></div>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" >
+                <form name="addCategoryForm" class="form-horizontal" novalidate>
                     <div class="form-group">
                         <div class="col-sm-2">
                             <label for="categoryName" class=" control-label">Name: </label>
                         </div>
                         <div class="col-sm-10">
-                            <input ng-model="addCategoryName" id="categoryName" class="form-control" type="text">
+                            <input ng-model="addCategoryName" name="categoryName" id="categoryName" class="form-control" type="text" required="required">
+                            <div class="formMessageWrapper" ng-show="addCategoryForm.categoryName.$touched">
+                              <span class="text-danger" ng-show="addCategoryForm.categoryName.$error.required">Category name is required</span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -128,7 +131,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button ng-click="saveCategory()" type="button" class="btn btn-primary" data-dismiss="modal">Add Category</button>
+                <button ng-click="saveCategory()" type="button" class="btn btn-primary" ng-disabled="!addCategoryForm.$valid" data-dismiss="modal">Add Category</button>
               </div>
             </div>
           </div>

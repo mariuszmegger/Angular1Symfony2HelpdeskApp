@@ -89,6 +89,7 @@ $(document).ready(function () {
         $scope.companyIsActive = '';
         console.log($scope.companyName);
 
+
           $scope.saveCompanyName = function(name){
             $scope.companyName = name;
             $scope.propagateTable($scope.companyName, $scope.companyIsActive);
@@ -104,6 +105,7 @@ $(document).ready(function () {
               'name': name ,
               'isActive': active
           }
+  console.log(startData);
           $scope.dtOptions = DTOptionsBuilder.newOptions()
           .withOption('ajax', {
             url: '/app_dev.php/ajaxGetCategories',
@@ -123,10 +125,10 @@ $(document).ready(function () {
              DTColumnBuilder.newColumn('created_date').withTitle('createdDate'),
              DTColumnBuilder.newColumn('is_active').withTitle('isActive').renderWith(function(data, type, full) {
                if(data == 1){
-                 return 'YES';
+                 return '<span class="text-success">YES</span>';
                }
                else{
-                 return 'NO'
+                 return '<span class="text-danger">NO</span>'
                }
              }),
              DTColumnBuilder.newColumn('operations').withTitle('Operations').notSortable()
@@ -155,9 +157,9 @@ $scope.propagateTable($scope.companyName, $scope.companyIsActive);
         $scope.saveCategory = function () {
             var data = {
                 'name': $scope.addCategoryName,
-                'isActive': $scope.addCategoryIsActive
+                'isActive': $scope.addCategoryIsActive,
+                'createdBy':userData.userName
             }
-
             var serviceResponse = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxCategories', data);
             serviceResponse.then(function (response) {
 
@@ -190,7 +192,45 @@ $scope.propagateTable($scope.companyName, $scope.companyIsActive);
                 }
             }, 3000)
         }
+        $scope.editCategory = function(){
+          var data = {
+              'name': $scope.singleCategory.name,
+              'isActive': $scope.singleCategory.isActive,
+              'id':$routeParams.id
+          }
+          var serviceResponse = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxUpdateCategory', data);
+          serviceResponse.then(function (response) {
 
+            $scope.data = response.data.code;
+            $scope.message = (response.data.code == 1) ? 'Category Edited' : response.data.message;
+            // (response.data.code == 1)? $scope.dtInstance.rerender():''
+            $scope.myStyle = {
+                visibility: 'visible',
+                opacity: '1'
+            }
+            $scope.addCategoryName = '';
+            $scope.addCategoryIsActive = '';
+                 if(response.data.code == 1){
+                      $location.path('/admin-categories');
+                      $scope.dtInstance.rerender()
+                 }
+          },function(response){
+              $scope.message = 'Connection error category not edited'
+              $scope.myStyle={
+                  visibility:'visible',
+                  opacity:'1'
+              }
+
+              $log.error(response)
+          })
+
+          $timeout(function(){
+              $scope.myStyle={
+                  visibility:'hidden',
+                  opacity:'0'
+              }
+          }, 3000)
+        }
         $scope.getOneCategory = function(id){
           var id = id.replace(':',' ');
           var data = {
