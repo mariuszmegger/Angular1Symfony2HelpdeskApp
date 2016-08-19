@@ -28,11 +28,18 @@
 .right-sidebar{
     display:none !important;
 }
-.alert{
-  visibility:hidden ;
-  opacity:0;
-  transition: all linear 1s;
+.alertWrapper{
+  margin: 0 auto;
+  margin-top:20px;
+  margin-bottom: -20px;
 }
+// .alert.alertIn {
+//   opacity: 1;
+//   transition: opacity 1.5s ease-out;
+// }
+// .alert.alertOut {
+//   opacity: 0;
+// }
 .mainSinglePanel{
     background-color: white;
     border-left: 1px solid #efefef;

@@ -7,8 +7,8 @@ $(document).ready(function () {
 });
 
 (function () {
-    var app = angular.module('helpdeskModule', ['ngRoute','datatables','datatables.light-columnfilter','datatables.bootstrap', 'ui.bootstrap', 'helpdeskService', 'helpdeskDirective', 'helpdeskFilter']);
-
+    var app = angular.module('helpdeskModule', ['ngRoute','datatables','datatables.light-columnfilter','datatables.bootstrap',
+     'ui.bootstrap', 'helpdeskService', 'helpdeskDirective', 'helpdeskFilter', 'ngFlash', 'ngAnimate']);
     app.config(['$routeProvider', function ($routeProvider) {
       // $httpProvider.defaults.cache = true;
         $routeProvider.
@@ -36,10 +36,6 @@ $(document).ready(function () {
                 templateUrl: 'bundles/templates/Categories/categoriesList.html',
                 controller: 'CategoriesController'
             })
-            .when('/admin-add_category', {
-                templateUrl: 'bundles/templates/Categories/add_category.html',
-                controller: 'CategoriesController'
-            })
             .when('/admin-edit_category:id', {
                 templateUrl: 'bundles/templates/Categories/edit_category.html',
                 controller: 'CategoriesController'
@@ -54,8 +50,16 @@ $(document).ready(function () {
             // $locationProvider.html5Mode(true);
     }]);
 
-    app.controller('MainController', ['$scope', function ($scope) {
-        $scope.testMain = 'test main';
+    app.controller('MainController', ['$scope', 'Flash','$timeout', function ($scope, Flash, $timeout) {
+
+      $scope.successAlert = function (message, type) {
+          var id = Flash.create(type, message, 0, {class: 'custom-class', id: 'custom-id'}, true);
+          $timeout(function(){
+            $('.alert').fadeOut(500, function(){
+              Flash.dismiss(id);
+            });
+        },5000);
+      }
     }]);
 
     app.controller('DashboardController', ['$scope', function ($scope) {
@@ -78,26 +82,30 @@ $(document).ready(function () {
         $scope.test = 'Operators';
 
     }]);
-    app.controller('CategoriesController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder) {
+    app.controller('CategoriesController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash) {
 
 //        authentication.auth()
 
-        $scope.message = '';
         $scope.categories = false;
         $scope.filterBy = {}
         $scope.companyName = '';
         $scope.companyIsActive = '';
-        console.log($scope.companyName);
 
+        // Company name filter
 
           $scope.saveCompanyName = function(name){
             $scope.companyName = name;
             $scope.propagateTable($scope.companyName, $scope.companyIsActive);
           }
+
+          // Is Active filter
+
           $scope.saveCompanyisActive = function(isActive){
             $scope.companyIsActive = isActive;
             $scope.propagateTable($scope.companyName, $scope.companyIsActive);
           }
+
+          // Ajax data dipslaying in datatable
 
           $scope.propagateTable = function(name, active){
 
@@ -105,7 +113,6 @@ $(document).ready(function () {
               'name': name ,
               'isActive': active
           }
-  console.log(startData);
           $scope.dtOptions = DTOptionsBuilder.newOptions()
           .withOption('ajax', {
             url: '/app_dev.php/ajaxGetCategories',
@@ -139,9 +146,9 @@ $(document).ready(function () {
         $scope.dtInstance = {};
 
     }
-$scope.propagateTable($scope.companyName, $scope.companyIsActive);
-                //  DTColumnBuilder.newColumn('operations').withTitle('operations')
-// $scope.propagateTable(name,isActive)
+      $scope.propagateTable($scope.companyName, $scope.companyIsActive);
+        //  DTColumnBuilder.newColumn('operations').withTitle('operations')
+        // $scope.propagateTable(name,isActive)
         // $scope.orderByColumn = 'id';
         // $scope.orderByDir = true;
 
@@ -151,10 +158,13 @@ $scope.propagateTable($scope.companyName, $scope.companyIsActive);
 
 //        $scope.bigCurrentPage = $scope.bigTotalItems / $scope.limitRec;
 
-        // console.log($scope.totalItems);
-        // console.log($scope.currentPage);
+
+
+        // New category adding
+
 
         $scope.saveCategory = function () {
+
             var data = {
                 'name': $scope.addCategoryName,
                 'isActive': $scope.addCategoryIsActive,
@@ -164,25 +174,26 @@ $scope.propagateTable($scope.companyName, $scope.companyIsActive);
             serviceResponse.then(function (response) {
 
               $scope.data = response.data.code;
-              $scope.message = (response.data.code == 1) ? 'Category Added' : response.data.message;
               (response.data.code == 1)? $scope.dtInstance.rerender():''
-              $scope.myStyle = {
-                  visibility: 'visible',
-                  opacity: '1'
-              }
               $scope.addCategoryName = '';
               $scope.addCategoryIsActive = '';
-                  //  if(response.data.code == 1){
-                  //       $location.path('/admin-categories');
-                  //  }
-            },function(response){
-                $scope.message = 'Connection error category not added'
-                $scope.myStyle={
-                    visibility:'visible',
-                    opacity:'1'
-                }
 
-                $log.error(response)
+                   if(response.data.code == 1){
+                     $location.path('/admin-categories');
+                     var message = 'Category Added';
+                     $scope.$parent.successAlert(message, 'success');
+                   }
+                   else{
+                     $location.path('/admin-categories');
+                     var message = 'Category name already exists';
+                     $scope.$parent.successAlert(message, 'danger');
+                   }
+            },function(response){
+              $location.path('/admin-categories');
+              var message = 'Connection error category not changed';
+              $scope.$parent.successAlert(message, 'danger');
+
+              $log.error(response)
             })
 
             $timeout(function(){
@@ -192,7 +203,12 @@ $scope.propagateTable($scope.companyName, $scope.companyIsActive);
                 }
             }, 3000)
         }
+
+        //Category Editing
+
         $scope.editCategory = function(){
+
+
           var data = {
               'name': $scope.singleCategory.name,
               'isActive': $scope.singleCategory.isActive,
@@ -212,14 +228,22 @@ $scope.propagateTable($scope.companyName, $scope.companyIsActive);
             $scope.addCategoryIsActive = '';
                  if(response.data.code == 1){
                       $location.path('/admin-categories');
-                      $scope.dtInstance.rerender()
+                      var message = 'Category Edited';
+                      $scope.$parent.successAlert(message, 'success');
+                 }
+                 else{
+                   console.log('aaa');
+                   $location.path('/admin-edit_category:'+397+'');
+                   var message = 'Category name already exists';
+                   $scope.$parent.successAlert(message, 'danger');
                  }
           },function(response){
-              $scope.message = 'Connection error category not edited'
-              $scope.myStyle={
-                  visibility:'visible',
-                  opacity:'1'
-              }
+              var message = 'Connection error category not changed';
+              $scope.$parent.successAlert(message, 'danger');
+              // $scope.myStyle={
+              //     visibility:'visible',
+              //     opacity:'1'
+              // }
 
               $log.error(response)
           })
@@ -231,6 +255,7 @@ $scope.propagateTable($scope.companyName, $scope.companyIsActive);
               }
           }, 3000)
         }
+
         $scope.getOneCategory = function(id){
           var id = id.replace(':',' ');
           var data = {

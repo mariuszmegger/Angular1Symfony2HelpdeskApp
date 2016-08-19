@@ -82,10 +82,10 @@
 .right-sidebar {
   display: none !important; }
 
-.alert {
-  visibility: hidden;
-  opacity: 0;
-  transition: all linear 1s; }
+.alertWrapper {
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: -20px; }
 
 .mainSinglePanel {
   background-color: white;

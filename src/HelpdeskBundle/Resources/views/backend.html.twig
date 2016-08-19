@@ -211,11 +211,17 @@
     <!-- .page-content -->
     <div class="page-content clearfix sidebar-page">
         <!-- .page-content-wrapper -->
-        <div class="page-content-wrapper" ng-controller="MainController">
-            {{ testMain}}
+        <div class="page-content-wrapper" >
             <div class="page-content-inner">
                 <!-- .page-content-inner -->
                 <!-- TEST -->
+                <div class="container alertWrapper">
+                  <div class="row">
+                    <flash-message></flash-message>
+                  </div>
+                </div>
+                  <!-- verbatim  -->
+                  <!-- endverbatim  -->
                 <div class="main" ng-view>
 
                 </div>
