@@ -1,8 +1,5 @@
 
-(function () {
-    var app = angular.module('helpdeskService', []);
-
-    app.factory('ajaxLoader', ['$http', function ($http) {
+  angular.module('helpdeskModule').factory('ajaxLoader', ['$http', function ($http) {
 
         var _makeRequest = function(method,url,data){
             return $http({method:method,url:url, data:data})
@@ -12,7 +9,7 @@
         }
     }])
 
-    app.factory('authentication', ['$location', function ($location) {
+  angular.module('helpdeskModule').factory('authentication', ['$location', function ($location) {
 
         var _auth = function(){
           var authenticated = false;
@@ -30,5 +27,3 @@
             auth : _auth
         }
     }])
-
-})();

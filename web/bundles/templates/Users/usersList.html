@@ -1,4 +1,202 @@
+<div class="container">
+    <div class="row">
+        <div class="row mainSinglePanel">
+            <div class="col-md-12 mainSinglePanelHeader"><h4>Users</h4></div>
+            <div class="row mainSinglePanelBody">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="userName">Users in Unit</label>
+                        <input placeholder="search" class="form-control" type="text" id="userName" ng-model="userName" ng-change="saveCompanyName(userName)" >
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="isActive">Is Active</label>
+                        <select ng-model="userIsActive" id="isActive" class="form-control" name="isActive" ng-change="saveCompanyisActive(userIsActive)">
+                            <option value="">All</option>
+                            <option value="1">Yes</option>
+                            <option value="2">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+        <div class="col-sm-12 mainSinglePanel tableWrapper">
+            <div class="col-md-12 mainSinglePanelHeader"><h4>Users<a data-toggle="modal" href="" data-target="#exampleModal" ><i class="fa fa-plus-circle" aria-hidden="true"></i></a></h4>
 
-<div ng-controller="UsersController">
-    {{ test }}
+            </div>
+            <table  class="table table-bordered userTable " datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance"></table>
+            <!-- <table  ng-cloak class="table table-bordered userTable" datatable="" dt-options="dtOptions" dt-columns="dtColumns"></table> -->
+            <!-- <thead>
+               <tr>
+                   <td>
+                     <span ng-click="changeOrder('id')" class="sort-btn">
+                       Id
+                       <i ng-show="isOrderedBy('id')"
+                       class="glyphicon "
+                       ng-class="{'glyphicon-chevron-up':!isOrderedReverse(),'glyphicon-chevron-down':isOrderedReverse() }">
+                       </i>
+                     </span>
+                   </td>
+                   <td>
+                     <span ng-click="changeOrder('name')" class="sort-btn">
+                       Name
+                       <i ng-show="isOrderedBy('name')"
+                       class="glyphicon"
+                       ng-class="{'glyphicon-chevron-up':!isOrderedReverse(),'glyphicon-chevron-down':isOrderedReverse() }">
+                       </i>
+                     </span>
+                   </td>
+                   <td>
+                     <span ng-click="changeOrder('createdBy')" class="sort-btn">
+                       Created By
+                       <i ng-show="isOrderedBy('createdBy')"
+                       class="glyphicon"
+                       ng-class="{'glyphicon-chevron-up':!isOrderedReverse(),'glyphicon-chevron-down':isOrderedReverse() }">
+                       </i>
+                     </span>
+                   </td>
+                   <td>
+                     <span ng-click="changeOrder('createdDate')" class="sort-btn">
+                       Created Date
+                       <i ng-show="isOrderedBy('createdDate')"
+                       class="glyphicon"
+                       ng-class="{'glyphicon-chevron-up':!isOrderedReverse(),'glyphicon-chevron-down':isOrderedReverse() }">
+                       </i>
+                     </span>
+                   </td>
+                   <td>
+                     <span ng-click="changeOrder('isActive')" class="sort-btn">
+                       Is Active
+                       <i ng-show="isOrderedBy('isActive')"
+                       class="glyphicon"
+                       ng-class="{'glyphicon-chevron-up':!isOrderedReverse(),'glyphicon-chevron-down':isOrderedReverse() }">
+                       </i>
+                     </span>
+                   </td>
+                   <td>Operations</td>
+               </tr>
+           </thead> -->
+            <!-- <tbody>
+              <tr ng-repeat="user in categories | filter:filterBy" dt-options="dtOptions" >
+                  <td>{{user.id}}</td>
+                  <td>{{user.name}}</td>
+                  <td>{{user.createdBy}}</td>
+                  <td>{{user.createdDate | date : 'longdate'}}</td>
+                  <td>{{user.isActive === 1? "Yes":"No"}}</td>
+                  <td><a href="#/admin-edit_user"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></td>
+              </tr>
+            </tbody> -->
+
+            <!-- {{filterBy | json}} -->
+            <!-- <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="itemsPerPage" ng-change="pageChanged()" class="pagination-sm" boundary-link-numbers="true" rotate="false"></uib-pagination>
+            total Items: {{totalItems}}<br />
+            Items per page: {{itemsPerPage}}<br />
+            Current Page: {{currentPage}} -->
+        </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="col-md-12 mainSinglePanelHeader"><h4>Add User</h4></div>
+              </div>
+              <div class="modal-body">
+                <form name="addUserForm" class="form-horizontal" novalidate>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label for="userName" class=" control-label">Login: </label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input ng-model="addUserName" name="userName" id="userName" class="form-control" type="text" required="required">
+                            <div class="formMessageWrapper" ng-show="adduserForm.userName.$touched">
+                              <span class="text-danger" ng-show="adduserForm.userName.$error.required">user name is required</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="userName" class=" control-label">First Name: </label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input ng-model="adduserName" name="userName" id="userName" class="form-control" type="text" required="required">
+                            <div class="formMessageWrapper" ng-show="adduserForm.userName.$touched">
+                              <span class="text-danger" ng-show="adduserForm.userName.$error.required">user name is required</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="userName" class=" control-label">Last Name: </label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input ng-model="adduserName" name="userName" id="userName" class="form-control" type="text" required="required">
+                            <div class="formMessageWrapper" ng-show="adduserForm.userName.$touched">
+                              <span class="text-danger" ng-show="adduserForm.userName.$error.required">user name is required</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="userName" class=" control-label">City: </label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input ng-model="adduserName" name="userName" id="userName" class="form-control" type="text" required="required">
+                            <div class="formMessageWrapper" ng-show="adduserForm.userName.$touched">
+                              <span class="text-danger" ng-show="adduserForm.userName.$error.required">user name is required</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="userName" class=" control-label">Street: </label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input ng-model="adduserName" name="userName" id="userName" class="form-control" type="text" required="required">
+                            <div class="formMessageWrapper" ng-show="adduserForm.userName.$touched">
+                              <span class="text-danger" ng-show="adduserForm.userName.$error.required">user name is required</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="userName" class=" control-label">Post code: </label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input ng-model="adduserName" name="userName" id="userName" class="form-control" type="text" required="required">
+                            <div class="formMessageWrapper" ng-show="adduserForm.userName.$touched">
+                              <span class="text-danger" ng-show="adduserForm.userName.$error.required">user name is required</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="userName" class=" control-label">Unit: </label>
+                        </div>
+                        <div class="col-sm-8">
+                            <select ng-model="adduserName" name="userName" id="userName" class="form-control" type="text" required="required">
+                              <option class="unitOption form-controll">Unit 1</option>
+                              <option class="unitOption form-controll">Unit 2</option>
+                              <option class="unitOption form-controll">Unit 3</option>
+                            </select>
+                            <div class="formMessageWrapper" ng-show="adduserForm.userName.$touched">
+                              <span class="text-danger" ng-show="adduserForm.userName.$error.required">user name is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <div class="checkbox">
+                                <label>
+                                    <input ng-model="userIsActive" type="checkbox"> Is Active
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button ng-click="saveuser()" type="button" class="btn btn-primary" ng-disabled="!adduserForm.$valid" data-dismiss="modal">Add user</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+</div>
+<!-- <div   ng-if="!categories" class="userTableInfo panel alert-info"> user list is empty</div> -->
+
+
 </div>
