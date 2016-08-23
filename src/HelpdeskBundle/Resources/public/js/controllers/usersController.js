@@ -79,14 +79,19 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
     // New category adding
 
 
-    $scope.saveCategory = function () {
+    $scope.saveUser = function () {
 
         var data = {
-            'name': $scope.addCategoryName,
-            'isActive': $scope.addCategoryIsActive,
-            'createdBy':userData.userName
+            'login': $scope.addUserLogin,
+            'firstName': $scope.addUserFirstName,
+            'surName': $scope.addUserSureName,
+            'city':$scope.addUserCity,
+            'street':$scope.addUserStreet,
+            'postCode':$scope.addUserPostCode,
+            'unit':$scope.addUserUnit,
+            'isActive':$scope.addUserIsActive
         }
-        var serviceResponse = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxCategories', data);
+        var serviceResponse = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxAddUser', data);
         serviceResponse.then(function (response) {
 
           $scope.data = response.data.code;
@@ -95,18 +100,18 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
           $scope.addCategoryIsActive = '';
 
                if(response.data.code == 1){
-                 $location.path('/admin-categories');
-                 var message = 'Category Added';
+                 $location.path('/admin-users');
+                 var message = 'User Added';
                  $scope.$parent.successAlert(message, 'success');
                }
                else{
-                 $location.path('/admin-categories');
-                 var message = 'Category name already exists';
+                 $location.path('/admin-users');
+                 var message = 'User login already exists';
                  $scope.$parent.successAlert(message, 'danger');
                }
         },function(response){
-          $location.path('/admin-categories');
-          var message = 'Connection error category not changed';
+          $location.path('/admin-users');
+          var message = 'Connection error user not changed';
           $scope.$parent.successAlert(message, 'danger');
 
           $log.error(response)

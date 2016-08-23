@@ -106,70 +106,62 @@
                 <form name="addUserForm" class="form-horizontal" novalidate>
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <label for="userName" class=" control-label">Login: </label>
+                            <label for="userLogin" class=" control-label">Login: </label>
                         </div>
                         <div class="col-sm-8">
-                            <input ng-model="addUserName" name="userName" id="userName" class="form-control" type="text" required="required">
-                            <div class="formMessageWrapper" ng-show="adduserForm.userName.$touched">
-                              <span class="text-danger" ng-show="adduserForm.userName.$error.required">user name is required</span>
+                            <input ng-model="addUserLogin" name="userLogin" id="userLogin" class="form-control" type="text" required="required">
+                            <div class="formMessageWrapper" ng-show="addUserForm.userLogin.$touched">
+                              <span class="text-danger" ng-show="addUserForm.userLogin.$error.required">User login is required</span>
                             </div>
                         </div>
                         <div class="col-sm-3">
-                            <label for="userName" class=" control-label">First Name: </label>
+                              <label for="addUserFirstName" class=" control-label">First Name: </label>
                         </div>
                         <div class="col-sm-8">
-                            <input ng-model="adduserName" name="userName" id="userName" class="form-control" type="text" required="required">
-                            <div class="formMessageWrapper" ng-show="adduserForm.userName.$touched">
-                              <span class="text-danger" ng-show="adduserForm.userName.$error.required">user name is required</span>
+                            <input ng-model="addUserFirstName" name="addUserFirstName" id="addUserFirstName" class="form-control" type="text" required="required">
+                            <div class="formMessageWrapper" ng-show="addUserForm.addUserFirstName.$touched">
+                              <span class="text-danger" ng-show="addUserForm.addUserFirstName.$error.required">First name is required</span>
                             </div>
                         </div>
                         <div class="col-sm-3">
-                            <label for="userName" class=" control-label">Last Name: </label>
+                            <label for="addUserSureName" class=" control-label">Last Name: </label>
                         </div>
                         <div class="col-sm-8">
-                            <input ng-model="adduserName" name="userName" id="userName" class="form-control" type="text" required="required">
-                            <div class="formMessageWrapper" ng-show="adduserForm.userName.$touched">
-                              <span class="text-danger" ng-show="adduserForm.userName.$error.required">user name is required</span>
+                            <input ng-model="addUserSureName" name="addUserSureName" id="addUserSureName" class="form-control" type="text" required="required">
+                            <div class="formMessageWrapper" ng-show="addUserForm.addUserSureName.$touched">
+                              <span class="text-danger" ng-show="addUserForm.addUserSureName.$error.required">Surname is required</span>
                             </div>
                         </div>
                         <div class="col-sm-3">
-                            <label for="userName" class=" control-label">City: </label>
+                            <label for="addUserCity" class=" control-label">City: </label>
                         </div>
                         <div class="col-sm-8">
-                            <input ng-model="adduserName" name="userName" id="userName" class="form-control" type="text" required="required">
-                            <div class="formMessageWrapper" ng-show="adduserForm.userName.$touched">
-                              <span class="text-danger" ng-show="adduserForm.userName.$error.required">user name is required</span>
-                            </div>
+                            <input ng-model="addUserCity" name="addUserCity" id="addUserCity" class="form-control" type="text" >
                         </div>
                         <div class="col-sm-3">
-                            <label for="userName" class=" control-label">Street: </label>
+                            <label for="addUserStreet" class=" control-label">Street: </label>
                         </div>
                         <div class="col-sm-8">
-                            <input ng-model="adduserName" name="userName" id="userName" class="form-control" type="text" required="required">
-                            <div class="formMessageWrapper" ng-show="adduserForm.userName.$touched">
-                              <span class="text-danger" ng-show="adduserForm.userName.$error.required">user name is required</span>
-                            </div>
+                            <input ng-model="addUserStreet" name="addUserStreet" id="addUserStreet" class="form-control" type="text" >
                         </div>
                         <div class="col-sm-3">
-                            <label for="userName" class=" control-label">Post code: </label>
+                            <label for="addUserPostCode" class=" control-label">Post code: </label>
                         </div>
                         <div class="col-sm-8">
-                            <input ng-model="adduserName" name="userName" id="userName" class="form-control" type="text" required="required">
-                            <div class="formMessageWrapper" ng-show="adduserForm.userName.$touched">
-                              <span class="text-danger" ng-show="adduserForm.userName.$error.required">user name is required</span>
-                            </div>
+                            <input ng-model="addUserPostCode" name="addUserPostCode" id="addUserPostCode" class="form-control" type="text" >
                         </div>
                         <div class="col-sm-3">
-                            <label for="userName" class=" control-label">Unit: </label>
+                            <label for="addUserUnit" class=" control-label">Unit: </label>
                         </div>
                         <div class="col-sm-8">
-                            <select ng-model="adduserName" name="userName" id="userName" class="form-control" type="text" required="required">
-                              <option class="unitOption form-controll">Unit 1</option>
-                              <option class="unitOption form-controll">Unit 2</option>
-                              <option class="unitOption form-controll">Unit 3</option>
-                            </select>
-                            <div class="formMessageWrapper" ng-show="adduserForm.userName.$touched">
-                              <span class="text-danger" ng-show="adduserForm.userName.$error.required">user name is required</span>
+                            <select ng-model="addUserUnit" name="addUserUnit" id="addUserUnit" class="form-control" type="text" required="required">
+                              <option class="unitOption form-controll" value="">Choose Unit</option>
+                              <option class="unitOption form-controll" value="1">Unit 1</option>
+                              <option class="unitOption form-controll" value="2">Unit 2</option>
+                              <option class="unitOption form-controll" value="3">Unit 3</option>
+                          </select>
+                            <div class="formMessageWrapper" ng-show="addUserForm.addUserUnit.$touched">
+                              <span class="text-danger" ng-show="addUserForm.addUserUnit.$error.required">Unit is required</span>
                             </div>
                         </div>
                     </div>
@@ -177,7 +169,7 @@
                         <div class="col-sm-offset-3 col-sm-9">
                             <div class="checkbox">
                                 <label>
-                                    <input ng-model="userIsActive" type="checkbox"> Is Active
+                                    <input ng-model="addUserIsActive" type="checkbox"> Is Active
                                 </label>
                             </div>
                         </div>
@@ -188,7 +180,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button ng-click="saveuser()" type="button" class="btn btn-primary" ng-disabled="!adduserForm.$valid" data-dismiss="modal">Add user</button>
+                <button ng-click="saveUser()" type="button" class="btn btn-primary" ng-disabled="!addUserForm.$valid" data-dismiss="modal">Add user</button>
               </div>
             </div>
           </div>
