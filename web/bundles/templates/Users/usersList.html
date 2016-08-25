@@ -115,6 +115,15 @@
                             </div>
                         </div>
                         <div class="col-sm-3">
+                            <label for="addUserEmail" class=" control-label">E-mail: </label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input ng-model="addUserEmail" name="addUserEmail" id="addUserEmail" class="form-control" type="text" required="required">
+                            <div class="formMessageWrapper" ng-show="addUserForm.addUserEmail.$touched">
+                              <span class="text-danger" ng-show="addUserForm.addUserEmail.$error.required">User email is required</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
                               <label for="addUserFirstName" class=" control-label">First Name: </label>
                         </div>
                         <div class="col-sm-8">
@@ -169,7 +178,7 @@
                         <div class="col-sm-offset-3 col-sm-9">
                             <div class="checkbox">
                                 <label>
-                                    <input ng-model="addUserIsActive" type="checkbox"> Is Active
+                                    <input ng-model="addUserIsActive" type="checkbox"> Is Locked
                                 </label>
                             </div>
                         </div>

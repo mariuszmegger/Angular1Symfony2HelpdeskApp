@@ -31,22 +31,23 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
       }
       $scope.dtOptions = DTOptionsBuilder.newOptions()
       .withOption('ajax', {
-        url: '/app_dev.php/ajaxGetCategories',
+        url: '/app_dev.php/ajaxGetUsers',
         type: 'GET',
         data: startData
       })
         .withDataProp('data')
         .withOption('processing', true)
-        .withOption('serverSide', true)
+        // .withOption('serverSide', true)
         .withPaginationType('full_numbers')
         .withBootstrap()
 
       $scope.dtColumns = [
          DTColumnBuilder.newColumn('id').withTitle('ID').withOption('width', '5%'),
-         DTColumnBuilder.newColumn('name').withTitle('name'),
-         DTColumnBuilder.newColumn('created_by').withTitle('createdBy'),
-         DTColumnBuilder.newColumn('created_date').withTitle('createdDate'),
-         DTColumnBuilder.newColumn('is_active').withTitle('isActive').renderWith(function(data, type, full) {
+         DTColumnBuilder.newColumn('username').withTitle('login'),
+         DTColumnBuilder.newColumn('email').withTitle('email'),
+         DTColumnBuilder.newColumn('firstname').withTitle('first name'),
+         DTColumnBuilder.newColumn('surname').withTitle('surname'),
+         DTColumnBuilder.newColumn('is_locked').withTitle('is Locked').renderWith(function(data, type, full) {
            if(data == 1){
              return '<span class="text-success">YES</span>';
            }
@@ -83,6 +84,7 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
 
         var data = {
             'login': $scope.addUserLogin,
+            'email': $scope.addUserEmail,
             'firstName': $scope.addUserFirstName,
             'surName': $scope.addUserSureName,
             'city':$scope.addUserCity,
@@ -155,11 +157,11 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
              else{
                console.log('aaa');
                $location.path('/admin-edit_category:'+397+'');
-               var message = 'Category name already exists';
+               var message = 'User login already exists';
                $scope.$parent.successAlert(message, 'danger');
              }
       },function(response){
-          var message = 'Connection error category not changed';
+          var message = 'Connection error user not changed';
           $scope.$parent.successAlert(message, 'danger');
           // $scope.myStyle={
           //     visibility:'visible',
