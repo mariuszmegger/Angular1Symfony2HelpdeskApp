@@ -11,14 +11,14 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
 
       $scope.saveCompanyName = function(name){
         $scope.companyName = name;
-        $scope.propagateTable($scope.companyName, $scope.companyIsActive);
+        $scope.propagateTable($scope.userInUnit, $scope.userIsActive);
       }
 
       // Is Active filter
 
       $scope.saveCompanyisActive = function(isActive){
         $scope.companyIsActive = isActive;
-        $scope.propagateTable($scope.companyName, $scope.companyIsActive);
+        $scope.propagateTable($scope.userInUnit, $scope.userIsActive);
       }
 
       // Ajax data dipslaying in datatable
@@ -26,7 +26,7 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
       $scope.propagateTable = function(name, active){
 
       var startData = {
-          'name': name ,
+          'userInUnit': name ,
           'isActive': active
       }
       $scope.dtOptions = DTOptionsBuilder.newOptions()
@@ -36,8 +36,6 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
         data: startData
       })
         .withDataProp('data')
-        .withOption('processing', true)
-        // .withOption('serverSide', true)
         .withPaginationType('full_numbers')
         .withBootstrap()
 
@@ -47,7 +45,8 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
          DTColumnBuilder.newColumn('email').withTitle('email'),
          DTColumnBuilder.newColumn('firstname').withTitle('first name'),
          DTColumnBuilder.newColumn('surname').withTitle('surname'),
-         DTColumnBuilder.newColumn('is_locked').withTitle('is Locked').renderWith(function(data, type, full) {
+         DTColumnBuilder.newColumn('unit_id').withTitle('unit'),
+         DTColumnBuilder.newColumn('locked').withTitle('is locked').renderWith(function(data, type, full) {
            if(data == 1){
              return '<span class="text-success">YES</span>';
            }
@@ -57,27 +56,15 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
          }),
          DTColumnBuilder.newColumn('operations').withTitle('Operations').notSortable()
            .renderWith(function(data, type, full) {
-              return '<a href="#/admin-edit_user:'+full.id+'"><i class="fa fa-pencil-square" aria-hidden="true"></i></a><a href="/app_dev.php/ajaxGetCategories/'+full.id+'"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+              return '<a href="#/admin-edit_user:'+full.id+'"><i class="fa fa-pencil-square" aria-hidden="true"></i></a><a href="/app_dev.php/ajaxDeleteUser/'+full.id+'"><i class="fa fa-trash" aria-hidden="true"></i></a>';
          })
     ]
     $scope.dtInstance = {};
 
 }
-  $scope.propagateTable($scope.companyName, $scope.companyIsActive);
-    //  DTColumnBuilder.newColumn('operations').withTitle('operations')
-    // $scope.propagateTable(name,isActive)
-    // $scope.orderByColumn = 'id';
-    // $scope.orderByDir = true;
+  $scope.propagateTable($scope.userInUnit, $scope.userIsActive);
 
-    // $scope.itemsPerPage = 10;
-    // $scope.totalItems = 0;
-    // $scope.currentPage = 1;
-
-//        $scope.bigCurrentPage = $scope.bigTotalItems / $scope.limitRec;
-
-
-
-    // New category adding
+    // New user adding
 
 
     $scope.saveUser = function () {
@@ -93,6 +80,7 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
             'unit':$scope.addUserUnit,
             'isActive':$scope.addUserIsActive
         }
+        console.log($scope.addUserIsActive);
         var serviceResponse = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxAddUser', data);
         serviceResponse.then(function (response) {
 

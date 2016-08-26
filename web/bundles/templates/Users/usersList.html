@@ -1,21 +1,26 @@
 <div class="container">
     <div class="row">
         <div class="row mainSinglePanel">
-            <div class="col-md-12 mainSinglePanelHeader"><h4>Users</h4></div>
+            <div class="col-md-12 mainSinglePanelHeader"><h4>Filters</h4></div>
             <div class="row mainSinglePanelBody">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="userName">Users in Unit</label>
-                        <input placeholder="search" class="form-control" type="text" id="userName" ng-model="userName" ng-change="saveCompanyName(userName)" >
-                    </div>
-                </div>
+              <div class="col-md-4">
+                  <div class="form-group">
+                      <label for="userInUnit">Unit</label>
+                      <select ng-model="userInUnit" id="userInUnit" class="form-control" name="userInUnit" ng-change="saveCompanyisActive(userIsActive)">
+                        <option class="unitOption form-controll" value="">All</option>
+                        <option class="unitOption form-controll" value="1">Unit 1</option>
+                        <option class="unitOption form-controll" value="2">Unit 2</option>
+                        <option class="unitOption form-controll" value="3">Unit 3</option>
+                      </select>
+                  </div>
+              </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="isActive">Is Active</label>
                         <select ng-model="userIsActive" id="isActive" class="form-control" name="isActive" ng-change="saveCompanyisActive(userIsActive)">
                             <option value="">All</option>
                             <option value="1">Yes</option>
-                            <option value="2">No</option>
+                            <option value="0">No</option>
                         </select>
                     </div>
                 </div>
@@ -109,18 +114,21 @@
                             <label for="userLogin" class=" control-label">Login: </label>
                         </div>
                         <div class="col-sm-8">
-                            <input ng-model="addUserLogin" name="userLogin" id="userLogin" class="form-control" type="text" required="required">
+                            <input ng-model="addUserLogin" name="userLogin" id="userLogin" class="form-control" type="text" required="required" ng-maxlength="15" ng-minlength="5">
                             <div class="formMessageWrapper" ng-show="addUserForm.userLogin.$touched">
                               <span class="text-danger" ng-show="addUserForm.userLogin.$error.required">User login is required</span>
+                              <span class="text-danger" ng-show="addUserForm.userLogin.$error.minlength">Login requires to have min 5 letters</span>
+                              <span class="text-danger" ng-show="addUserForm.userLogin.$error.maxlength">Login requires to have max 15 letters</span>
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <label for="addUserEmail" class=" control-label">E-mail: </label>
                         </div>
                         <div class="col-sm-8">
-                            <input ng-model="addUserEmail" name="addUserEmail" id="addUserEmail" class="form-control" type="text" required="required">
+                            <input ng-model="addUserEmail" name="addUserEmail" id="addUserEmail" class="form-control" type="email" required="required">
                             <div class="formMessageWrapper" ng-show="addUserForm.addUserEmail.$touched">
                               <span class="text-danger" ng-show="addUserForm.addUserEmail.$error.required">User email is required</span>
+                              <span class="text-danger" ng-show="addUserForm.addUserEmail.$error.email">Enter valid email adress</span>
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -168,7 +176,7 @@
                               <option class="unitOption form-controll" value="1">Unit 1</option>
                               <option class="unitOption form-controll" value="2">Unit 2</option>
                               <option class="unitOption form-controll" value="3">Unit 3</option>
-                          </select>
+                            </select>
                             <div class="formMessageWrapper" ng-show="addUserForm.addUserUnit.$touched">
                               <span class="text-danger" ng-show="addUserForm.addUserUnit.$error.required">Unit is required</span>
                             </div>
