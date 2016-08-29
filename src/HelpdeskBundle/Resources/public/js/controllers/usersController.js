@@ -1,4 +1,4 @@
-angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash) {
+angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', '$compile', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash, $compile) {
 
 //        authentication.auth()
 
@@ -38,7 +38,10 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
         .withDataProp('data')
         .withPaginationType('full_numbers')
         .withBootstrap()
-
+        .withOption('createdRow', function(row) {
+          // Recompiling so we can bind Angular directive to the DT
+          $compile(angular.element(row).contents())($scope);
+        });
       $scope.dtColumns = [
          DTColumnBuilder.newColumn('id').withTitle('ID').withOption('width', '5%'),
          DTColumnBuilder.newColumn('username').withTitle('login'),
@@ -56,7 +59,7 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
          }),
          DTColumnBuilder.newColumn('operations').withTitle('Operations').notSortable()
            .renderWith(function(data, type, full) {
-              return '<a href="#/admin-edit_user:'+full.id+'"><i class="fa fa-pencil-square" aria-hidden="true"></i></a><a href="/app_dev.php/ajaxDeleteUser/'+full.id+'"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+              return '<a href="#/admin-edit_user:'+full.id+'"><i class="fa fa-pencil-square" aria-hidden="true"></i></a><a ng-click="deleteUser('+full.id+')"><i class="fa fa-trash" aria-hidden="true"></i></a>';
          })
     ]
     $scope.dtInstance = {};
@@ -65,7 +68,6 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
   $scope.propagateTable($scope.userInUnit, $scope.userIsActive);
 
     // New user adding
-
 
     $scope.saveUser = function () {
 
@@ -115,9 +117,38 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
         }, 3000)
     }
 
+    $scope.deleteUser = function(id){
+      var data = {
+          'id': id
+      }
+      var serviceResponse = ajaxLoader.makeRequest('GET','/app_dev.php/ajaxDeleteUser/'+id, data);
+      serviceResponse.then(function (response) {
+        console.log(response.data.code);
+        $scope.data = response.data.code;
+        (response.data.code == 1)? $scope.dtInstance.rerender():''
+        $scope.addCategoryName = '';
+        $scope.addCategoryIsActive = '';
+             if(response.data.code == 1){
+               $location.path('/admin-users');
+               var message = 'User Deleted';
+               $scope.$parent.successAlert(message, 'success');
+             }
+             else{
+               $location.path('/admin-users');
+               var message = 'User login not exists';
+               $scope.$parent.successAlert(message, 'danger');
+             }
+      },function(response){
+        $location.path('/admin-users');
+        var message = 'Connection error user not deleted';
+        $scope.$parent.successAlert(message, 'danger');
+
+        $log.error(response)
+      })
+    }
     //Category Editing
 
-    $scope.editCategory = function(){
+    $scope.editUser = function(){
 
 
       var data = {
@@ -167,65 +198,32 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
       }, 3000)
     }
 
-    $scope.getOneCategory = function(id){
-      var id = id.replace(':',' ');
+    $scope.getOneUser = function(id){
+      var id = id.replace(':','');
       var data = {
         'id': id
       }
-      var serviceResponse3 = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxGetOneCategory', data);
+      var serviceResponse3 = ajaxLoader.makeRequest('GET','/app_dev.php/ajaxGetOneUser/'+id, data);
       serviceResponse3.then(function (response) {
         if(response.data != false){
-            $scope.singleCategory = response.data[0];
-
+            $scope.singleUser = response.data[0];
         }
         else{
-            $location.path('/admin-categories');
+            // $location.path('/admin-categories');
+            console.log('brak uzytkownika');
         }
     })
   }
-  if($routeParams.id){
-    $scope.getOneCategory($routeParams.id)
+  if($routeParams.user_id){
+    console.log($routeParams.user_id);
+    $scope.getOneUser($routeParams.user_id)
   }
 
   $scope.checkIsActive = function(is_active){
     if(is_active === 1){ return true } else{ return false};
   }
 
-    $scope.getCategories = function(){
-      var serviceResponse2 = ajaxLoader.makeRequest('GET','/app_dev.php/ajaxGetCategories', data = null);
-      serviceResponse2.then(function (response) {
-        if(response != false){
-            $scope.categories = response.data;
 
-          //   $scope.totalItems = response.data.length;
-           //
-          //  $scope.$watch('currentPage + itemsPerPage', function() {
-          //   var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
-          //     end = begin + $scope.itemsPerPage;
-           //
-          //   $scope.filteredCategories = $scope.categories.slice(begin, end);
-           //
-          //   $scope.pageCount = function () {
-          //     return Math.ceil($scope.filteredCategories.length / $scope.itemsPerPage);
-          //   };
-          //   console.log($scope.filteredCategories);
-          //   console.log($scope.currentPage);
-          //   console.log($scope.totalItems);
-          //   console.log($scope.itemsPerPage);
-          // });
-
-            // console.log($scope.currentPage);
-            // console.log($scope.totalItems);
-            // console.log($scope.categories);
-        }
-        else{
-          $scope.categories = false;
-        }
-
-      }, function(response){
-
-    })
-  }
     $scope.filterChanged = function(){
       console.log($scope.filterBy)
     }

@@ -19,7 +19,7 @@ $(document).ready(function () {
                 templateUrl: 'bundles/templates/Users/usersList.html',
                 controller: 'UsersController'
             }).
-            when('/admin-users_edit', {
+            when('/admin-edit_user:user_id', {
                 templateUrl: 'bundles/templates/Users/edit_user.html',
                 controller: 'UsersController'
             }).

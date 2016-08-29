@@ -72,4 +72,22 @@ class UserRepository extends EntityRepository
     echo $response;
     die;
   }
+
+  public function deleteUser($id){
+    $user = $this->getEntityManager()->getRepository('HelpdeskBundle:User')->findOneById($id);
+    if($user){
+      try{
+        $em = $this->getEntityManager();
+        $em->remove($user);
+        $em->flush();
+        $response['code']  = 1;
+      }catch(Exception $e){
+      }
+    }else{
+      $response['code']  = 0;
+    }
+    $response = json_encode($response);
+    echo($response);
+    die;
+  }
 }

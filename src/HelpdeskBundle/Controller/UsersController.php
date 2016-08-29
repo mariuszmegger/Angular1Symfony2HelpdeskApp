@@ -5,10 +5,7 @@ namespace HelpdeskBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use ContactsBundle\Entity\Contact;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UsersController extends Controller
 {
@@ -34,12 +31,20 @@ class UsersController extends Controller
  /**
   * @Route("/ajaxDeleteUser/{id}", name="ajaxDeleteUser")
   */
- public function ajaxDeleteUserAction(Request $request, $id)
+ public function ajaxDeleteUserAction($id)
 {
-   $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->findOneById($id);
-   $em = $this->getDoctrine()->getManager();
-   $em->remove($user);
-   die;
+   $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->deleteUser($id);
 }
 
+  /**
+   * @Route("/ajaxGetOneUser/{id}", name="ajaxGetOneUser")
+   */
+  public function getOneUserAction(Request $request, $id)
+  {
+    $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->findBy(array('id'=>$id));
+    $response = json_encode($user);
+    echo $response;
+    die;
+
+  }
 }
