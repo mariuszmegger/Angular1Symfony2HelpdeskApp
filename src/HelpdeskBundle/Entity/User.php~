@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="fos_user")
+ * @ORM\Entity(repositoryClass="HelpdeskBundle\Repository\UserRepository")
  */
 class User extends BaseUser
 {
@@ -44,6 +45,21 @@ class User extends BaseUser
     protected $surname;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $city;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $street;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $postCode;
+    
+    /**
      * Set unit_id
      *
      * @param integer $unitId
@@ -64,5 +80,51 @@ class User extends BaseUser
     public function getUnitId()
     {
         return $this->unit_id;
+    }
+
+    /**
+     * Set firstname
+     *
+     * @param string $firstname
+     * @return User
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * Get firstname
+     *
+     * @return string
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Set surname
+     *
+     * @param string $surname
+     * @return User
+     */
+    public function setSurname($surname)
+    {
+        $this->surname = $surname;
+
+        return $this;
+    }
+
+    /**
+     * Get surname
+     *
+     * @return string
+     */
+    public function getSurname()
+    {
+        return $this->surname;
     }
 }

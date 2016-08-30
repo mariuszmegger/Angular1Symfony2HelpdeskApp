@@ -52,6 +52,9 @@ class UserRepository extends EntityRepository
       $user->setFirstname($firstName);
       $user->setSurname($surName);
       $user->setEmail($email);
+      $user->setCity($city);
+      $user->setStreet($street);
+      $user->setPostcode($postCode);
       $user->setPlainPassword('abc');
       $user->setEnabled(1);
       $user->setUnitId($unit);
@@ -59,9 +62,6 @@ class UserRepository extends EntityRepository
       $duplicated = $this->getEntityManager()->getRepository('HelpdeskBundle:User')->findByUsername($login);
       if(!$duplicated){
         $userManager->updateUser($user);
-
-        $response['code'] = ($user->getId())? 1:0;
-        $response['message'] = '';
       }else{
         $response['code'] = 0;
         $response['message'] = 'User exists';
@@ -83,6 +83,39 @@ class UserRepository extends EntityRepository
         $response['code']  = 1;
       }catch(Exception $e){
       }
+    }else{
+      $response['code']  = 0;
+    }
+    $response = json_encode($response);
+    echo($response);
+    die;
+  }
+
+  public function updateUser($request, $userManager){
+    $data = $content = json_decode($request->getContent(),true);
+    $user = $this->getEntityManager()->getRepository('HelpdeskBundle:User')->findOneById($data['id']);
+    if($user){
+      // $canUser = $this->getEntityManager()->getRepository('HelpdeskBundle:User')->findOneByUsernameCanonical($data['username']);
+      // if(!$canUser){
+        $data['islocked'] = ($data['islocked'] === true)? 1:0;
+        try{
+          $user->setUsername($data['firstname']);
+          $user->setSurname($data['surname']);
+          $user->setEmail($data['email']);
+          $user->setCity($data['city']);
+          $user->setStreet($data['street']);
+          $user->setPostcode($data['postcode']);
+          $user->setUnitId($data['unit']);
+          $user->setLocked($data['islocked']);
+          $userManager->updateUser($user);
+          $response['code'] = ($user->getId())? 1:0;
+          $response['message'] = '';
+        }
+        catch(exception $e){
+        }
+      // }else{
+      //   $response['code']  = 0;
+      // }
     }else{
       $response['code']  = 0;
     }

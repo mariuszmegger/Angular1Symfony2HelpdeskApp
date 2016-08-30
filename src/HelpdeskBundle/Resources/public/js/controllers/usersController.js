@@ -148,19 +148,24 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
     }
     //Category Editing
 
-    $scope.editUser = function(){
-
-
+    $scope.updateUser = function(){
       var data = {
-          'name': $scope.singleCategory.name,
-          'isActive': $scope.singleCategory.isActive,
-          'id':$routeParams.id
+          'id':$scope.editUser.id,
+          'username': $scope.editUser.login,
+          'firstname': $scope.editUser.firstname,
+          'surname': $scope.editUser.surname,
+          'email': $scope.editUser.email,
+          'city': $scope.editUser.city,
+          'street': $scope.editUser.street,
+          'postcode': $scope.editUser.postcode,
+          'unit': $scope.editUser.unit,
+          'islocked': $scope.editUser.islocked
       }
-      var serviceResponse = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxUpdateCategory', data);
+      var serviceResponse = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxUpdateUser', data);
       serviceResponse.then(function (response) {
 
         $scope.data = response.data.code;
-        $scope.message = (response.data.code == 1) ? 'Category Edited' : response.data.message;
+        $scope.message = (response.data.code == 1) ? 'User Edited' : response.data.message;
         // (response.data.code == 1)? $scope.dtInstance.rerender():''
         $scope.myStyle = {
             visibility: 'visible',
@@ -169,14 +174,14 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
         $scope.addCategoryName = '';
         $scope.addCategoryIsActive = '';
              if(response.data.code == 1){
-                  $location.path('/admin-categories');
-                  var message = 'Category Edited';
+                  $location.path('/admin-users');
+                  var message = 'User Edited';
                   $scope.$parent.successAlert(message, 'success');
              }
              else{
                console.log('aaa');
-               $location.path('/admin-edit_category:'+397+'');
-               var message = 'User login already exists';
+              //  $location.path('/admin-edit_category:'+397+'');
+               var message = 'User email already exists';
                $scope.$parent.successAlert(message, 'danger');
              }
       },function(response){
@@ -199,6 +204,7 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
     }
 
     $scope.getOneUser = function(id){
+      $scope.editUser = {};
       var id = id.replace(':','');
       var data = {
         'id': id
@@ -206,11 +212,30 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
       var serviceResponse3 = ajaxLoader.makeRequest('GET','/app_dev.php/ajaxGetOneUser/'+id, data);
       serviceResponse3.then(function (response) {
         if(response.data != false){
-            $scope.singleUser = response.data[0];
+          console.log(response.data.id);
+            $scope.editUser.id = response.data.id;
+            $scope.editUser.login = response.data.login;
+            $scope.editUser.email = response.data.email;
+            $scope.editUser.firstname = response.data.firstname;
+            $scope.editUser.surname = response.data.surname;
+            $scope.editUser.city = response.data.city;
+            $scope.editUser.street = response.data.street;
+            $scope.editUser.postcode = response.data.postcode;
+            $scope.editUser.unit = response.data.unit;
+            $scope.editUser.islocked = response.data.locked;
+
+            $scope.editUser.loginNoChange = response.data.login;
+            $scope.editUser.emailNoChange = response.data.email;
+            $scope.editUser.firstnameNoChange = response.data.firstname;
+            $scope.editUser.surnameNoChange = response.data.surname;
+            $scope.editUser.cityNoChange = response.data.city;
+            $scope.editUser.streetNoChange = response.data.street;
+            $scope.editUser.postcodeNoChange = response.data.postcode;
+            $scope.editUser.unitNoChange = response.data.unit;
+            $scope.editUser.islockedNoChange = response.data.locked;
         }
         else{
-            // $location.path('/admin-categories');
-            console.log('brak uzytkownika');
+            $location.path('/admin-users');
         }
     })
   }
@@ -222,47 +247,5 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
   $scope.checkIsActive = function(is_active){
     if(is_active === 1){ return true } else{ return false};
   }
-
-
-    $scope.filterChanged = function(){
-      console.log($scope.filterBy)
-    }
-// mechanical filter
-    // $scope.filterByName = function(){
-    //   $scope.getCategories()
-    //   if($scope.filterBy !=={}){
-    //
-    //     $scope.filteredCategories = [];
-    //     angular.forEach($scope.categories, function(value,key){
-    //         if(value.name.indexOf($scope.filterBy.name) !== -1){
-    //           $scope.filteredCategories.push(value)
-    //         }
-    //     })
-    //       $scope.categories = $scope.filteredCategories;
-    //
-    //   }
-    // }
-
-
-
-
-    // $scope.changeOrder = function(columnName){
-    //     if($scope.orderByColumn == columnName){
-    //         $scope.orderByDir = !$scope.orderByDir;
-    //       }else{
-    //         $scope.orderByColumn = columnName
-    //         $scope.orderByDir = false;
-    //       }
-    // }
-
-    // $scope.isOrderedBy = function(columnName){
-    //    return ($scope.orderByColumn == columnName);
-    // }
-    //
-    // $scope.isOrderedReverse = function(){
-    //   return !$scope.orderByDir;
-    // }
-
-    // $scope.getCategories();
 
 }])

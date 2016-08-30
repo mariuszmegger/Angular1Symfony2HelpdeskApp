@@ -45,6 +45,21 @@ class User extends BaseUser
     protected $surname;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $city;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $street;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $postCode;
+
+    /**
      * Set unit_id
      *
      * @param integer $unitId
@@ -111,5 +126,74 @@ class User extends BaseUser
     public function getSurname()
     {
         return $this->surname;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     * @return User
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set street
+     *
+     * @param string $street
+     * @return User
+     */
+    public function setStreet($street)
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    /**
+     * Get street
+     *
+     * @return string
+     */
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+    /**
+     * Set postCode
+     *
+     * @param string $postCode
+     * @return User
+     */
+    public function setPostCode($postCode)
+    {
+        $this->postCode = $postCode;
+
+        return $this;
+    }
+
+    /**
+     * Get postCode
+     *
+     * @return string
+     */
+    public function getPostCode()
+    {
+        return $this->postCode;
     }
 }

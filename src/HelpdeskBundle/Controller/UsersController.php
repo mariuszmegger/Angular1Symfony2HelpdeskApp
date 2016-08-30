@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UsersController extends Controller
 {
@@ -41,10 +42,42 @@ class UsersController extends Controller
    */
   public function getOneUserAction(Request $request, $id)
   {
-    $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->findBy(array('id'=>$id));
-    $response = json_encode($user);
-    echo $response;
-    die;
 
+    $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->findBy(array('id'=>$id));
+
+    // dump($user);die;
+    $data = array(
+      'id'=>$user[0]->getId(),
+      'login'=>$user[0]->getUsername(),
+      'email'=>$user[0]->getEmail(),
+      'firstname'=>$user[0]->getFirstname(),
+      'surname'=>$user[0]->getSurname(),
+      'city'=>$user[0]->getCity(),
+      'street'=>$user[0]->getStreet(),
+      'postcode'=>$user[0]->getPostcode(),
+      'unit'=>$user[0]->getUnitid(),
+      'locked'=>$user[0]->isLocked()
+    );
+    $responseContainer = new JsonResponse();
+    $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
+    $responseContainer->setData($data);
+    $responseContainer->headers->set('Content-Type', 'application/json');
+    return $responseContainer;
   }
+
+  /**
+   * @Route("/ajaxUpdateUser", name="ajaxDeleteUser")
+   */
+  public function ajaxUpdateUserAction(Request $request)
+ {
+   $userManager = $this->get('fos_user.user_manager');
+   $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->updateUser($request, $userManager);
+
+
+  //  $responseContainer = new JsonResponse();
+  //  $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
+  //  $responseContainer->setData($data);
+  //  $responseContainer->headers->set('Content-Type', 'application/json');
+  //  return $responseContainer;
+ }
 }
