@@ -72,12 +72,18 @@ class UsersController extends Controller
  {
    $userManager = $this->get('fos_user.user_manager');
    $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->updateUser($request, $userManager);
-
-
-  //  $responseContainer = new JsonResponse();
-  //  $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
-  //  $responseContainer->setData($data);
-  //  $responseContainer->headers->set('Content-Type', 'application/json');
-  //  return $responseContainer;
  }
+
+ /**
+  * @Route("/checkUserEmail/{email}", name="checkUserEmail")
+  */
+ public function checkUserEmailAction(Request $request, $email)
+ {
+   $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->findOneByEmail($email);
+   $userCheck = ($user)? false : true;
+   $userCheck = json_encode($userCheck);
+   echo $userCheck;
+   die;
+ }
+
 }

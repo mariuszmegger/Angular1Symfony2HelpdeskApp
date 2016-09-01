@@ -2,7 +2,7 @@
     <div class="row " ng-controller="UsersController">
         <div class="col-sm-6 leftBox mainSinglePanel" ng-if="editUser.loginNoChange">
             <div class="col-md-12 mainSinglePanelHeader"><h4>Edit User</h4></div>
-            <form name="editUserForm" class="form-horizontal" novalidate>
+            <form novalidate name="editUserForm" class="form-horizontal" >
                 <div class="form-group">
                     <div class="col-sm-3">
                         <label for="userName" class=" control-label">Username: </label>
@@ -14,10 +14,11 @@
                         <label for="editUser.email" class=" control-label">Email: </label>
                     </div>
                     <div class="col-sm-8">
-                        <input ng-model="editUser.email" name="editUserEmail" id="editUserEmail" class="form-control" type="email" required="required">
+                        <input ng-model="editUser.email" name="editUserEmail" id="editUserEmail" class="form-control" type="email" required="required" validate-email-available>
                         <div class="formMessageWrapper" ng-show="editUserForm.editUserEmail.$touched">
-                          <span class="text-danger" ng-show="editUserForm.editUserEmail.$error.required">Email is required</span>
-                          <span class="text-danger" ng-show="editUserForm.editUserEmail.$error.email">Enter valid email adress</span>
+                          <span class="text-danger" ng-if="editUserForm.editUserEmail.$error.required">Email is required</span>
+                          <span class="text-danger" ng-if="editUserForm.editUserEmail.$error.email">Enter valid email adress</span>
+                          <span class="text-danger" ng-if="editUserForm.editUserEmail.$error.emailAvailable == false">Email exist</span>
                         </div>
                     </div>
                     <div class="col-sm-3">
@@ -78,7 +79,7 @@
                     <div class="col-sm-9">
                         <div class="checkbox">
                             <label>
-                                <input ng-model="editUser.islocked" type="checkbox"> Is Locked
+                                <input name="editUserIsLocked" ng-model="editUser.islocked" type="checkbox"> Is Locked
                             </label>
                         </div>
                     </div>

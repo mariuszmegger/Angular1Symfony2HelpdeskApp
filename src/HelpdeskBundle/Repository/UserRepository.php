@@ -95,11 +95,16 @@ class UserRepository extends EntityRepository
     $data = $content = json_decode($request->getContent(),true);
     $user = $this->getEntityManager()->getRepository('HelpdeskBundle:User')->findOneById($data['id']);
     if($user){
-      // $canUser = $this->getEntityManager()->getRepository('HelpdeskBundle:User')->findOneByUsernameCanonical($data['username']);
-      // if(!$canUser){
+      $canEmail = $this->getEntityManager()->getRepository('HelpdeskBundle:User')->findOneByUsernameCanonical($data['username']);
+      // if(!$canEmail){
+      if(!$canEmail || $canEmail->getEmail() == $user->getEmail()){
+        if($canEmail->getEmail()){
+          
+        }
+
         $data['islocked'] = ($data['islocked'] === true)? 1:0;
         try{
-          $user->setUsername($data['firstname']);
+          $user->setFirstname($data['firstname']);
           $user->setSurname($data['surname']);
           $user->setEmail($data['email']);
           $user->setCity($data['city']);
@@ -109,13 +114,12 @@ class UserRepository extends EntityRepository
           $user->setLocked($data['islocked']);
           $userManager->updateUser($user);
           $response['code'] = ($user->getId())? 1:0;
-          $response['message'] = '';
         }
         catch(exception $e){
         }
-      // }else{
-      //   $response['code']  = 0;
-      // }
+      }else{
+        $response['code']  = 3;
+      }
     }else{
       $response['code']  = 0;
     }

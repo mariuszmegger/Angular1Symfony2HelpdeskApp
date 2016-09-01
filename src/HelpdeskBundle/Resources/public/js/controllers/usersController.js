@@ -1,20 +1,15 @@
-angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', '$compile', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash, $compile) {
+angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', '$compile',  function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash, $compile) {
 
 //        authentication.auth()
 
-    $scope.categories = false;
-    $scope.filterBy = {}
-    $scope.companyName = '';
-    $scope.companyIsActive = '';
-
-    // Company name filter
+    // Unit name filter
 
       $scope.saveCompanyName = function(name){
         $scope.companyName = name;
         $scope.propagateTable($scope.userInUnit, $scope.userIsActive);
       }
 
-      // Is Active filter
+      // Is Locked filter
 
       $scope.saveCompanyisActive = function(isActive){
         $scope.companyIsActive = isActive;
@@ -26,7 +21,7 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
       $scope.propagateTable = function(name, active){
 
       var startData = {
-          'userInUnit': name ,
+          'userInUnit': name,
           'isActive': active
       }
       $scope.dtOptions = DTOptionsBuilder.newOptions()
@@ -51,10 +46,10 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
          DTColumnBuilder.newColumn('unit_id').withTitle('unit'),
          DTColumnBuilder.newColumn('locked').withTitle('is locked').renderWith(function(data, type, full) {
            if(data == 1){
-             return '<span class="text-success">YES</span>';
+             return '<span class="text-danger">YES</span>';
            }
            else{
-             return '<span class="text-danger">NO</span>'
+             return '<span class="text-success">NO</span>'
            }
          }),
          DTColumnBuilder.newColumn('operations').withTitle('Operations').notSortable()
@@ -108,13 +103,6 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
 
           $log.error(response)
         })
-
-        $timeout(function(){
-            $scope.myStyle={
-                visibility:'hidden',
-                opacity:'0'
-            }
-        }, 3000)
     }
 
     $scope.deleteUser = function(id){
@@ -178,29 +166,20 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
                   var message = 'User Edited';
                   $scope.$parent.successAlert(message, 'success');
              }
-             else{
-               console.log('aaa');
-              //  $location.path('/admin-edit_category:'+397+'');
+             else if(response.data.code == 3){
                var message = 'User email already exists';
+               $scope.$parent.successAlert(message, 'danger');
+             }
+             else{
+               var message = 'User not exists';
                $scope.$parent.successAlert(message, 'danger');
              }
       },function(response){
           var message = 'Connection error user not changed';
           $scope.$parent.successAlert(message, 'danger');
-          // $scope.myStyle={
-          //     visibility:'visible',
-          //     opacity:'1'
-          // }
 
           $log.error(response)
       })
-
-      $timeout(function(){
-          $scope.myStyle={
-              visibility:'hidden',
-              opacity:'0'
-          }
-      }, 3000)
     }
 
     $scope.getOneUser = function(id){
@@ -236,11 +215,12 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
         }
         else{
             $location.path('/admin-users');
+            var message = 'User not exists';
+            $scope.$parent.successAlert(message, 'danger');
         }
     })
   }
   if($routeParams.user_id){
-    console.log($routeParams.user_id);
     $scope.getOneUser($routeParams.user_id)
   }
 
@@ -248,4 +228,4 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
     if(is_active === 1){ return true } else{ return false};
   }
 
-}])
+}]);
