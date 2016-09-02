@@ -80,10 +80,13 @@ class UsersController extends Controller
  public function checkUserEmailAction(Request $request, $email)
  {
    $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->findOneByEmail($email);
-   $userCheck = ($user)? false : true;
-   $userCheck = json_encode($userCheck);
-   echo $userCheck;
-   die;
+   if(!$user){
+     $userCheck = true;
+   }
+   $responseContainer = new JsonResponse();
+   $responseContainer->setData($userCheck);
+   $responseContainer->headers->set('Content-Type', 'application/json');
+   return $responseContainer;
  }
 
 }

@@ -61,6 +61,7 @@ class UserRepository extends EntityRepository
       $user->setLocked($isActive);
       $duplicated = $this->getEntityManager()->getRepository('HelpdeskBundle:User')->findByUsername($login);
       if(!$duplicated){
+        $response['code'] = 1;
         $userManager->updateUser($user);
       }else{
         $response['code'] = 0;
@@ -99,7 +100,7 @@ class UserRepository extends EntityRepository
       // if(!$canEmail){
       if(!$canEmail || $canEmail->getEmail() == $user->getEmail()){
         if($canEmail->getEmail()){
-          
+
         }
 
         $data['islocked'] = ($data['islocked'] === true)? 1:0;
