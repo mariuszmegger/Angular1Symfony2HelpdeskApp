@@ -9,6 +9,8 @@ use Symfony\Component\BrowserKit\Response;
 use HelpdeskBundle\Entity\Categories;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Twig_Environment;
+use Twig_Lexer;
 
 class MainController extends Controller
 {
@@ -17,7 +19,16 @@ class MainController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('HelpdeskBundle::backend.html.twig');
+      $twig = new Twig_Environment();
+
+      $lexer = new Twig_Lexer($twig, array(
+          'tag_comment'   => array('{#', '#}'),
+          'tag_block'     => array('{%', '%}'),
+          'tag_variable'  => array('{/', '/}'),
+          'interpolation' => array('#{', '}'),
+      ));
+      $twig->setLexer($lexer);
+      return $this->render('HelpdeskBundle::backend.html.twig');
     }
 
     /**
@@ -28,92 +39,4 @@ class MainController extends Controller
     {
         return $this->render('HelpdeskBundle::backend.html.twig');
     }
-
-
-    /**
-     * @Route("/ajaxCategories", name="ajaxCategories")
-     */
-    public function ajaxAction(Request $request)
-    {
-      try{
-        $content = json_decode($request->getContent(),true);
-        $name = $content['name'];
-        $isActive  = (isset($content['isActive']) === true)? 1:2;
-        $dt =  date('Y-m-d H:i:s');
-        $category = new Categories();
-        $category->setName($name);
-        $category->setIsActive($isActive);
-        $category->setCreatedBy(1);
-        $category->setCreatedDate($dt);
-        $em = $this->getDoctrine()->getManager();
-        $duplicated = $this->getDoctrine()->getRepository('HelpdeskBundle:Categories')->findByName($name);
-        if(!$duplicated){
-          $em->persist($category);
-          $em->flush();
-
-          $response['code'] = ($category->getId())? 1:0;
-          $response['message'] = '';
-        }else{
-          $response['code'] = 0;
-          $response['message'] = 'Category exists';
-        }
-      }catch(Exception $e){
-      }
-      $response = json_encode($response);
-      echo $response;
-      die;
-    }
-
-    /**
-     * @Route("/ajaxGetCategories", name="ajaxGetCategories")
-     */
-    public function ajaxGetCategories(Request $request)
-    {
-      $postData = $request->query->all();
-      try{
-        // $response = $this->getDoctrine()
-        //        ->getRepository('HelpdeskBundle:Categories')
-        //        ->createQueryBuilder('e')
-        //        ->select('e')
-        //        ->getQuery()
-        //        ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
-
-
-        $response = $this->getDoctrine()->getRepository('HelpdeskBundle:Categories')->getCategories($postData);
-
-         if(empty($response)){
-           $response = false;
-         }
-      }catch(Exception $e){
-        $response = $e->getMessage();
-    }
-    $responseContainer = new JsonResponse();
-    $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
-    $responseContainer->setData($response);
-
-    return $responseContainer;
-  }
-
-
-  /**
-   * @Route("/ajaxGetOneCategory", name="ajaxGetOneCategory")
-   */
-   public function ajaxGetOneCategory(Request $request){
-     $content = json_decode($request->getContent(),true);
-     $id = $content['id'];
-     try{
-       $response = $this->getDoctrine()->getRepository('HelpdeskBundle:Categories')->getOneCategory($id);
-     }catch(Exception $e){
-       $response = $e->getMessage();
-     }
-
-    //  var_dump($response) ;
-    //  die;
-     $responseContainer = new JsonResponse();
-     $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
-     $responseContainer->setData($response);
-
-     return $responseContainer;
-   }
-
 }

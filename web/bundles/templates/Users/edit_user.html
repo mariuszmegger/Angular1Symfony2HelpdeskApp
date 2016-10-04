@@ -1,0 +1,141 @@
+<div class="container">
+    <div class="row " ng-controller="UsersController">
+        <div class="col-sm-6 leftBox mainSinglePanel" ng-if="editUser.loginNoChange">
+            <div class="col-md-12 mainSinglePanelHeader"><h4>Edit User</h4></div>
+            <form novalidate name="editUserForm" class="form-horizontal" >
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label for="userName" class=" control-label">Username: </label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input ng-model="editUser.login" ng-disabled="editUser.login" name="userName" id="userName" class="form-control" type="text" required="required">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="editUser.email" class=" control-label">Email: </label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input ng-model="editUser.email"  name="editUserEmail" id="editUserEmail" class="form-control" type="email" required="required" validate-email-available>
+                        <div class="formMessageWrapper" ng-show="editUserForm.editUserEmail.$touched">
+                          <span class="text-danger" ng-show="editUserForm.editUserEmail.$error.required">Email is required</span>
+                          <span class="text-danger" ng-show="editUserForm.editUserEmail.$error.email">Enter valid email adress</span>
+                          <span class="text-danger" ng-show="editUserForm.editUserEmail.$error.emailAvailable">Email exist</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="editUserFirstName" class=" control-label">First Name: </label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input ng-model="editUser.firstname" name="editUserFirstName" id="editUserFirstName" class="form-control" type="text" required="required">
+                        <div class="formMessageWrapper" ng-show="editUserForm.editUserFirstName.$touched">
+                          <span class="text-danger" ng-show="editUserForm.editUserFirstName.$error.required">First name is required</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="editUserSurName" class=" control-label">Last Name: </label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input ng-model="editUser.surname" name="editUserSurName" id="editUserSurName" class="form-control" type="text" required="required">
+                        <div class="formMessageWrapper" ng-show="editUserForm.editUserSurName.$touched">
+                          <span class="text-danger" ng-show="editUserForm.editUserSurName.$error.required">Sur name is required</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="editUserCity" class=" control-label">City: </label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input ng-model="editUser.city" name="editUserCity" id="editUserCity" class="form-control" type="text" >
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="editUserStreet" class=" control-label">Street: </label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input ng-model="editUser.street" name="editUserStreet" id="editUserStreet" class="form-control" type="text" >
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="editUserPostCode" class=" control-label">Post code: </label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input ng-model="editUser.postcode" name="editUserPostCode" id="editUserPostCode" class="form-control" type="text" >
+                        <div class="formMessageWrapper" ng-show="editUserForm.editUser.postcode.$touched">
+                          <span class="text-danger" ng-show="editUserForm.editUser.postcode.$error.required">user name is required</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="editUserUnit" class=" control-label">Unit: </label>
+                    </div>
+                    <div class="col-sm-8">
+                        <select ng-model="editUser.unit" name="editUserUnit" id="editUserUnit" class="form-control" type="text" required="required">
+                          <option class="unitOption form-control" value="1" ng-selected="editUser.unit == 1">Unit 1</option>
+                          <option class="unitOption form-control" value="2" ng-selected="editUser.unit == 2">Unit 2</option>
+                          <option class="unitOption form-control" value="3" ng-selected="editUser.unit == 3">Unit 3</option>
+                        </select>
+                        <div class="formMessageWrapper" ng-show="editUserForm.editUser.unit.$touched">
+                          <span class="text-danger" ng-show="editUserForm.editUser.unit.$error.required">Unit is required</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="editUserPostCode" class=" control-label">Is Locked: </label>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="checkbox">
+                            <label>
+                                <input name="editUserIsLocked" ng-model="editUser.islocked" type="checkbox"> Is Locked
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-sm-offset-8 col-sm-10">
+                          <button ng-click="updateUser()" ng-disabled="!editUserForm.$valid" type="submit" class="btn btn-primary">Edit User</button>
+                      </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-6 rightBox mainSinglePanel" ng-if="editUser.loginNoChange">
+              <div class="col-md-12 mainSinglePanelHeader"><h4>User Details</h4></div>
+            <div class="col-sm-12">
+              <table class="table table-bordered table-hovered">
+                <thead></thead>
+                  <tbody>
+                    <tr>
+                        <th>Username:</th>
+                        <th>{{editUser.loginNoChange}}</th>
+                    </tr>
+                    <tr>
+                        <th>Email:</th>
+                        <th>{{editUser.emailNoChange}}</th>
+                    </tr>
+                    <tr>
+                        <th>First Name:</th>
+                        <th>{{editUser.firstnameNoChange}}</th>
+                    </tr>
+                    <tr>
+                        <th>Sur Name:</th>
+                        <th>{{editUser.surnameNoChange}}</th>
+                    </tr>
+                    <tr>
+                        <th>City:</th>
+                        <th>{{editUser.cityNoChange}}</th>
+                    </tr>
+                    <tr>
+                        <th>Street:</th>
+                        <th>{{editUser.streetNoChange}}</th>
+                    </tr>
+                    <tr>
+                        <th>Post Code:</th>
+                        <th>{{editUser.postcodeNoChange}}</th>
+                    </tr>
+                    <tr>
+                        <th>Unit:</th>
+                        <th>{{editUser.unitNoChange}}</th>
+                    </tr>
+                    <tr>
+                        <th>Is Locked:</th>
+                        <th ng-class="(editUser.islockedNoChange !== true)? 'text-success':'text-danger'">{{editUser.islockedNoChange == "1"? "YES":"NO"}}</th>
+                    </tr>
+                  </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>

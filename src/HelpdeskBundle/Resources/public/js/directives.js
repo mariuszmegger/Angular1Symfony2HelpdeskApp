@@ -1,15 +1,12 @@
+angular.module('helpdeskModule').directive('validateEmailAvailable',['$http','$log','$q', function($http,$log, $q) {
 
-(function () {
-    var app = angular.module('helpdeskDirective', []);
-
-    // app.directive('myOnKeyDownCall', function () {
-    // return function (scope, element, attrs) {
-    //     element.bind("keydown keypress", function (event) {
-    //             scope.$apply(function (){
-    //                 scope.$eval(attrs.ngEnter);
-    //             });
-    //             event.preventDefault();
-    //         });
-    //     };
-    // });
-})();
+    return {
+      restrict: 'AE',
+      require: 'ngModel',
+      link: function(element, attrs, scope, ngModel) {
+        ngModel.$asyncValidators.emailAvailable = function(value) {
+            return $http.get('/app_dev.php/checkUserEmail/'+value)
+        }
+      },
+    };
+}]);

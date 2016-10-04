@@ -62,7 +62,8 @@
   height: auto;
   position: relative;
   overflow: hidden;
-  background-color: #F5F5F5; }
+  background-color: #F5F5F5;
+  min-height: 900px; }
 
 .page-content.sidebar-page {
   margin-left: 210px; }
@@ -81,10 +82,10 @@
 .right-sidebar {
   display: none !important; }
 
-.alert {
-  visibility: hidden;
-  opacity: 0;
-  transition: all linear 1s; }
+.alertWrapper {
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: -20px; }
 
 .mainSinglePanel {
   background-color: white;
@@ -121,6 +122,13 @@
   .mainSinglePanel .mainSinglePanelBody input, .mainSinglePanel .mainSinglePanelBody select {
     width: 64%; }
 
+.mainSinglePanelHeader h4 {
+  margin-top: 3px;
+  font-family: "Raleway", Helvetica, sans-serif !important;
+  font-weight: 200;
+  color: #23527C;
+  font-size: 24px; }
+
 .main {
   padding-top: 10px; }
   .main .dataTables_filter {
@@ -154,9 +162,12 @@
         display: block;
         text-align: center; }
       .main table thead tr th {
+        cursor: pointer;
         background-color: #303946;
         color: white;
         text-align: center; }
+        .main table thead tr th:last-child {
+          cursor: auto; }
     .main table tbody tr td {
       text-align: center;
       vertical-align: middle; }
@@ -169,22 +180,34 @@
           color: blue; }
   .main form label {
     width: 100%; }
-  .main .rightBox .contentBoxHeader {
-    margin-bottom: 11px;
+  .main form .formMessageWrapper {
+    margin-top: 10px;
     margin-left: 10px; }
-    .main .rightBox .contentBoxHeader h1 {
-      font-size: 30px !important; }
-  .main .rightBox ul {
-    list-style: none; }
-    .main .rightBox ul li {
-      font-size: 16px;
-      padding: 10px 0;
-      font-weight: bold; }
-  .main .leftBox .contentBoxHeader {
-    margin-left: 78px;
-    margin-bottom: 20px; }
-    .main .leftBox .contentBoxHeader h1 {
-      font-size: 30px !important; }
+  .main .rightBox {
+    min-height: 500px;
+    width: 48.85%; }
+    .main .rightBox .contentBoxHeader {
+      margin-bottom: 11px;
+      margin-left: 10px; }
+    .main .rightBox table {
+      font-size: 12px; }
+      .main .rightBox table tr th {
+        text-align: center;
+        font-style: oblique; }
+        .main .rightBox table tr th:first-child {
+          color: white;
+          background-color: #337AB7;
+          width: 136px;
+          font-style: normal; }
+  .main .leftBox {
+    min-height: 500px;
+    margin-right: 24px;
+    width: 48.85%; }
+    .main .leftBox .contentBoxHeader {
+      margin-left: 78px;
+      margin-bottom: 20px; }
+      .main .leftBox .contentBoxHeader h1 {
+        font-size: 30px !important; }
 
 .page-navbar.header-fixed {
   position: fixed; }

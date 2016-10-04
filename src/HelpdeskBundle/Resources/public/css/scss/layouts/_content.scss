@@ -5,6 +5,7 @@
     position: relative;
     overflow: hidden;
     background-color: #F5F5F5;
+    min-height:900px;
 }
 
 .page-content.sidebar-page {
@@ -27,11 +28,18 @@
 .right-sidebar{
     display:none !important;
 }
-.alert{
-  visibility:hidden ;
-  opacity:0;
-  transition: all linear 1s;
+.alertWrapper{
+  margin: 0 auto;
+  margin-top:20px;
+  margin-bottom: -20px;
 }
+// .alert.alertIn {
+//   opacity: 1;
+//   transition: opacity 1.5s ease-out;
+// }
+// .alert.alertOut {
+//   opacity: 0;
+// }
 .mainSinglePanel{
     background-color: white;
     border-left: 1px solid #efefef;
@@ -74,6 +82,15 @@
             width:64%;
 
         }
+    }
+}
+.mainSinglePanelHeader{
+  h4{
+      margin-top: 3px;
+      font-family: "Raleway", Helvetica, sans-serif !important;
+      font-weight: 200;
+      color: #23527C;
+      font-size: 24px;
     }
 }
 .main{
@@ -132,9 +149,13 @@
                 color: white;
                 background-color: #303946;
                 th{
+                    cursor:pointer;
                     background-color:#303946;
                     color:white;
                     text-align:center;
+                    &:last-child{
+                      cursor:auto;
+                    }
                 }
             }
         }
@@ -164,26 +185,40 @@
         label{
             width:100%;
         }
+        .formMessageWrapper{
+          // text-align:center;
+          margin-top:10px;
+          margin-left:10px;
+        }
     }
     .rightBox {
+        min-height:500px;
+        width: 48.85%;
         .contentBoxHeader{
             margin-bottom:11px;
             margin-left:10px;
-            h1{
-                font-size:30px !important;
-            }
         }
-        ul{
-            list-style:none;
-            li{
-                font-size: 16px;
-                padding:10px 0;
-                font-weight:bold;
-
+        table{
+          font-size:12px;
+          tr{
+            th{
+                text-align:center;
+                font-style: oblique;
+                &:first-child{
+                  color:white;
+                  background-color: #337AB7;
+                  width:136px;
+                  font-style: normal;
+                }
             }
+          }
+
         }
     }
     .leftBox{
+      min-height:500px;
+      margin-right: 24px;
+      width: 48.85%;
         .contentBoxHeader{
             margin-left:78px;
             margin-bottom:20px;
