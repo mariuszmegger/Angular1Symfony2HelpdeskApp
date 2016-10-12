@@ -195,6 +195,7 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
             $scope.editUser.id = response.data.id;
             $scope.editUser.login = response.data.login;
             $scope.editUser.email = response.data.email;
+            $scope.editUser.basicEmail = response.data.email;
             $scope.editUser.firstname = response.data.firstname;
             $scope.editUser.surname = response.data.surname;
             $scope.editUser.city = response.data.city;

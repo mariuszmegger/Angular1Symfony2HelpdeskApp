@@ -12,4 +12,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class OperatorsRepository extends EntityRepository
 {
+    public function getUsersByName($name){
+//        $result = $this->getEntityManager()->getRepository("HelpdeskBundle:User")->createQueryBuilder('u')
+//            ->where('u.username LIKE :name')
+//            ->orWhere('u.firstname LIKE :name')
+//            ->orWhere('u.surname LIKE :name')
+//            ->setParameter('name', '%'.$name.'%')
+//            ->getQuery()
+//            ->getResult(\Doctrine\ORM\AbstractQuery::HYDRATE_ARRAY);
+
+        $sql = "SELECT id, username, firstname, surname FROM fos_user WHERE username LIKE '%".$name."%' or firstname LIKE '%".$name."%' or surname LIKE '%".$name."%' ";
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return $result;
+
+    }
 }

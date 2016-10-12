@@ -3,10 +3,12 @@ angular.module('helpdeskModule').directive('validateEmailAvailable',['$http','$l
     return {
       restrict: 'AE',
       require: 'ngModel',
-      link: function(element, attrs, scope, ngModel) {
-        ngModel.$asyncValidators.emailAvailable = function(value) {
+      link: function(element, attrs, scope, ngModel, controller) {
+        ngModel.$asyncValidators.emailAvailable = function(modelValue, viewValue) {
+            var value = modelValue || viewValue;
+
             return $http.get('/app_dev.php/checkUserEmail/'+value)
         }
-      },
+      }
     };
 }]);

@@ -1,6 +1,6 @@
 angular.module('helpdeskModule').controller('CategoriesController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash) {
 
-    authentication.auth()
+//    authentication.auth()
 
     $scope.categories = false;
     $scope.filterBy = {}
@@ -180,6 +180,7 @@ angular.module('helpdeskModule').controller('CategoriesController', ['$scope', '
       var serviceResponse3 = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxGetOneCategory', data);
       serviceResponse3.then(function (response) {
         if(response.data != false){
+            console.log(response);
             $scope.singleCategory = response.data[0];
 
         }
