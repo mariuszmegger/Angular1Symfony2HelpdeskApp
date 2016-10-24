@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="row mainSinglePanel">
+    <div class="col-md-12 mainSinglePanelHeader"><h4>Add Operator</h4></div>
+    <div class="row mainSinglePanelBody">
+      <div class="form-group">
+        <label for="searchUser">Search User</label>
+        <input ng-model="searchedText" ng-change="searchUser(searchedText)" id="searchUser" type="text" placeholder="User Name" class="form-control">
+      </div>
+
+      <div class="searchedUsersWrapper">
+        <table class="table table-hovered ">
+          <tbody>
+            <tr ng-click="prepareForOperator(user.firstname,user.surname,user.username,user.email)" ng-repeat="user in usersForOperators">
+              <td>{{ user.firstname }}</td>
+              <td>{{ user.surname }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row mainSinglePanel">
+    <div class="col-md-12 mainSinglePanelHeader"><h4>Select Operator</h4></div>
+    <div class="row mainSinglePanelBody">
+      <table ng-show="candidateTableCheck" class="table table-stripped">
+        <thead>
+          <tr>
+            <td>Name</td>
+            <td>Surname</td>
+            <td>Username</td>
+            <td>E-mail</td>
+            <td>Category</td>
+            <td>Support Line</td>
+            <td>Operations</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ candidateTable.firstname }}</td>
+            <td>{{ candidateTable.surname }}</td>
+            <td>{{ candidateTable.username }}</td>
+            <td>{{ candidateTable.email }}</td>
+            <td>
+              <select ng-options=" category.name for category in categoriesForOperators" ng-model="operatorCategory" class="form-control">
+                <option value="">Choose</option>
+              </select>
+            </td>
+            <td>
+              <select ng-model="operatorSupportLine" class="form-control" ng-change="saveValueFromSelect(operatorSupportLine)">
+                <option value="">Choose</option>
+                <option value="1">Support Line 1</option>
+                <option value="2">Support Line 2</option>
+                <option value="3">Support Line 3</option>
+              </select>
+            </td>
+            <td><button ng-click="saveOperator(candidateTable.username, operatorCategory.id, operatorSupportLine)" type="button" class="btn btn-primary">Save operator</button></td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>

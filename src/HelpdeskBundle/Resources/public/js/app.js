@@ -35,6 +35,10 @@ $(document).ready(function () {
                 templateUrl: 'bundles/templates/Operators/OperatorsList.html',
                 controller: 'OperatorsController'
             })
+            .when('/admin-addOperators', {
+                templateUrl: 'bundles/templates/Operators/addOperator.html',
+                controller: 'OperatorsController'
+            })
             .when('/admin-categories', {
                 templateUrl: 'bundles/templates/Categories/categoriesList.html',
                 controller: 'CategoriesController'

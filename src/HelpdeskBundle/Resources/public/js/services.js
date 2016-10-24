@@ -2,7 +2,11 @@
   angular.module('helpdeskModule').factory('ajaxLoader', ['$http', function ($http) {
 
         var _makeRequest = function(method,url,data){
+          if(method === 'POST'){
             return $http({method:method,url:url, data:data})
+          }else if (method === 'GET'){
+            return $http({method:method,url:url, params:data})
+          }
         }
         return {
             makeRequest : _makeRequest
