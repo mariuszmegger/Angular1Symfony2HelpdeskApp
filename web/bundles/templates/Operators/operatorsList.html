@@ -4,12 +4,9 @@
             <div class="row mainSinglePanelBody">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="userInUnit">Category</label>
-                        <select ng-model="userInUnit" id="userInUnit" class="form-control" name="userInUnit" ng-change="saveCompanyisActive(userIsActive)">
-                            <option class="unitOption form-control" value="">All</option>
-                            <option class="unitOption form-control" value="1">Unit 1</option>
-                            <option class="unitOption form-control" value="2">Unit 2</option>
-                            <option class="unitOption form-control" value="3">Unit 3</option>
+                        <label for="categoriesList">Category</label>
+                        <select id="categoriesList" ng-options=" category.name for category in getCategoriesForOperatorsListFilter" ng-model="operatorCategory" class="form-control">
+                            <option value="">All</option>
                         </select>
                     </div>
                 </div>
@@ -18,8 +15,9 @@
                         <label for="isActive">Support Line</label>
                         <select ng-model="userIsActive" id="isActive" class="form-control" name="isActive" ng-change="saveCompanyisActive(userIsActive)">
                             <option value="">All</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
+                            <option value="1">Support Line 1</option>
+                            <option value="2">Support Line 2</option>
+                            <option value="3">Support Line 3</option>
                         </select>
                     </div>
                 </div>
@@ -30,13 +28,12 @@
 
         <div class="col-sm-12 mainSinglePanel tableWrapper">
             <div class="col-md-12 mainSinglePanelHeader"><h4>Operators<a href="/#/admin-addOperators"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></h4></div>
-            <table  class="table table-bordered userTable " datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance"></table>
+            <table  class="table table-bordered userTable" ></table>
         </div>
 
     </div>
 
 </div>
-<!-- <div   ng-if="!categories" class="userTableInfo panel alert-info"> user list is empty</div> -->
 
 
 </div>

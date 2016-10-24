@@ -5,13 +5,9 @@ namespace HelpdeskBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\BrowserKit\Response;
-use HelpdeskBundle\Entity\Categories;
 use HelpdeskBundle\Entity\Operators;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Twig_Environment;
-use Twig_Lexer;
 
 class OperatorsController extends Controller
 {
@@ -26,6 +22,7 @@ class OperatorsController extends Controller
             $response = array();
             $response = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->getUsersByName($name);
         }catch(Exception $e){
+            $response['message'] =  $e->getMessage();
         }
         $responseContainer = new JsonResponse();
         $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
@@ -39,15 +36,16 @@ class OperatorsController extends Controller
      */
     public function ajaxGetCategoriesForOperators()
     {
-      try{
-          $response = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->getCategoriesForOperators();
-      }catch(Exception $e){
-      }
-      $responseContainer = new JsonResponse();
-      $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
-      $responseContainer->setData(array('data'=>$response));
-      $responseContainer->headers->set('Content-Type', 'application/json');
-      return $responseContainer;
+        try{
+            $response = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->getCategoriesForOperators();
+        }catch(Exception $e){
+            $response['message'] =  $e->getMessage();
+        }
+        $responseContainer = new JsonResponse();
+        $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
+        $responseContainer->setData(array('data'=>$response));
+        $responseContainer->headers->set('Content-Type', 'application/json');
+        return $responseContainer;
     }
 
     /**
@@ -55,37 +53,35 @@ class OperatorsController extends Controller
      */
     public function ajaxSaveOperator(Request $request)
     {
-      try{
-        $content = json_decode($request->getContent(),true);
-        $username = $content['username'];
-        $category = $content['category'];
-        // dump($content); die;
-        $sline = $content['sLine'];
-        $operator = new Operators();
+        try{
+            $content = json_decode($request->getContent(),true);
+            $username = (isset($content['username']))? $content['username'] : '';
+            $category = (isset($content['category']))? $content['category'] : '';
+            $sline = (isset($content['sLine']))? $content['sLine'] : '';
+            if($username && $category && $sline){
+                $duplicated = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->findBy(array('userUsername'=>$username, 'categoryId'=>$category, 'supportLineId'=>$sline));
+                if(!$duplicated){
+                    $operator = new Operators();
+                    $operator->setUserUsername($username);
+                    $operator->setCategoryId($category);
+                    $operator->setSupportLineId($sline);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($operator);
+                    $em->flush();
 
-        $operator->setUserUsername($username);
-        $operator->setCategoryId($category);
-        $operator->setSupportLineId($sline);
-        $em = $this->getDoctrine()->getManager();
-        $duplicated = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->findBy(array('userUsername'=>$username, 'categoryId'=>$category, 'supportLineId'=>$sline));
-        dump($duplicated);
-        die;
-        if(!$duplicated){
-          $em->persist($operator);
-          $em->flush();
-
-          $response['code'] = ($operator->getId())? 1:0;
-          $response['message'] = '';
-        }else{
-          $response['code'] = 0;
-          $response['message'] = 'Operator exists';
+                    $response['code'] = 1;
+                }else{
+                    $response['code'] = 0;
+                }
+            }
+        }catch(Exception $e){
+            $response['message'] =  $e->getMessage();
         }
-      }catch(Exception $e){
-      }
-      $response = json_encode($response);
-      echo $response;
-      die;
+
+        $responseContainer = new JsonResponse();
+        $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
+        $responseContainer->setData(array('data'=>$response));
+        $responseContainer->headers->set('Content-Type', 'application/json');
+        return $responseContainer;
     }
-
-
 }

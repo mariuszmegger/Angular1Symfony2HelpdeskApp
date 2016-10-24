@@ -26,10 +26,10 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
         $scope.getCategoriesForOperators();
 
         $scope.candidateTable = {};
-        $scope.candidateTable.firstname = firstname
-        $scope.candidateTable.surname = surname
-        $scope.candidateTable.username = username
-        $scope.candidateTable.email = email
+        $scope.candidateTable.firstname = firstname;
+        $scope.candidateTable.surname = surname;
+        $scope.candidateTable.username = username;
+        $scope.candidateTable.email = email;
     }
 
     $scope.getCategoriesForOperators = function(){
@@ -47,17 +47,33 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
       })
     }
 
+    $scope.getCategoriesForOperatorsListFilter = function(){
+
+        var categoriesList = ajaxLoader.makeRequest('GET','/app_dev.php/ajaxGetCategoriesForOperators');
+
+        categoriesList.then(function (response) {
+            if(response.data !== false){
+                $scope.getCategoriesForOperatorsListFilter = response.data.data;
+            }
+            else{
+                $scope.getCategoriesForOperatorsListFilter = false;
+            }
+        })
+    }
+    $scope.getCategoriesForOperatorsListFilter();
+
     $scope.saveOperator = function(username, category, sLine){
 
       var data = {
           username: username,
           category: category,
-          sLine: sLine,
+          sLine: sLine
       }
       var saveOperator = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxSaveOperator', data);
       saveOperator.then(function (response) {
-          if(response.data !== false){
-            if(response.data.code == 1){
+          console.log(response.data.data.code);
+          if(response.data.data !== false){
+            if(response.data.data.code === 1){
               // $location.path('/admin-operators');
               var message = 'Operator Added';
               $scope.$parent.successAlert(message, 'success');
@@ -76,6 +92,11 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
     }
 
     $scope.saveValueFromSelect = function(value){
-      $scope.operatorSupportLine = parseInt(value);
+      $scope.operatorSupportLine = value;
     }
+
+    $scope.createOperatorsTable = function(){
+
+    }
+
 }])
