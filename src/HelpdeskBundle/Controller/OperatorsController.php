@@ -84,4 +84,23 @@ class OperatorsController extends Controller
         $responseContainer->headers->set('Content-Type', 'application/json');
         return $responseContainer;
     }
+
+    /**
+     * @Route("/ajaxGetOperators", name="ajaxGetOperators")
+     */
+    public function ajaxGetOperators()
+    {
+        try{
+            $response = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->getOperatorsQuery();
+        }catch(Exception $e){
+            $response['message'] =  $e->getMessage();
+        }finally{
+          $responseContainer = new JsonResponse();
+          $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
+          $responseContainer->setData(array('data'=>$response));
+          $responseContainer->headers->set('Content-Type', 'application/json');
+          return $responseContainer;
+        }
+
+    }
 }

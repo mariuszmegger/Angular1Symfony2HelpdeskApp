@@ -5,15 +5,21 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="categoriesList">Category</label>
-                        <select id="categoriesList" ng-options=" category.name for category in getCategoriesForOperatorsListFilter" ng-model="operatorCategory" class="form-control">
+
+                        <!-- <select ng-model="filterBy.name" id="categoriesList" ng-options=" category.name for category in getCategoriesForOperatorsListFilter"  class="form-control" ng-change="filterByCategorySelect(category.name)">
                             <option value="">All</option>
+                        </select> -->
+
+                        <select ng-model="filterBy.name" id="categoriesList"   class="form-control" >
+                            <option value="">All</option>
+                            <option  ng-repeat="category in getCategoriesForOperatorsListFilter" value="{{ category.name }}">{{ category.name }}</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="isActive">Support Line</label>
-                        <select ng-model="userIsActive" id="isActive" class="form-control" name="isActive" ng-change="saveCompanyisActive(userIsActive)">
+                        <select ng-model="filterBy.line_name" id="isActive" class="form-control" name="isActive">
                             <option value="">All</option>
                             <option value="1">Support Line 1</option>
                             <option value="2">Support Line 2</option>
@@ -28,7 +34,28 @@
 
         <div class="col-sm-12 mainSinglePanel tableWrapper">
             <div class="col-md-12 mainSinglePanelHeader"><h4>Operators<a href="/#/admin-addOperators"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></h4></div>
-            <table  class="table table-bordered userTable" ></table>
+            <table  class="table table-bordered operatorsTable" >
+              <thead>
+                <tr>
+                  <td>First Name</td>
+                  <td>Surname</td>
+                  <td>Username</td>
+                  <td>Category</td>
+                  <td>Support Line</td>
+                  <td>Operations</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="operator in operatorsList | filter:filterBy">
+                  <td>{{ operator.firstname }}</td>
+                  <td>{{ operator.surname }}</td>
+                  <td>{{ operator.username }}</td>
+                  <td>{{ operator.name }}</td>
+                  <td>{{ operator.line_name }}</td>
+                  <td>delete</td>
+                </tr>
+              </tbody>
+            </table>
         </div>
 
     </div>

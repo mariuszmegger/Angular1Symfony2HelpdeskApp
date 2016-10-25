@@ -1,5 +1,6 @@
 angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash) {
     $scope.candidateTableCheck = false;
+    $scope.filterBy = {};
 
     $scope.searchUser = function(name){
       // if(name.length > 2 ){
@@ -96,7 +97,20 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
     }
 
     $scope.createOperatorsTable = function(){
-
+        var operatorsList = ajaxLoader.makeRequest('GET','/app_dev.php/ajaxGetOperators');
+        operatorsList.then(function (response) {
+            if(response.data !== false){
+              $scope.operatorsList = response.data.data;
+            }
+            else{
+                $scope.operatorsList = false;
+            }
+        })
     }
+    $scope.createOperatorsTable();
 
+    $scope.filterByCategorySelect = function(categoryName){
+      console.log(categoryName);
+      $scope.filterBy.name = categoryName;
+    }
 }])
