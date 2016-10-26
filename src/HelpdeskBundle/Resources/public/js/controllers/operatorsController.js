@@ -110,7 +110,25 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
     $scope.createOperatorsTable();
 
     $scope.filterByCategorySelect = function(categoryName){
-      console.log(categoryName);
       $scope.filterBy.name = categoryName;
+    }
+
+    $scope.orderByColumn = 'firstname';
+    $scope.orderByDirection = true;
+
+    $scope.sortBy = function(columnName){
+      if($scope.orderByColumn == columnName){
+        $scope.orderByDirection = !$scope.orderByDirection
+      }else{
+          $scope.orderByColumn = columnName;
+          $scope.orderByDirection = true;
+      }
+    }
+
+    $scope.isOrderedBy = function(columnName){
+      return($scope.orderByColumn === columnName);
+    }
+    $scope.showOrderArrow = function(){
+      return !$scope.orderByDirection;
     }
 }])

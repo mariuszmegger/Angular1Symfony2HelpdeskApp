@@ -33,20 +33,35 @@
 
 
         <div class="col-sm-12 mainSinglePanel tableWrapper">
-            <div class="col-md-12 mainSinglePanelHeader"><h4>Operators<a href="/#/admin-addOperators"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></h4></div>
+            <div class="col-md-18 mainSinglePanelHeader">
+              <div class="col-md-12"><h4>Operators<a href="/#/admin-addOperators"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></h4></div>
+
+            </div>
+            <div class="col-md-9"></div>
+            <div class="col-md-3"><label for="searchField">Search: </label><input class="form-control" id="searchField" type="text" ng-model="searchTerm" placeholder="search"></div>
             <table  class="table table-bordered operatorsTable" >
               <thead>
                 <tr>
-                  <td>First Name</td>
-                  <td>Surname</td>
-                  <td>Username</td>
-                  <td>Category</td>
-                  <td>Support Line</td>
+                  <td ng-click="sortBy('firstname')">First Name
+                    <i ng-show="isOrderedBy('firstname')" class="glyphicon" ng-class="{'glyphicon-chevron-up': showOrderArrow('firstname'), 'glyphicon-chevron-down': !showOrderArrow('firstname')}"></i>
+                  </td>
+                  <td ng-click="sortBy('surname')">Surname
+                    <i ng-show="isOrderedBy('surname')" class="glyphicon" ng-class="{'glyphicon-chevron-up': showOrderArrow('surname'), 'glyphicon-chevron-down': !showOrderArrow('surname')}"></i>
+                  </td>
+                  <td ng-click="sortBy('username')">Username
+                    <i ng-show="isOrderedBy('username')" class="glyphicon" ng-class="{'glyphicon-chevron-up': showOrderArrow('username'), 'glyphicon-chevron-down': !showOrderArrow('username')}"></i>
+                  </td>
+                  <td ng-click="sortBy('name')">Category
+                    <i ng-show="isOrderedBy('name')" class="glyphicon" ng-class="{'glyphicon-chevron-up': showOrderArrow('name'), 'glyphicon-chevron-down': !showOrderArrow('name')}"></i>
+                  </td>
+                  <td ng-click="sortBy('line_name')">Support Line
+                    <i ng-show="isOrderedBy('line_name')" class="glyphicon" ng-class="{'glyphicon-chevron-up': showOrderArrow('line_name'), 'glyphicon-chevron-down': !showOrderArrow('line_name')}"></i>
+                  </td>
                   <td>Operations</td>
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="operator in operatorsList | filter:filterBy">
+                <tr ng-repeat="operator in operatorsList | filter:filterBy | filter:searchTerm | orderBy: orderByColumn: orderByDirection">
                   <td>{{ operator.firstname }}</td>
                   <td>{{ operator.surname }}</td>
                   <td>{{ operator.username }}</td>
