@@ -33,11 +33,12 @@ $(document).ready(function () {
             })
             .when('/admin-operators', {
                 templateUrl: 'bundles/templates/Operators/OperatorsList.html',
-                controller: 'OperatorsController'
+                controller: 'OperatorsController',
             })
             .when('/admin-addOperators', {
                 templateUrl: 'bundles/templates/Operators/addOperator.html',
-                controller: 'OperatorsController'
+                controller: 'OperatorsController',
+                controllerAs: 'Oper'
             })
             .when('/admin-categories', {
                 templateUrl: 'bundles/templates/Categories/categoriesList.html',

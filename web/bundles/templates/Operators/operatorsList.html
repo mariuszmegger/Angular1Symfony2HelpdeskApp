@@ -37,7 +37,15 @@
               <div class="col-md-12"><h4>Operators<a href="/#/admin-addOperators"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></h4></div>
 
             </div>
-            <div class="col-md-9"></div>
+            <div class="col-md-2" >
+              <select class="form-control" ng-model="length">
+                <option ng-selected="{{ length === 2 }}" value="2">2</option>
+                <option ng-selected="{{ length === 5 }}"value="5">5</option>
+                <option  ng-selected="{{ length === 10 }}"value="10">10</option>
+                <option ng-selected="{{ length === 100 }}"value="100">100</option>
+              </select>
+            </div>
+            <div class="col-md-7"></div>
             <div class="col-md-3"><label for="searchField">Search: </label><input class="form-control" id="searchField" type="text" ng-model="searchTerm" placeholder="search"></div>
             <table  class="table table-bordered operatorsTable" >
               <thead>
@@ -61,13 +69,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="operator in operatorsList | filter:filterBy | filter:searchTerm | orderBy: orderByColumn: orderByDirection">
+                <tr ng-repeat="operator in operatorsList | filter:searchTerm | pagination:length | filter:filterBy | orderBy: orderByColumn: orderByDirection ">
                   <td>{{ operator.firstname }}</td>
                   <td>{{ operator.surname }}</td>
                   <td>{{ operator.username }}</td>
                   <td>{{ operator.name }}</td>
                   <td>{{ operator.line_name }}</td>
-                  <td>delete</td>
+                  <td><i ng-click="deleteOperator(operator.username, operator.category_id, operator.support_line_id)" class="fa fa-minus-circle"></i></td>
                 </tr>
               </tbody>
             </table>

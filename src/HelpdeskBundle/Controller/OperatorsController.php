@@ -103,4 +103,40 @@ class OperatorsController extends Controller
         }
 
     }
+
+    /**
+     * @Route("/ajaxDeleteOperator", name="ajaxDeleteOperator")
+     */
+    public function ajaxDeleteOperator(Request $request)
+    {
+      $content = json_decode($request->getContent(),true);
+      $userUsername = $content['operatorUsername'];
+      $categoryId = $content['categoryId'];
+      $supportLineId = $content['supportLineId'];
+// dump($categoryId);
+// die;
+        try{
+          if($userUsername && $categoryId && $supportLineId){
+            $operator = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->findOneBy(array(
+              'userUsername'=>$userUsername,
+              'categoryId'=>$categoryId,
+              'supportLineId'=>$supportLineId
+            ));
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->remove($operator);
+            $em->flush();
+            $response['code'] = 1;
+          }
+        }catch(Exception $e){
+            $response['message'] =  $e->getMessage();
+            $response['code'] = 0;
+        }finally{
+          $responseContainer = new JsonResponse();
+          $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
+          $responseContainer->setData(array('data'=>$response));
+          $responseContainer->headers->set('Content-Type', 'application/json');
+          return $responseContainer;
+        }
+
+    }
 }

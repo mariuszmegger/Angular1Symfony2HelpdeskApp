@@ -1,6 +1,8 @@
 angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash) {
     $scope.candidateTableCheck = false;
     $scope.filterBy = {};
+    $scope.length = 10;
+    $scope.operatorsList = [];
 
     $scope.searchUser = function(name){
       // if(name.length > 2 ){
@@ -72,7 +74,6 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
       }
       var saveOperator = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxSaveOperator', data);
       saveOperator.then(function (response) {
-          console.log(response.data.data.code);
           if(response.data.data !== false){
             if(response.data.data.code === 1){
               // $location.path('/admin-operators');
@@ -100,6 +101,7 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
         var operatorsList = ajaxLoader.makeRequest('GET','/app_dev.php/ajaxGetOperators');
         operatorsList.then(function (response) {
             if(response.data !== false){
+                console.log(response.data.data);
               $scope.operatorsList = response.data.data;
             }
             else{
@@ -128,7 +130,30 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
     $scope.isOrderedBy = function(columnName){
       return($scope.orderByColumn === columnName);
     }
+
     $scope.showOrderArrow = function(){
       return !$scope.orderByDirection;
     }
+
+    $scope.deleteOperator = function(operatorUsername, categoryId, supportLineId){
+      data = {
+        operatorUsername: operatorUsername,
+        categoryId: categoryId,
+        supportLineId: supportLineId
+      }
+      console.log(operatorUsername);
+      var operatorsList = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxDeleteOperator', data);
+      operatorsList.then(function (response) {
+              $scope.createOperatorsTable();
+              var message = 'Operator Removed';
+              $scope.$parent.successAlert(message, 'success');
+      },function(response){
+        var message = 'Connection error operator not deleted';
+        $scope.$parent.successAlert(message, 'danger');
+        $log.error(response)
+      })
+    }
+
+
+
 }])
