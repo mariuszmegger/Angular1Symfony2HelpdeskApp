@@ -1,8 +1,10 @@
 angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash) {
     $scope.candidateTableCheck = false;
     $scope.filterBy = {};
-    $scope.length = 10;
+    $scope.listLength = 10;
     $scope.operatorsList = [];
+    $scope.currentPage = 1;
+    $scope.totalRecords = '';
 
     $scope.searchUser = function(name){
       // if(name.length > 2 ){
@@ -101,8 +103,8 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
         var operatorsList = ajaxLoader.makeRequest('GET','/app_dev.php/ajaxGetOperators');
         operatorsList.then(function (response) {
             if(response.data !== false){
-                console.log(response.data.data);
               $scope.operatorsList = response.data.data;
+              $scope.totalRecords = $scope.operatorsList.length
             }
             else{
                 $scope.operatorsList = false;
@@ -141,7 +143,6 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
         categoryId: categoryId,
         supportLineId: supportLineId
       }
-      console.log(operatorUsername);
       var operatorsList = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxDeleteOperator', data);
       operatorsList.then(function (response) {
               $scope.createOperatorsTable();
@@ -154,6 +155,8 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
       })
     }
 
-
+    $scope.setCurrentPage = function(currentPage){
+      $scope.currentPage = currentPage;
+    }
 
 }])

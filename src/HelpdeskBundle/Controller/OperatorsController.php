@@ -113,8 +113,6 @@ class OperatorsController extends Controller
       $userUsername = $content['operatorUsername'];
       $categoryId = $content['categoryId'];
       $supportLineId = $content['supportLineId'];
-// dump($categoryId);
-// die;
         try{
           if($userUsername && $categoryId && $supportLineId){
             $operator = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->findOneBy(array(
