@@ -1,10 +1,26 @@
-angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash) {
+angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', '$filter', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash, $filter) {
     $scope.candidateTableCheck = false;
     $scope.filterBy = {};
-    $scope.listLength = 10;
+    $scope.listLength = 2;
     $scope.operatorsList = [];
     $scope.currentPage = 1;
-    $scope.totalRecords = '';
+    $scope.paginationLengthArray = [];
+    $scope.totalRecords = 0;
+
+
+    $scope.pageChanged = function (pageNo) {
+      $scope.currentPage = pageNo;
+    };
+
+  //   $scope.$watch('currentPage + listLength + operatorsList', function() {
+  //     console.log($scope.operatorsList);
+  //     var begin = $scope.currentPage * $scope.listLength - $scope.listLength;
+  //     var end = $scope.currentPage * $scope.listLength ;
+  //     $scope.filteredTodos = $scope.operatorsList.slice(begin, end);
+  // });
+
+
+
 
     $scope.searchUser = function(name){
       // if(name.length > 2 ){
@@ -104,7 +120,10 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
         operatorsList.then(function (response) {
             if(response.data !== false){
               $scope.operatorsList = response.data.data;
-              $scope.totalRecords = $scope.operatorsList.length
+              $scope.totalRecords = $scope.operatorsList.length;
+              console.log($scope.operatorsList);
+              console.log('aaa');
+              // $scope.countRecords($scope.operatorsList, $scope.currentPage, $scope.listLength);
             }
             else{
                 $scope.operatorsList = false;
@@ -155,8 +174,16 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
       })
     }
 
-    $scope.setCurrentPage = function(currentPage){
-      $scope.currentPage = currentPage;
+    $scope.countRecords = function(value, currentPage, limit){
+      $scope.begin = currentPage * limit - limit;
+      $scope.end = currentPage * limit ;
+      if ($scope.end > value.length){
+        $scope.end = value.length;
+      }
+
+      $scope.setFirstPage = function(){
+        $scope.currentPage = 1;
+      }
     }
 
 }])

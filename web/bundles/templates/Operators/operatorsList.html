@@ -38,7 +38,7 @@
 
             </div>
             <div class="col-md-2" >
-              <select class="form-control" ng-model="listLength">
+              <select class="form-control" ng-model="listLength" ng-change="setFirstPage()">
                 <option ng-selected="{{ listLength === 2 }}" value="2">2</option>
                 <option ng-selected="{{ listLength === 5 }}"value="5">5</option>
                 <option  ng-selected="{{ listLength === 10 }}"value="10">10</option>
@@ -69,7 +69,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="operator in operatorsList | filter:searchTerm |  filter:filterBy |  pagination: currentPage: listLength | orderBy: orderByColumn: orderByDirection ">
+                <tr ng-repeat="operator in operatorsList | filter:searchTerm |  filter:filterBy |  pagination:currentPage:lineLength | orderBy: orderByColumn: orderByDirection ">
+                <!-- <tr ng-repeat="operator in filteredTodos | filter:searchTerm |  filter:filterBy |  orderBy: orderByColumn: orderByDirection "> -->
                   <td>{{ operator.firstname }}</td>
                   <td>{{ operator.surname }}</td>
                   <td>{{ operator.username }}</td>
@@ -79,12 +80,9 @@
                 </tr>
               </tbody>
             </table>
-            <span>Total items:{{ totalRecords }}</span>
-            <ul>
-              <li ng-click="setCurrentPage(1)">1</li>
-              <li ng-click="setCurrentPage(2)">2</li>
-              <li ng-click="setCurrentPage(3)">3</li>
-            </ul>
+            <span>Showing {{ begin }} to {{ end }}  of {{ totalRecords  }}</span>
+            <!-- <ul uib-pagination total-items="totalRecords" ng-model="currentPage" ng-change="pageChanged()"></ul> -->
+            <ul uib-pagination total-items="totalRecords" ng-model="currentPage" items-per-page="listLength" class="pagination-sm" boundary-link-numbers="true"></ul>
         </div>
 
     </div>
