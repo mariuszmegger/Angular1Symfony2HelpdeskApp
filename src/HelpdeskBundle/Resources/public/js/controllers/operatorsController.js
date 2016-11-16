@@ -3,24 +3,63 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
     $scope.filterBy = {};
     $scope.listLength = 2;
     $scope.operatorsList = [];
+    $scope.filteredOperatorList = [];
+    $scope.finalFilteredOperatorList = [];
     $scope.currentPage = 1;
     $scope.paginationLengthArray = [];
     $scope.totalRecords = 0;
-
 
     $scope.pageChanged = function (pageNo) {
       $scope.currentPage = pageNo;
     };
 
-  //   $scope.$watch('currentPage + listLength + operatorsList', function() {
-  //     console.log($scope.operatorsList);
-  //     var begin = $scope.currentPage * $scope.listLength - $scope.listLength;
-  //     var end = $scope.currentPage * $scope.listLength ;
-  //     $scope.filteredTodos = $scope.operatorsList.slice(begin, end);
-  // });
+    $scope.$watch('filterBy.name + filterBy.line_name + listLength + searchTerm', function() {
+        $scope.filterData();
+    });
 
+    $scope.filterData = function(){
+        $scope.filteredOperatorList = [];
+        $scope.finalFilteredOperatorList = [];
+        if($scope.searchTerm){
+            for(var i=0; i< $scope.operatorsList.length ; i++){
+                if(
+                    $scope.operatorsList[i].name.indexOf($scope.searchTerm) !== -1 ||
+                    $scope.operatorsList[i].firstname.indexOf($scope.searchTerm) !== -1 ||
+                    $scope.operatorsList[i].surname.indexOf($scope.searchTerm) !== -1 ||
+                    $scope.operatorsList[i].username.indexOf($scope.searchTerm) !== -1 ||
+                    $scope.operatorsList[i].line_name.indexOf($scope.searchTerm) !== -1
 
+                ){
+                    $scope.filteredOperatorList.push($scope.operatorsList[i]);
+                }
+            }
+        }else{
+            $scope.filteredOperatorList = $scope.operatorsList
+        }
 
+        for(var i=0; i< $scope.filteredOperatorList.length ; i++){
+
+            if($scope.filterBy.name && $scope.filterBy.line_name){
+                if($scope.filteredOperatorList[i].support_line_id == $scope.filterBy.line_name && $scope.filteredOperatorList[i].name == $scope.filterBy.name){
+                    $scope.finalFilteredOperatorList.push($scope.filteredOperatorList[i]);
+                }
+            }
+            else if($scope.filterBy.name){
+                if($scope.filteredOperatorList[i].name == $scope.filterBy.name){
+                    $scope.finalFilteredOperatorList.push($scope.filteredOperatorList[i]);
+                }
+            }
+            else if($scope.filterBy.line_name){
+                if($scope.filteredOperatorList[i].support_line_id == $scope.filterBy.line_name){
+                    $scope.finalFilteredOperatorList.push($scope.filteredOperatorList[i]);
+                }
+            }
+            else{
+                $scope.finalFilteredOperatorList.push($scope.filteredOperatorList[i]);
+            }
+        }
+        $scope.totalRecords = $scope.finalFilteredOperatorList.length;
+    }
 
     $scope.searchUser = function(name){
       // if(name.length > 2 ){
@@ -120,15 +159,15 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
         operatorsList.then(function (response) {
             if(response.data !== false){
               $scope.operatorsList = response.data.data;
-              $scope.totalRecords = $scope.operatorsList.length;
-              console.log($scope.operatorsList);
-              console.log('aaa');
+            //   $scope.totalRecords = $scope.operatorsList.length;
+              $scope.filterData()
               // $scope.countRecords($scope.operatorsList, $scope.currentPage, $scope.listLength);
             }
             else{
                 $scope.operatorsList = false;
             }
         })
+
     }
     $scope.createOperatorsTable();
 
@@ -174,16 +213,16 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
       })
     }
 
-    $scope.countRecords = function(value, currentPage, limit){
-      $scope.begin = currentPage * limit - limit;
-      $scope.end = currentPage * limit ;
-      if ($scope.end > value.length){
-        $scope.end = value.length;
-      }
+    // $scope.countRecords = function(value, currentPage, limit){
+    //   $scope.begin = currentPage * limit - limit;
+    //   $scope.end = currentPage * limit ;
+    //   if ($scope.end > value.length){
+    //     $scope.end = value.length;
+    //   }
 
-      $scope.setFirstPage = function(){
+
+    $scope.setFirstPage = function(){
         $scope.currentPage = 1;
-      }
     }
 
 }])

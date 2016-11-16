@@ -69,7 +69,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="operator in operatorsList | filter:searchTerm |  filter:filterBy |  pagination:currentPage:lineLength | orderBy: orderByColumn: orderByDirection ">
+                <tr ng-repeat="operator in finalFilteredOperatorList | pagination:currentPage:listLength | orderBy: orderByColumn: orderByDirection ">
                 <!-- <tr ng-repeat="operator in filteredTodos | filter:searchTerm |  filter:filterBy |  orderBy: orderByColumn: orderByDirection "> -->
                   <td>{{ operator.firstname }}</td>
                   <td>{{ operator.surname }}</td>
