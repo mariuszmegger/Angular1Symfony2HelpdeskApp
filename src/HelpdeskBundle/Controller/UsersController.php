@@ -82,6 +82,8 @@ class UsersController extends Controller
    $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->findOneByEmail($email);
    if(!$user){
      $userCheck = true;
+   }else{
+     $userCheck = false;
    }
    $responseContainer = new JsonResponse();
    $responseContainer->setData($userCheck);

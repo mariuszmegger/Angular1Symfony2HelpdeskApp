@@ -191,7 +191,6 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
       var serviceResponse3 = ajaxLoader.makeRequest('GET','/app_dev.php/ajaxGetOneUser/'+id, data);
       serviceResponse3.then(function (response) {
         if(response.data != false){
-          console.log(response.data.id);
             $scope.editUser.id = response.data.id;
             $scope.editUser.login = response.data.login;
             $scope.editUser.email = response.data.email;
@@ -213,6 +212,7 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
             $scope.editUser.postcodeNoChange = response.data.postcode;
             $scope.editUser.unitNoChange = response.data.unit;
             $scope.editUser.islockedNoChange = response.data.locked;
+
         }
         else{
             $location.path('/admin-users');
