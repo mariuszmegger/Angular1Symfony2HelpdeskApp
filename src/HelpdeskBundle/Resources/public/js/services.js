@@ -1,3 +1,6 @@
+  /**
+  * Service created for ajax calls
+  */
 
   angular.module('helpdeskModule').factory('ajaxLoader', ['$http', function ($http) {
 
@@ -12,6 +15,10 @@
             makeRequest : _makeRequest
         }
     }])
+
+  /**
+  * Service used to autheticate user
+  */
 
   angular.module('helpdeskModule').factory('authentication', ['$location', function ($location) {
 

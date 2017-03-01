@@ -7,8 +7,12 @@ angular.module('helpdeskModule').directive('emailAvailable',['$http','$q', funct
       restrict: 'A',
       require: 'ngModel',
       link: function(scope, element, attrs, ngModel) {
+        if(element[0].name === 'editUserEmail'){
           var oldEmail = scope.editUser.emailNoChange;
-
+        }
+        else{
+          var oldEmail = null;
+        }
           ngModel.$asyncValidators.emailAvailable = function(value) {
 			  if(oldEmail !== element.val()){
 	             return $http.get('/app_dev.php/checkUserEmail/'+value).then(function(response){

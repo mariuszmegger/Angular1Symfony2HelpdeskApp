@@ -29,6 +29,9 @@
     display: none; } }
 
 /* MODULES - Individual sites components */
+.fa {
+  cursor: pointer; }
+
 .page-navbar .navbar-brand img {
   display: inline-block; }
 
@@ -178,13 +181,33 @@
           color: red; }
         .main table tbody tr td:last-child i.fa-trash {
           color: blue; }
+  .main .searchUserInput {
+    margin-left: 120px; }
+  .main .searchedUsersWrapper {
+    position: absolute;
+    width: 93%;
+    max-height: 171px;
+    overflow-y: auto; }
+  .main .operatorsAddTable {
+    border: 1px solid lightgrey; }
+    .main .operatorsAddTable tr td {
+      font-size: 12px !important;
+      color: black;
+      cursor: pointer;
+      background-color: #eaeaea; }
+  .main .operatorsAddResultTable select {
+    width: 90% !important;
+    float: left; }
+  .main .operatorsAddResultTable .fa-star {
+    color: red;
+    font-size: 10px; }
   .main form label {
     width: 100%; }
   .main form .formMessageWrapper {
-    margin-top: 10px;
+    padding-bottom: 0px;
     margin-left: 10px; }
   .main .rightBox {
-    min-height: 500px;
+    height: 600px;
     width: 48.85%; }
     .main .rightBox .contentBoxHeader {
       margin-bottom: 11px;
@@ -200,7 +223,7 @@
           width: 136px;
           font-style: normal; }
   .main .leftBox {
-    min-height: 500px;
+    height: 600px;
     margin-right: 24px;
     width: 48.85%; }
     .main .leftBox .contentBoxHeader {
@@ -231,6 +254,22 @@
   font-weight: bold;
   padding: 1px 15px;
   font-size: 21px; }
+
+.sidebar-inner {
+  position: fixed;
+  top: 50px;
+  width: 210px; }
+
+.sidebar-inner .disabled {
+  color: #626467 !important;
+  background-color: #303946; }
+
+.sidebar-inner .disabled:hover {
+  color: #626467 !important;
+  background-color: #303946; }
+
+.page-sidebar .side-nav .nav > li a {
+  padding: 10px 39px 9px !important; }
 
 .page-sidebar {
   width: 210px;

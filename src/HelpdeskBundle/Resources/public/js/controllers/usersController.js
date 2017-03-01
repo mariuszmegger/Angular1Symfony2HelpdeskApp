@@ -107,9 +107,9 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
 
     $scope.deleteUser = function(id){
       var data = {
-          'id': id
+        id: id
       }
-      var serviceResponse = ajaxLoader.makeRequest('GET','/app_dev.php/ajaxDeleteUser/'+id, data);
+      var serviceResponse = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxDeleteUser', data);
       serviceResponse.then(function (response) {
         console.log(response.data.code);
         $scope.data = response.data.code;

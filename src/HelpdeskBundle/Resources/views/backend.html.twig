@@ -5,94 +5,78 @@
   <!-- .page-navbar -->
   <div id="header" class="page-navbar header-fixed">
       <!-- .navbar-brand -->
-      <a href="#" class="navbar-brand">
+      <a href="#/admin-dashboard" class="navbar-brand">
         <i class="fa fa-bolt"></i>
         <span>&nbsp; Amigos Helpdesk</span>
       </a>
       <!-- /.navbar-brand -->
       <!-- .no-collapse -->
       <div class="navbar-no-collapse">
-          <!-- top left nav -->
-          <ul class="nav navbar-nav">
-              <li class="toggle-sidebar">
-                  <a href="#">
-                      <i class="fa fa-reorder"></i>
-                      <span class="sr-only">&nbsp; Zwiń boczny panel</span>
-                  </a>
-              </li>
-          </ul>
-          <!-- / top left nav -->
           <!-- top right nav -->
           <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
-                  <a href="#" data-toggle="dropdown">
+                  <a  data-toggle="dropdown">
                       <i class="fa fa-bell-o"></i>
-                      <span class="sr-only">Powiadomienia</span>
+                      <span class="sr-only">Notifications</span>
                       <span class="badge">8</span>
                   </a>
                   <ul class="dropdown-menu">
-                      <li><a href="#" class="dropdown-menu-header">Powiadomienia</a>
+                      <li><a  class="dropdown-menu-header">Notifications</a>
                       </li>
                       <li>
-                        <a href="#">
+                        <a >
                           <i class="fa fa-exclamation-circle text-danger">
-                          </i>&nbsp; Incydenty wygasające <span class="badge">0</span>
+                          </i>&nbsp; Incidents expire <span class="badge">0</span>
                         </a>
                       </li>
                       <li>
-                        <a href="#">
+                        <a >
                           <i class="fa fa-exclamation-triangle text-danger">
-                          </i>&nbsp; Żądania wygasające <span class="badge">5</span>
+                          </i>&nbsp; Requests expire <span class="badge">5</span>
                         </a>
                       </li>
                       <li>
-                        <a href="#">
+                        <a >
                           <i class="fa fa-arrow-circle-o-down">
-                          </i>&nbsp; Incydenty cofnięte <span class="badge">2</span>
+                          </i>&nbsp; Incidents withdrawn <span class="badge">2</span>
                         </a>
                       </li>
                       <li>
-                        <a href="#"><i class="fa fa-arrow-circle-down">
-                        </i>&nbsp; Żądania cofnięte <span class="badge">1</span>
+                        <a ><i class="fa fa-arrow-circle-down">
+                        </i>&nbsp; Request withdrawn <span class="badge">1</span>
                       </a>
                       </li>
                       <li>
-                        <a href="#"><i class="fa fa-user">
-                        </i>&nbsp; Nowe zdarzenie moje <span class="badge">1</span>
+                        <a ><i class="fa fa-user">
+                        </i>&nbsp; My new events  <span class="badge">1</span>
                       </a>
                       </li>
                       <li>
-                        <a href="#"><i class="fa fa-users">
-                        </i>&nbsp; Nowe zdarzenie grupy <span class="badge">1</span>
+                        <a ><i class="fa fa-users">
+                        </i>&nbsp; New events of my group <span class="badge">1</span>
                       </a>
                       </li>
                       <li>
-                        <a href="#" class="view-all">
-                          <span>Pokaż wszystkie</span>
+                        <a  class="view-all">
+                          <span>Show All</span>
                         </a>
                       </li>
                   </ul>
               </li>
               <li class="dropdown">
-                  <a href="#" data-toggle="dropdown">
+                  <a disabled  data-toggle="dropdown">
                       <i class="fa fa-cog"></i>
-                      <span class="sr-only">Ustawienia</span>
+                      <span class="sr-only">Settings</span>
                   </a>
                   <ul class="dropdown-menu">
-                      <li><a href="#" class="dropdown-menu-header">Miejsce na ustawienia</a>
+                      <li><a href="#" class="dropdown-menu-header">Place for settings</a>
                       </li>
                   </ul>
               </li>
               <li>
                   <a href="/logout">
                       <i class="fa fa-power-off"></i>
-                      <span class="sr-only">Wyloguj</span>
-                  </a>
-              </li>
-              <li>
-                  <a id="toggle-right-sidebar" href="#" title="Ukryj prawy sidebar">
-                      <i class="fa fa-caret-square-o-right"></i>
-                      <span class="sr-only">Ukryj prawy sidebar</span>
+                      <span class="sr-only">Logout</span>
                   </a>
               </li>
           </ul>
@@ -130,24 +114,7 @@
                     </li>
                   </ul>
                 </div>
-                <div class="side-nav">
-                  <ul class="nav">
-                    <li class="hover-li">
-                      <a href="/#/admin-units" class="active">
-                        <span class="txt">Units</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="side-nav">
-                  <ul class="nav">
-                    <li class="hover-li">
-                      <a href="/#/admin-support_lines" class="active">
-                        <span class="txt">Support Lines</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+
                 <div class="side-nav">
                   <ul class="nav">
                     <li class="hover-li">
@@ -168,8 +135,26 @@
                 </div>
                 <div class="side-nav">
                   <ul class="nav">
-                    <li class="hover-li">
-                      <a href="/#/admin-settings" class="active">
+                    <li disabled="disabled" class="hover-li">
+                      <a disabled="disabled"   class="disabled">
+                        <span class="txt">Units</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="side-nav">
+                  <ul class="nav">
+                    <li disabled="disabled" class="hover-li">
+                      <a disabled="disabled"   class="disabled">
+                        <span class="txt">Support Lines</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="side-nav">
+                  <ul class="nav">
+                    <li disabled="disabled" class="hover-li">
+                      <a disabled="disabled"  class="disabled">
                         <span class="txt">Settings</span>
                       </a>
                     </li>

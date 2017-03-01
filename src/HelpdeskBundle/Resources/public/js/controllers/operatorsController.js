@@ -62,22 +62,23 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
     }
 
     $scope.searchUser = function(name){
-      // if(name.length > 2 ){
-      $scope.candidateTableCheck = false;
-      if(name){
-          var data = {
-              name: name
-          }
-          var usersList = ajaxLoader.makeRequest('GET','/app_dev.php/ajaxGetUsersForOperators', data);
+      if(name.length > 3 ){
+          $scope.candidateTableCheck = false;
+          if(name){
+              var data = {
+                  name: name
+              }
+              var usersList = ajaxLoader.makeRequest('GET','/app_dev.php/ajaxGetUsersForOperators', data);
 
-          usersList.then(function (response) {
-              if(response.data !== false){
-                  $scope.usersForOperators = response.data.data;
-              }
-              else{
-                  $scope.usersForOperators = false;
-              }
-          })
+              usersList.then(function (response) {
+                  if(response.data !== false){
+                      $scope.usersForOperators = response.data.data;
+                  }
+                  else{
+                      $scope.usersForOperators = false;
+                  }
+              })
+            }
         }
     }
 
@@ -90,6 +91,7 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
         $scope.candidateTable.surname = surname;
         $scope.candidateTable.username = username;
         $scope.candidateTable.email = email;
+
     }
 
     $scope.getCategoriesForOperators = function(){
@@ -133,7 +135,7 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
       saveOperator.then(function (response) {
           if(response.data.data !== false){
             if(response.data.data.code === 1){
-              // $location.path('/admin-operators');
+              $location.path('/admin-operators');
               var message = 'Operator Added';
               $scope.$parent.successAlert(message, 'success');
             }

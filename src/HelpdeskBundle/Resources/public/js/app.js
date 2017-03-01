@@ -1,10 +1,3 @@
-$(document).ready(function () {
-
-    $(".toggle-sidebar").click(function () {
-        $("#sidebar").toggleClass("collapse-sidebar");
-
-    });
-});
 
 /**
  * Main config with module creation, dependency injection, routes and other configuration
@@ -86,7 +79,3 @@ angular.module('helpdeskModule').controller('MainController', ['$scope', 'Flash'
         }, 5000);
     }
 }]);
-
-
-
-

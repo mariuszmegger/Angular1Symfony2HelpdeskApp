@@ -23,3 +23,22 @@
     padding: 1px 15px;
     font-size: 21px;
 }
+.sidebar-inner{
+    position: fixed;
+    top: 50px;
+    width: 210px;
+}
+
+.sidebar-inner .disabled{
+    color: #626467 !important;
+    background-color: #303946;
+}
+
+.sidebar-inner .disabled:hover{
+    color: #626467 !important;
+    background-color: #303946;
+}
+
+.page-sidebar .side-nav .nav > li a {
+    padding: 10px 39px 9px !important;
+}

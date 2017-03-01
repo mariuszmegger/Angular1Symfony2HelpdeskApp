@@ -12,6 +12,8 @@ class UsersController extends Controller
 {
 
   /**
+   * Ajax function used for saving user to database
+   *
    * @Route("/ajaxAddUser", name="ajaxAddUser")
    */
   public function ajaxAddUserAction(Request $request)
@@ -20,9 +22,11 @@ class UsersController extends Controller
     $users = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->saveUser($request, $userManager);
   }
 
-  /**
-   * @Route("/ajaxGetUsers", name="ajaxGetUsers")
-   */
+	/**
+	* Ajax function used for getting all users
+	*
+ 	* @Route("/ajaxGetUsers", name="ajaxGetUsers")
+ 	*/
   public function ajaxGetUsersAction(Request $request)
 {
     $users = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->findUsers($request);
@@ -30,22 +34,27 @@ class UsersController extends Controller
  }
 
  /**
-  * @Route("/ajaxDeleteUser/{id}", name="ajaxDeleteUser")
+ 	* Ajax function used for deleting one user
+	*
+  * @Route("/ajaxDeleteUser", name="ajaxDeleteUser")
   */
- public function ajaxDeleteUserAction($id)
+ public function ajaxDeleteUserAction(Request $request)
 {
-   $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->deleteUser($id);
+    $content = json_decode($request->getContent(),true);
+    $id = $content['id'];
+    $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->deleteUser($id);
 }
 
   /**
-   * @Route("/ajaxGetOneUser/{id}", name="ajaxGetOneUser")
-   */
+	* Ajax function used for getting one user
+	*
+  * @Route("/ajaxGetOneUser/{id}", name="ajaxGetOneUser")
+  */
   public function getOneUserAction(Request $request, $id)
   {
 
     $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->findBy(array('id'=>$id));
 
-    // dump($user);die;
     $data = array(
       'id'=>$user[0]->getId(),
       'login'=>$user[0]->getUsername(),
@@ -66,8 +75,10 @@ class UsersController extends Controller
   }
 
   /**
-   * @Route("/ajaxUpdateUser", name="ajaxDeleteUser")
-   */
+	* Ajax function used for updating one user
+	*
+  * @Route("/ajaxUpdateUser", name="ajaxUpdateUser")
+  */
   public function ajaxUpdateUserAction(Request $request)
  {
    $userManager = $this->get('fos_user.user_manager');
@@ -75,6 +86,8 @@ class UsersController extends Controller
  }
 
  /**
+ 	* Ajax function used for checking if the written email exists
+	*
   * @Route("/checkUserEmail/{email}", name="checkUserEmail")
   */
  public function checkUserEmailAction(Request $request, $email)

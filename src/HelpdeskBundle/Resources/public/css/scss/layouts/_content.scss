@@ -181,18 +181,52 @@
         }
     }
 
+
+    // OPERATORS TABLE
+
+    .searchUserInput{
+      margin-left:120px;
+    }
+    .searchedUsersWrapper{
+      position: absolute;
+      width:93%;
+      max-height:171px;
+      overflow-y:auto;
+    }
+    .operatorsAddTable{
+      border: 1px solid lightgrey;
+      tr{
+        // border:1px solid black;
+        td{
+          font-size: 12px !important;
+          color:black;
+          cursor:pointer;
+          background-color:#eaeaea;
+        }
+      }
+    }
+    .operatorsAddResultTable{
+      select{
+        width:90% !important;
+        float:left;
+      }
+      .fa-star{
+        color:red;
+        font-size:10px;
+      }
+    }
     form{
         label{
             width:100%;
         }
         .formMessageWrapper{
           // text-align:center;
-          margin-top:10px;
+          padding-bottom:0px;
           margin-left:10px;
         }
     }
     .rightBox {
-        min-height:500px;
+        height:600px;
         width: 48.85%;
         .contentBoxHeader{
             margin-bottom:11px;
@@ -216,7 +250,7 @@
         }
     }
     .leftBox{
-      min-height:500px;
+      height:600px;
       margin-right: 24px;
       width: 48.85%;
         .contentBoxHeader{

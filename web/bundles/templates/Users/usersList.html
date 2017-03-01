@@ -16,7 +16,7 @@
               </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="isActive">Is Active</label>
+                        <label for="isActive">Is Locked</label>
                         <select ng-model="userIsActive" id="isActive" class="form-control" name="isActive" ng-change="saveCompanyisActive(userIsActive)">
                             <option value="">All</option>
                             <option value="1">Yes</option>
@@ -52,16 +52,21 @@
                               <span class="text-danger" ng-show="addUserForm.userLogin.$error.maxlength">Login requires to have max 15 letters</span>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-sm-3">
                             <label for="addUserEmail" class=" control-label">E-mail: </label>
                         </div>
                         <div class="col-sm-8">
-                            <input ng-model="addUserEmail" name="addUserEmail" id="addUserEmail" class="form-control" type="email" required="required">
+                            <input ng-model="addUserEmail" name="addUserEmail" id="addUserEmail" class="form-control" type="email" required="required" email-available>
                             <div class="formMessageWrapper" ng-show="addUserForm.addUserEmail.$touched">
                               <span class="text-danger" ng-show="addUserForm.addUserEmail.$error.required">User email is required</span>
                               <span class="text-danger" ng-show="addUserForm.addUserEmail.$error.email">Enter valid email adress</span>
+                              <span class="text-danger" ng-show="addUserForm.addUserEmail.$error.emailAvailable">User e-mail exist try another one</span>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-sm-3">
                               <label for="addUserFirstName" class=" control-label">First Name: </label>
                         </div>
@@ -71,6 +76,8 @@
                               <span class="text-danger" ng-show="addUserForm.addUserFirstName.$error.required">First name is required</span>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-sm-3">
                             <label for="addUserSureName" class=" control-label">Last Name: </label>
                         </div>
@@ -80,33 +87,41 @@
                               <span class="text-danger" ng-show="addUserForm.addUserSureName.$error.required">Surname is required</span>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-sm-3">
                             <label for="addUserCity" class=" control-label">City: </label>
                         </div>
                         <div class="col-sm-8">
                             <input ng-model="addUserCity" name="addUserCity" id="addUserCity" class="form-control" type="text" >
                         </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-sm-3">
                             <label for="addUserStreet" class=" control-label">Street: </label>
                         </div>
                         <div class="col-sm-8">
                             <input ng-model="addUserStreet" name="addUserStreet" id="addUserStreet" class="form-control" type="text" >
                         </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-sm-3">
                             <label for="addUserPostCode" class=" control-label">Post code: </label>
                         </div>
                         <div class="col-sm-8">
                             <input ng-model="addUserPostCode" name="addUserPostCode" id="addUserPostCode" class="form-control" type="text" >
                         </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-sm-3">
                             <label for="addUserUnit" class=" control-label">Unit: </label>
                         </div>
                         <div class="col-sm-8">
                             <select ng-model="addUserUnit" name="addUserUnit" id="addUserUnit" class="form-control" type="text" required="required">
-                              <option class="unitOption form-controll" value="">Choose Unit</option>
-                              <option class="unitOption form-controll" value="1">Unit 1</option>
-                              <option class="unitOption form-controll" value="2">Unit 2</option>
-                              <option class="unitOption form-controll" value="3">Unit 3</option>
+                              <option class="unitOption form-control" value="">Choose Unit</option>
+                              <option class="unitOption form-control" value="1">Unit 1</option>
+                              <option class="unitOption form-control" value="2">Unit 2</option>
+                              <option class="unitOption form-control" value="3">Unit 3</option>
                             </select>
                             <div class="formMessageWrapper" ng-show="addUserForm.addUserUnit.$touched">
                               <span class="text-danger" ng-show="addUserForm.addUserUnit.$error.required">Unit is required</span>

@@ -19,7 +19,6 @@ class OperatorsRepository extends EntityRepository
     ->orWhere('u.surname LIKE :name')
     ->setParameter('name', '%'.$name. '%')
     ->orderBy('u.firstname', 'ASC')
-    ->setMaxResults('5')
     ->getQuery()
     ->getResult(\Doctrine\ORM\AbstractQuery::HYDRATE_ARRAY);
 
