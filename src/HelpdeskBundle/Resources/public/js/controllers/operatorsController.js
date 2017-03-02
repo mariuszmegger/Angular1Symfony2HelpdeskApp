@@ -1,19 +1,20 @@
-angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', '$filter', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash, $filter) {
+angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', '$filter', '$uibModal', 'confirmModal', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash, $filter, $uibModal, confirmModal) {
     $scope.candidateTableCheck = false;
     $scope.filterBy = {};
-    $scope.listLength = 2;
+    $scope.listLength = 10;
     $scope.operatorsList = [];
     $scope.filteredOperatorList = [];
     $scope.finalFilteredOperatorList = [];
     $scope.currentPage = 1;
     $scope.paginationLengthArray = [];
-    $scope.totalRecords = 0;
+    $scope.totalRecords = undefined;
+
 
     $scope.pageChanged = function (pageNo) {
       $scope.currentPage = pageNo;
     };
 
-    $scope.$watch('filterBy.name + filterBy.line_name + listLength + searchTerm', function() {
+    $scope.$watch('filterBy.name + filterBy.line_name + listLength + searchTerm + currentPage', function() {
         $scope.filterData();
     });
 
@@ -59,6 +60,8 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
             }
         }
         $scope.totalRecords = $scope.finalFilteredOperatorList.length;
+        $scope.countRecords($scope.totalRecords,$scope.currentPage, $scope.listLength);
+
     }
 
     $scope.searchUser = function(name){
@@ -198,29 +201,35 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
     }
 
     $scope.deleteOperator = function(operatorUsername, categoryId, supportLineId){
-      data = {
-        operatorUsername: operatorUsername,
-        categoryId: categoryId,
-        supportLineId: supportLineId
-      }
-      var operatorsList = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxDeleteOperator', data);
-      operatorsList.then(function (response) {
-              $scope.createOperatorsTable();
-              var message = 'Operator Removed';
-              $scope.$parent.successAlert(message, 'success');
-      },function(response){
-        var message = 'Connection error operator not deleted';
-        $scope.$parent.successAlert(message, 'danger');
-        $log.error(response)
-      })
+
+        var options = {};
+        confirmModal.open(options, 'Are you sure you want to delete this operator?', function(){
+            data = {
+              operatorUsername: operatorUsername,
+              categoryId: categoryId,
+              supportLineId: supportLineId
+            }
+            var operatorsList = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxDeleteOperator', data);
+            operatorsList.then(function (response) {
+                $scope.createOperatorsTable();
+                var message = 'Operator Removed';
+                $scope.$parent.successAlert(message, 'success');
+            },function(response){
+              var message = 'Connection error operator not deleted';
+              $scope.$parent.successAlert(message, 'danger');
+              $log.error(response)
+            })
+        });
     }
 
-    // $scope.countRecords = function(value, currentPage, limit){
-    //   $scope.begin = currentPage * limit - limit;
-    //   $scope.end = currentPage * limit ;
-    //   if ($scope.end > value.length){
-    //     $scope.end = value.length;
-    //   }
+    $scope.countRecords = function(total, currentPage, limit){
+      $scope.begin = currentPage * limit - limit;
+       $scope.end = currentPage * limit ;
+      if($scope.begin === 0 && $scope.totalRecords !== 0) $scope.begin = 1;
+      if ($scope.end > total){
+        $scope.end = total;
+      }
+  }
 
 
     $scope.setFirstPage = function(){

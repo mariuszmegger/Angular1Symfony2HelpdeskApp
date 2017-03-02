@@ -201,6 +201,27 @@
   .main .operatorsAddResultTable .fa-star {
     color: red;
     font-size: 10px; }
+  .main .operatorsTable {
+    margin-top: 10px; }
+    .main .operatorsTable thead td:not(:last-child) {
+      cursor: pointer; }
+  .main .searchFormField {
+    width: 70%; }
+  .main .searchFormFieldLabel {
+    float: left;
+    padding-top: 6px;
+    margin-right: 10px;
+    margin-left: 41px; }
+  .main .numberSelect {
+    display: inline-block !important;
+    width: 100%; }
+    .main .numberSelect select {
+      width: 20%; }
+  .main .pagination {
+    margin: 0;
+    float: right; }
+    .main .pagination li a {
+      padding: 8px 15px; }
   .main form label {
     width: 100%; }
   .main form .formMessageWrapper {

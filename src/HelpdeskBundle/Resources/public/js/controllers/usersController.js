@@ -1,4 +1,4 @@
-angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', '$compile',  function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash, $compile) {
+angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', '$compile', 'confirmModal',  function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash, $compile, confirmModal) {
 
 //        authentication.auth()
 
@@ -106,33 +106,34 @@ angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http
     }
 
     $scope.deleteUser = function(id){
-      var data = {
-        id: id
-      }
-      var serviceResponse = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxDeleteUser', data);
-      serviceResponse.then(function (response) {
-        console.log(response.data.code);
-        $scope.data = response.data.code;
-        (response.data.code == 1)? $scope.dtInstance.rerender():''
-        $scope.addCategoryName = '';
-        $scope.addCategoryIsActive = '';
-             if(response.data.code == 1){
-               $location.path('/admin-users');
-               var message = 'User Deleted';
-               $scope.$parent.successAlert(message, 'success');
-             }
-             else{
-               $location.path('/admin-users');
-               var message = 'User login not exists';
-               $scope.$parent.successAlert(message, 'danger');
-             }
-      },function(response){
-        $location.path('/admin-users');
-        var message = 'Connection error user not deleted';
-        $scope.$parent.successAlert(message, 'danger');
+      var options = {};
+          confirmModal.open(options, 'Are you sure you want to delete this user?', function(){
+            var data = {
+              id: id
+            }
+            var serviceResponse = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxDeleteUser', data);
+            serviceResponse.then(function (response) {
+              $scope.data = response.data.code;
+              (response.data.code == 1)? $scope.dtInstance.rerender():''
+              $scope.addCategoryName = '';
+              $scope.addCategoryIsActive = '';
+                   if(response.data.code == 1){
+                     var message = 'User Deleted';
+                     $scope.$parent.successAlert(message, 'success');
+                   }
+                   else{
+                     var message = 'User login not exists';
+                     $scope.$parent.successAlert(message, 'danger');
+                   }
+            },function(response){
+              var message = 'Connection error user not deleted';
+              $scope.$parent.successAlert(message, 'danger');
 
-        $log.error(response)
-      })
+              $log.error(response)
+            })
+
+          });
+
     }
     //Category Editing
 

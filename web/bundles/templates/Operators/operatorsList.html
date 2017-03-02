@@ -1,92 +1,92 @@
 <div class="container">
-        <div class="row mainSinglePanel">
-            <div class="col-md-12 mainSinglePanelHeader"><h4>Filters</h4></div>
-            <div class="row mainSinglePanelBody">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="categoriesList">Category</label>
-
-                        <!-- <select ng-model="filterBy.name" id="categoriesList" ng-options=" category.name for category in getCategoriesForOperatorsListFilter"  class="form-control" ng-change="filterByCategorySelect(category.name)">
-                            <option value="">All</option>
-                        </select> -->
-
-                        <select ng-model="filterBy.name" id="categoriesList"   class="form-control" >
-                            <option value="">All</option>
-                            <option  ng-repeat="category in getCategoriesForOperatorsListFilter" value="{{ category.name }}">{{ category.name }}</option>
-                        </select>
+        <div class="row">
+                <div class="row mainSinglePanel">
+                    <div class="col-md-12 mainSinglePanelHeader"><h4>Filters</h4></div>
+                    <div class="row mainSinglePanelBody">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="categoriesList">Category</label>
+                                <select ng-model="filterBy.name" id="categoriesList"   class="form-control" >
+                                    <option value="">All</option>
+                                    <option  ng-repeat="category in getCategoriesForOperatorsListFilter" value="{{ category.name }}">{{ category.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="isActive">Support Line</label>
+                                <select ng-model="filterBy.line_name" id="isActive" class="form-control" name="isActive">
+                                    <option value="">All</option>
+                                    <option value="1">Support Line 1</option>
+                                    <option value="2">Support Line 2</option>
+                                    <option value="3">Support Line 3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="isActive">Support Line</label>
-                        <select ng-model="filterBy.line_name" id="isActive" class="form-control" name="isActive">
-                            <option value="">All</option>
-                            <option value="1">Support Line 1</option>
-                            <option value="2">Support Line 2</option>
-                            <option value="3">Support Line 3</option>
-                        </select>
+
+
+                <div class="col-sm-12 mainSinglePanel tableWrapper">
+                    <div class="col-md-12 mainSinglePanelHeader">
+                      <h4 class="operatorsh4">Operators<a href="/#/admin-addOperators"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></h4>
                     </div>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
+                        <div class="row">
+                            <div class="col-md-4" >
+                              <label class="numberSelect">
+                          Show <select class="form-control numberSelect" ng-model="listLength" ng-change="setFirstPage()">
+                                    <option ng-selected="{{ listLength === 10 }}"value="10">10</option>
+                                    <option ng-selected="{{ listLength === 25 }}" value="25">25</option>
+
+                                    <option  ng-selected="{{ listLength === 50 }}"value="50">50</option>
+                                    <option ng-selected="{{ listLength === 100 }}"value="100">100</option>
+                                </select> entries
+                            </label>
+                            </div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4"><label class="searchFormFieldLabel" for="searchField">Search: </label><input class="form-control searchFormField" id="searchField" type="text" ng-model="searchTerm" ></div>
+                        </div>
+
+                        <table  class="table table-bordered operatorsTable" >
+                          <thead>
+                            <tr>
+                              <td ng-click="sortBy('firstname')">First Name
+                                <i ng-show="isOrderedBy('firstname')" class="glyphicon" ng-class="{'glyphicon-chevron-up': showOrderArrow('firstname'), 'glyphicon-chevron-down': !showOrderArrow('firstname')}"></i>
+                              </td>
+                              <td ng-click="sortBy('surname')">Surname
+                                <i ng-show="isOrderedBy('surname')" class="glyphicon" ng-class="{'glyphicon-chevron-up': showOrderArrow('surname'), 'glyphicon-chevron-down': !showOrderArrow('surname')}"></i>
+                              </td>
+                              <td ng-click="sortBy('username')">Username
+                                <i ng-show="isOrderedBy('username')" class="glyphicon" ng-class="{'glyphicon-chevron-up': showOrderArrow('username'), 'glyphicon-chevron-down': !showOrderArrow('username')}"></i>
+                              </td>
+                              <td ng-click="sortBy('name')">Category
+                                <i ng-show="isOrderedBy('name')" class="glyphicon" ng-class="{'glyphicon-chevron-up': showOrderArrow('name'), 'glyphicon-chevron-down': !showOrderArrow('name')}"></i>
+                              </td>
+                              <td ng-click="sortBy('line_name')">Support Line
+                                <i ng-show="isOrderedBy('line_name')" class="glyphicon" ng-class="{'glyphicon-chevron-up': showOrderArrow('line_name'), 'glyphicon-chevron-down': !showOrderArrow('line_name')}"></i>
+                              </td>
+                              <td>Operations</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="operator in finalFilteredOperatorList | pagination:currentPage:listLength | orderBy: orderByColumn: orderByDirection ">
+                              <td>{{ operator.firstname }}</td>
+                              <td>{{ operator.surname }}</td>
+                              <td>{{ operator.username }}</td>
+                              <td>{{ operator.name }}</td>
+                              <td>{{ operator.line_name }}</td>
+                              <td><i ng-click="deleteOperator(operator.username, operator.category_id, operator.support_line_id)" class="fa fa-minus-circle"></i></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="row" ng-show="totalRecords">
+                                <div class="col-md-4"><span >Showing {{ begin }} to {{ end }}  of {{ totalRecords  }}</span></div>
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4"><ul uib-pagination total-items="totalRecords" ng-model="currentPage" items-per-page="listLength" class="pagination-sm" boundary-links="true" ng-change="pageChanged(currentPage)"></ul></div>
+                        </div>
+                    </div>
         </div>
-
-
-        <div class="col-sm-12 mainSinglePanel tableWrapper">
-            <div class="col-md-18 mainSinglePanelHeader">
-              <div class="col-md-12"><h4>Operators<a href="/#/admin-addOperators"><i class="fa fa-plus-circle" aria-hidden="true"></i></a></h4></div>
-
-            </div>
-            <div class="col-md-2" >
-              <select class="form-control" ng-model="listLength" ng-change="setFirstPage()">
-                <option ng-selected="{{ listLength === 2 }}" value="2">2</option>
-                <option ng-selected="{{ listLength === 5 }}"value="5">5</option>
-                <option  ng-selected="{{ listLength === 10 }}"value="10">10</option>
-                <option ng-selected="{{ listLength === 100 }}"value="100">100</option>
-              </select>
-            </div>
-            <div class="col-md-7"></div>
-            <div class="col-md-3"><label for="searchField">Search: </label><input class="form-control" id="searchField" type="text" ng-model="searchTerm" placeholder="search"></div>
-            <table  class="table table-bordered operatorsTable" >
-              <thead>
-                <tr>
-                  <td ng-click="sortBy('firstname')">First Name
-                    <i ng-show="isOrderedBy('firstname')" class="glyphicon" ng-class="{'glyphicon-chevron-up': showOrderArrow('firstname'), 'glyphicon-chevron-down': !showOrderArrow('firstname')}"></i>
-                  </td>
-                  <td ng-click="sortBy('surname')">Surname
-                    <i ng-show="isOrderedBy('surname')" class="glyphicon" ng-class="{'glyphicon-chevron-up': showOrderArrow('surname'), 'glyphicon-chevron-down': !showOrderArrow('surname')}"></i>
-                  </td>
-                  <td ng-click="sortBy('username')">Username
-                    <i ng-show="isOrderedBy('username')" class="glyphicon" ng-class="{'glyphicon-chevron-up': showOrderArrow('username'), 'glyphicon-chevron-down': !showOrderArrow('username')}"></i>
-                  </td>
-                  <td ng-click="sortBy('name')">Category
-                    <i ng-show="isOrderedBy('name')" class="glyphicon" ng-class="{'glyphicon-chevron-up': showOrderArrow('name'), 'glyphicon-chevron-down': !showOrderArrow('name')}"></i>
-                  </td>
-                  <td ng-click="sortBy('line_name')">Support Line
-                    <i ng-show="isOrderedBy('line_name')" class="glyphicon" ng-class="{'glyphicon-chevron-up': showOrderArrow('line_name'), 'glyphicon-chevron-down': !showOrderArrow('line_name')}"></i>
-                  </td>
-                  <td>Operations</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="operator in finalFilteredOperatorList | pagination:currentPage:listLength | orderBy: orderByColumn: orderByDirection ">
-                <!-- <tr ng-repeat="operator in filteredTodos | filter:searchTerm |  filter:filterBy |  orderBy: orderByColumn: orderByDirection "> -->
-                  <td>{{ operator.firstname }}</td>
-                  <td>{{ operator.surname }}</td>
-                  <td>{{ operator.username }}</td>
-                  <td>{{ operator.name }}</td>
-                  <td>{{ operator.line_name }}</td>
-                  <td><i ng-click="deleteOperator(operator.username, operator.category_id, operator.support_line_id)" class="fa fa-minus-circle"></i></td>
-                </tr>
-              </tbody>
-            </table>
-            <span>Showing {{ begin }} to {{ end }}  of {{ totalRecords  }}</span>
-            <!-- <ul uib-pagination total-items="totalRecords" ng-model="currentPage" ng-change="pageChanged()"></ul> -->
-            <ul uib-pagination total-items="totalRecords" ng-model="currentPage" items-per-page="listLength" class="pagination-sm" boundary-link-numbers="true"></ul>
-        </div>
-
-    </div>
-
 </div>
 
 
