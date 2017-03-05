@@ -3,9 +3,11 @@
 */
 
 angular.module('helpdeskModule').directive('emailAvailable',['$http','$q', function($http, $q) {
+
     return {
       restrict: 'A',
       require: 'ngModel',
+
       link: function(scope, element, attrs, ngModel) {
         if(element[0].name === 'editUserEmail'){
           var oldEmail = scope.editUser.emailNoChange;

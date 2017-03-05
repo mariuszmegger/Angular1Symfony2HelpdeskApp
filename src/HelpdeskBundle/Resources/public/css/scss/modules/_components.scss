@@ -1,0 +1,40 @@
+// login form layout
+.loginFormTitle{
+  width:40%;
+  margin:50px auto;
+  color: #303946;
+  padding-left: 50px;
+}
+
+
+.loginFormWrapper{
+  background-color:#303946;
+  width:25%;
+  margin:50px auto;
+  padding:30px;
+  color:#bdbdbd;
+  border-radius:20px;
+  h4{
+    color:white;
+    width:50%;
+    margin: 0 auto;
+    margin-bottom:15px;
+  }
+  form{
+  //  width:25%;
+  //  margin:120px auto;
+   label{
+    padding-top:10px;
+   }
+   input[type="text"], input[type="password"], input[type="submit"]{
+     width:100%
+   }
+   input{
+     color:black;
+   }
+  label[for=remeber_me]{
+    //  float:left;
+    width:40%;
+   }
+ }
+}

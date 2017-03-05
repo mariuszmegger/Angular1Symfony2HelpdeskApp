@@ -32,6 +32,33 @@
 .fa {
   cursor: pointer; }
 
+.loginFormTitle {
+  width: 40%;
+  margin: 50px auto;
+  color: #303946;
+  padding-left: 50px; }
+
+.loginFormWrapper {
+  background-color: #303946;
+  width: 25%;
+  margin: 50px auto;
+  padding: 30px;
+  color: #bdbdbd;
+  border-radius: 20px; }
+  .loginFormWrapper h4 {
+    color: white;
+    width: 50%;
+    margin: 0 auto;
+    margin-bottom: 15px; }
+  .loginFormWrapper form label {
+    padding-top: 10px; }
+  .loginFormWrapper form input[type="text"], .loginFormWrapper form input[type="password"], .loginFormWrapper form input[type="submit"] {
+    width: 100%; }
+  .loginFormWrapper form input {
+    color: black; }
+  .loginFormWrapper form label[for=remeber_me] {
+    width: 40%; }
+
 .page-navbar .navbar-brand img {
   display: inline-block; }
 

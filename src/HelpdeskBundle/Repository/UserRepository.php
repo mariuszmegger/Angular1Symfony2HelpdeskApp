@@ -48,17 +48,17 @@ class UserRepository extends EntityRepository
       $isActive  = (isset($content['isActive']) === true)? 1:0;
 
       $user = $userManager->createUser();
-      $user->setUsername($login);
-      $user->setFirstname($firstName);
-      $user->setSurname($surName);
-      $user->setEmail($email);
-      $user->setCity($city);
-      $user->setStreet($street);
-      $user->setPostcode($postCode);
+      $user->setUsername(addslashes(htmlspecialchars($login)));
+      $user->setFirstname(addslashes(htmlspecialchars($firstName)));
+      $user->setSurname(addslashes(htmlspecialchars($surName)));
+      $user->setEmail(addslashes(htmlspecialchars($email)));
+      $user->setCity(addslashes(htmlspecialchars($city)));
+      $user->setStreet(addslashes(htmlspecialchars($street)));
+      $user->setPostcode(addslashes(htmlspecialchars($postCode)));
       $user->setPlainPassword('abc');
       $user->setEnabled(1);
-      $user->setUnitId($unit);
-      $user->setLocked($isActive);
+      $user->setUnitId(addslashes(htmlspecialchars($unit)));
+      $user->setLocked(addslashes(htmlspecialchars($isActive)));
       $duplicated = $this->getEntityManager()->getRepository('HelpdeskBundle:User')->findByUsername($login);
       if(!$duplicated){
         $response['code'] = 1;
@@ -75,7 +75,7 @@ class UserRepository extends EntityRepository
   }
 
   public function deleteUser($id){
-    $user = $this->getEntityManager()->getRepository('HelpdeskBundle:User')->findOneById($id);
+    $user = $this->getEntityManager()->getRepository('HelpdeskBundle:User')->findOneById(addslashes(htmlspecialchars($id)));
     if($user){
       try{
         $em = $this->getEntityManager();
@@ -94,9 +94,9 @@ class UserRepository extends EntityRepository
 
   public function updateUser($request, $userManager){
     $data = $content = json_decode($request->getContent(),true);
-    $user = $this->getEntityManager()->getRepository('HelpdeskBundle:User')->findOneById($data['id']);
+    $user = $this->getEntityManager()->getRepository('HelpdeskBundle:User')->findOneById(addslashes(htmlspecialchars($data['id'])));
     if($user){
-      $canEmail = $this->getEntityManager()->getRepository('HelpdeskBundle:User')->findOneByUsernameCanonical($data['username']);
+      $canEmail = $this->getEntityManager()->getRepository('HelpdeskBundle:User')->findOneByUsernameCanonical(addslashes(htmlspecialchars($data['username'])));
       // if(!$canEmail){
       if(!$canEmail || $canEmail->getEmail() == $user->getEmail()){
         if($canEmail->getEmail()){
@@ -105,14 +105,14 @@ class UserRepository extends EntityRepository
 
         $data['islocked'] = ($data['islocked'] === true)? 1:0;
         try{
-          $user->setFirstname($data['firstname']);
-          $user->setSurname($data['surname']);
-          $user->setEmail($data['email']);
-          $user->setCity($data['city']);
-          $user->setStreet($data['street']);
-          $user->setPostcode($data['postcode']);
-          $user->setUnitId($data['unit']);
-          $user->setLocked($data['islocked']);
+          $user->setFirstname(addslashes(htmlspecialchars($data['firstname'])));
+          $user->setSurname(addslashes(htmlspecialchars($data['surname'])));
+          $user->setEmail(addslashes(htmlspecialchars($data['email'])));
+          $user->setCity(addslashes(htmlspecialchars($data['city'])));
+          $user->setStreet(addslashes(htmlspecialchars($data['street'])));
+          $user->setPostcode(addslashes(htmlspecialchars($data['postcode'])));
+          $user->setUnitId(addslashes(htmlspecialchars($data['unit'])));
+          $user->setLocked(addslashes(htmlspecialchars($data['islocked'])));
           $userManager->updateUser($user);
           $response['code'] = ($user->getId())? 1:0;
         }

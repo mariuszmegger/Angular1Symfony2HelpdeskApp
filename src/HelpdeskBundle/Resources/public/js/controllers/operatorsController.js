@@ -19,44 +19,51 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
     });
 
     $scope.filterData = function(){
-        $scope.filteredOperatorList = [];
+
+        var operatorsList = $scope.operatorsList,
+            searchTerm = $scope.searchTerm,
+            filteredOperatorList = [],
+            filterByName = $scope.filterBy.name,
+            filterByLineName = $scope.filterBy.line_name
+
         $scope.finalFilteredOperatorList = [];
+
         if($scope.searchTerm){
-            for(var i=0; i< $scope.operatorsList.length ; i++){
+            for(var i = 0, y = operatorsList.length; i < y ; i++){
                 if(
-                    $scope.operatorsList[i].name.indexOf($scope.searchTerm) !== -1 ||
-                    $scope.operatorsList[i].firstname.indexOf($scope.searchTerm) !== -1 ||
-                    $scope.operatorsList[i].surname.indexOf($scope.searchTerm) !== -1 ||
-                    $scope.operatorsList[i].username.indexOf($scope.searchTerm) !== -1 ||
-                    $scope.operatorsList[i].line_name.indexOf($scope.searchTerm) !== -1
+                    operatorsList[i].name.indexOf(searchTerm) !== -1 ||
+                    operatorsList[i].firstname.indexOf(searchTerm) !== -1 ||
+                    operatorsList[i].surname.indexOf(searchTerm) !== -1 ||
+                    operatorsList[i].username.indexOf(searchTerm) !== -1 ||
+                    operatorsList[i].line_name.indexOf(searchTerm) !== -1
 
                 ){
-                    $scope.filteredOperatorList.push($scope.operatorsList[i]);
+                    filteredOperatorList.push(operatorsList[i]);
                 }
             }
         }else{
-            $scope.filteredOperatorList = $scope.operatorsList
+            filteredOperatorList = operatorsList
         }
 
-        for(var i=0; i< $scope.filteredOperatorList.length ; i++){
+        for(var i=0, y = filteredOperatorList.length; i< y ; i++){
 
-            if($scope.filterBy.name && $scope.filterBy.line_name){
-                if($scope.filteredOperatorList[i].support_line_id == $scope.filterBy.line_name && $scope.filteredOperatorList[i].name == $scope.filterBy.name){
-                    $scope.finalFilteredOperatorList.push($scope.filteredOperatorList[i]);
+            if(filterByName && filterByLineName){
+                if(filteredOperatorList[i].support_line_id == filterByLineName && filteredOperatorList[i].name == filterByName){
+                    $scope.finalFilteredOperatorList.push(filteredOperatorList[i]);
                 }
             }
-            else if($scope.filterBy.name){
-                if($scope.filteredOperatorList[i].name == $scope.filterBy.name){
-                    $scope.finalFilteredOperatorList.push($scope.filteredOperatorList[i]);
+            else if(filterByName){
+                if(filteredOperatorList[i].name == filterByName){
+                    $scope.finalFilteredOperatorList.push(filteredOperatorList[i]);
                 }
             }
-            else if($scope.filterBy.line_name){
-                if($scope.filteredOperatorList[i].support_line_id == $scope.filterBy.line_name){
-                    $scope.finalFilteredOperatorList.push($scope.filteredOperatorList[i]);
+            else if(filterByLineName){
+                if(filteredOperatorList[i].support_line_id == filterByLineName){
+                    $scope.finalFilteredOperatorList.push(filteredOperatorList[i]);
                 }
             }
             else{
-                $scope.finalFilteredOperatorList.push($scope.filteredOperatorList[i]);
+                $scope.finalFilteredOperatorList.push(filteredOperatorList[i]);
             }
         }
         $scope.totalRecords = $scope.finalFilteredOperatorList.length;
@@ -164,9 +171,7 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
         operatorsList.then(function (response) {
             if(response.data !== false){
               $scope.operatorsList = response.data.data;
-            //   $scope.totalRecords = $scope.operatorsList.length;
               $scope.filterData()
-              // $scope.countRecords($scope.operatorsList, $scope.currentPage, $scope.listLength);
             }
             else{
                 $scope.operatorsList = false;

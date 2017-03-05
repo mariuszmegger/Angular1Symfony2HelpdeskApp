@@ -15,20 +15,20 @@ class CategoriesRepository extends EntityRepository
   public function getCategories($data){
 
       $complexResult = array();
-      $draw = $data['draw'];
+      $draw = addslashes(htmlspecialchars($data['draw']));
       $columnsList = array('id','name','created_by', 'created_date', 'is_active');
-      $limit = $data['length'];
-      $offset = $data['start'];
-      $search = ''.$data['search']['value'].'';
-      $orderByColumn = $data['order'][0]['column'];
-      if($data['order'][0]['dir']){
+      $limit = addslashes(htmlspecialchars($data['length']));
+      $offset = addslashes(htmlspecialchars($data['start']));
+      $search = ''.addslashes(htmlspecialchars($data['search']['value'])).'';
+      $orderByColumn = addslashes(htmlspecialchars($data['order'][0]['column']));
+      if(addslashes(htmlspecialchars($data['order'][0]['dir']))){
         $orderByDirection = $data['order'][0]['dir'];
       }
       if($draw == 1){
         $orderByDirection = 'DESC';
       }
-      $nameSearch = (isset($data['name']))? $data['name']: false;
-      $isActiveSearch = (isset($data['isActive']))? $data['isActive']: false;
+      $nameSearch = (isset($data['name']))? addslashes(htmlspecialchars($data['name'])): false;
+      $isActiveSearch = (isset($data['isActive']))? addslashes(htmlspecialchars($data['isActive'])): false;
 
       $where = ($nameSearch || $isActiveSearch || $search)? 'WHERE ': '';
 
@@ -85,6 +85,7 @@ class CategoriesRepository extends EntityRepository
     }
   public function getOneCategory($id){
 
+    $id = addslashes(htmlspecialchars($id));
     $sql = 'SELECT * FROM categories WHERE id='.$id ;
     $stmt = $this->getEntityManager()->getConnection();
     $result = $stmt->executeQuery($sql);

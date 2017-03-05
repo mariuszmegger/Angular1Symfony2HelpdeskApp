@@ -14,12 +14,6 @@
             <link href="{{ asset('bundles/helpdesk/css/main.css') }}" type="text/css" rel="stylesheet" />
         {% endblock %}
 
-    <script>
-        var userData = {
-          'user': {{ app.user.roles|json_encode|raw }},
-          'userName': '{{ app.user.username }}'
-        };
-    </script>
     </head>
     <body ng-app="helpdeskModule" ng-controller="MainController">
             {% block header %}
@@ -27,6 +21,8 @@
             {% block sidebar %}
             {% endblock %}
             {% block main %}
+                {% block content %}
+                {% endblock %}
             {% endblock %}
             {% block footer %}
             {% endblock %}

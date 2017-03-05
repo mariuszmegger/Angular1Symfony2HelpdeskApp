@@ -5,10 +5,13 @@
   angular.module('helpdeskModule').factory('ajaxLoader', ['$http', function ($http) {
 
         var _makeRequest = function(method,url,data){
+          var headers = {
+            "X-Requested-With": "XMLHttpRequest"
+          };
           if(method === 'POST'){
-            return $http({method:method,url:url, data:data})
+            return $http({method:method,url:url, headers:headers, data:data})
           }else if (method === 'GET'){
-            return $http({method:method,url:url, params:data})
+            return $http({method:method,url:url, headers:headers, params:data})
           }
         }
         return {

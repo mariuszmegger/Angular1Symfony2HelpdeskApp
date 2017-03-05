@@ -18,8 +18,11 @@ class UsersController extends Controller
    */
   public function ajaxAddUserAction(Request $request)
   {
-    $userManager = $this->get('fos_user.user_manager');
-    $users = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->saveUser($request, $userManager);
+    if($request->isXmlHttpRequest()) {
+        $userManager = $this->get('fos_user.user_manager');
+        $users = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->saveUser($request, $userManager);
+    }
+    die;
   }
 
 	/**
@@ -29,8 +32,11 @@ class UsersController extends Controller
  	*/
   public function ajaxGetUsersAction(Request $request)
 {
-    $users = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->findUsers($request);
-    return $users;
+    if($request->isXmlHttpRequest()) {
+        $users = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->findUsers($request);
+        return $users;
+    }
+    die;
  }
 
  /**
@@ -40,9 +46,12 @@ class UsersController extends Controller
   */
  public function ajaxDeleteUserAction(Request $request)
 {
-    $content = json_decode($request->getContent(),true);
-    $id = $content['id'];
-    $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->deleteUser($id);
+    if($request->isXmlHttpRequest()) {
+        $content = json_decode($request->getContent(),true);
+        $id = $content['id'];
+        $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->deleteUser($id);
+    }
+    die;
 }
 
   /**
@@ -53,25 +62,28 @@ class UsersController extends Controller
   public function getOneUserAction(Request $request, $id)
   {
 
-    $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->findBy(array('id'=>$id));
+      if($request->isXmlHttpRequest()) {
+        $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->findBy(array('id'=>addslashes(htmlspecialchars($id))));
 
-    $data = array(
-      'id'=>$user[0]->getId(),
-      'login'=>$user[0]->getUsername(),
-      'email'=>$user[0]->getEmail(),
-      'firstname'=>$user[0]->getFirstname(),
-      'surname'=>$user[0]->getSurname(),
-      'city'=>$user[0]->getCity(),
-      'street'=>$user[0]->getStreet(),
-      'postcode'=>$user[0]->getPostcode(),
-      'unit'=>$user[0]->getUnitid(),
-      'locked'=>$user[0]->isLocked()
-    );
-    $responseContainer = new JsonResponse();
-    $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
-    $responseContainer->setData($data);
-    $responseContainer->headers->set('Content-Type', 'application/json');
-    return $responseContainer;
+        $data = array(
+          'id'=>$user[0]->getId(),
+          'login'=>$user[0]->getUsername(),
+          'email'=>$user[0]->getEmail(),
+          'firstname'=>$user[0]->getFirstname(),
+          'surname'=>$user[0]->getSurname(),
+          'city'=>$user[0]->getCity(),
+          'street'=>$user[0]->getStreet(),
+          'postcode'=>$user[0]->getPostcode(),
+          'unit'=>$user[0]->getUnitid(),
+          'locked'=>$user[0]->isLocked()
+        );
+        $responseContainer = new JsonResponse();
+        $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
+        $responseContainer->setData($data);
+        $responseContainer->headers->set('Content-Type', 'application/json');
+        return $responseContainer;
+    }
+    die;
   }
 
   /**
@@ -81,8 +93,11 @@ class UsersController extends Controller
   */
   public function ajaxUpdateUserAction(Request $request)
  {
-   $userManager = $this->get('fos_user.user_manager');
-   $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->updateUser($request, $userManager);
+     if($request->isXmlHttpRequest()) {
+         $userManager = $this->get('fos_user.user_manager');
+         $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->updateUser($request, $userManager);
+     }
+     die;
  }
 
  /**
@@ -92,16 +107,16 @@ class UsersController extends Controller
   */
  public function checkUserEmailAction(Request $request, $email)
  {
-   $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->findOneByEmail($email);
-   if(!$user){
-     $userCheck = true;
-   }else{
-     $userCheck = false;
-   }
-   $responseContainer = new JsonResponse();
-   $responseContainer->setData($userCheck);
-   $responseContainer->headers->set('Content-Type', 'application/json');
-   return $responseContainer;
+       $user = $this->getDoctrine()->getRepository('HelpdeskBundle:User')->findOneByEmail(addslashes(htmlspecialchars($email)));
+       if(!$user){
+         $userCheck = true;
+       }else{
+         $userCheck = false;
+       }
+       $responseContainer = new JsonResponse();
+       $responseContainer->setData($userCheck);
+       $responseContainer->headers->set('Content-Type', 'application/json');
+       return $responseContainer;
  }
 
 }

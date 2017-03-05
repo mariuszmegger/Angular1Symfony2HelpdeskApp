@@ -63,18 +63,6 @@ angular.module('helpdeskModule').controller('CategoriesController', ['$scope', '
 
 }
   $scope.propagateTable($scope.companyName, $scope.companyIsActive);
-    //  DTColumnBuilder.newColumn('operations').withTitle('operations')
-    // $scope.propagateTable(name,isActive)
-    // $scope.orderByColumn = 'id';
-    // $scope.orderByDir = true;
-
-    // $scope.itemsPerPage = 10;
-    // $scope.totalItems = 0;
-    // $scope.currentPage = 1;
-
-//        $scope.bigCurrentPage = $scope.bigTotalItems / $scope.limitRec;
-
-
 
     // New category adding
 

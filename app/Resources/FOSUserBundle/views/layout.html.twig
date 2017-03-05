@@ -1,0 +1,11 @@
+{% extends 'HelpdeskBundle::base.html.twig' %}
+
+
+{% block content %}
+  <h1 class="loginFormTitle"><i>Helpdesk Example Application</i></h1>
+<div class="row loginFormWrapper">
+  <div class="col-md-12"><h4>Login Form</h4></div>
+  {% block fos_user_content %}{% endblock %}
+</div>
+
+{% endblock %}

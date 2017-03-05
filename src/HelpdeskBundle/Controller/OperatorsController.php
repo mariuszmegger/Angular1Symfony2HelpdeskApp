@@ -17,8 +17,9 @@ class OperatorsController extends Controller
      */
     public function ajaxGetusersForOperators(Request $request)
     {
+      if($request->isXmlHttpRequest()) {
         try{
-            $name = $request->query->get('name');
+            $name = addslashes(htmlspecialchars($request->query->get('name')));
             $response = array();
             $response = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->getUsersByName($name);
         }catch(Exception $e){
@@ -30,22 +31,27 @@ class OperatorsController extends Controller
         $responseContainer->headers->set('Content-Type', 'application/json');
         return $responseContainer;
     }
+    die;
+    }
 
     /**
      * @Route("/ajaxGetCategoriesForOperators", name="ajaxGetCategoriesForOperators")
      */
-    public function ajaxGetCategoriesForOperators()
+    public function ajaxGetCategoriesForOperators(Request $request)
     {
-        try{
-            $response = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->getCategoriesForOperators();
-        }catch(Exception $e){
-            $response['message'] =  $e->getMessage();
+        if($request->isXmlHttpRequest()) {
+            try{
+                $response = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->getCategoriesForOperators();
+            }catch(Exception $e){
+                $response['message'] =  $e->getMessage();
+            }
+            $responseContainer = new JsonResponse();
+            $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
+            $responseContainer->setData(array('data'=>$response));
+            $responseContainer->headers->set('Content-Type', 'application/json');
+            return $responseContainer;
         }
-        $responseContainer = new JsonResponse();
-        $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
-        $responseContainer->setData(array('data'=>$response));
-        $responseContainer->headers->set('Content-Type', 'application/json');
-        return $responseContainer;
+        die;
     }
 
     /**
@@ -53,54 +59,60 @@ class OperatorsController extends Controller
      */
     public function ajaxSaveOperator(Request $request)
     {
-        try{
-            $content = json_decode($request->getContent(),true);
-            $username = (isset($content['username']))? $content['username'] : '';
-            $category = (isset($content['category']))? $content['category'] : '';
-            $sline = (isset($content['sLine']))? $content['sLine'] : '';
-            if($username && $category && $sline){
-                $duplicated = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->findBy(array('userUsername'=>$username, 'categoryId'=>$category, 'supportLineId'=>$sline));
-                if(!$duplicated){
-                    $operator = new Operators();
-                    $operator->setUserUsername($username);
-                    $operator->setCategoryId($category);
-                    $operator->setSupportLineId($sline);
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($operator);
-                    $em->flush();
+        if($request->isXmlHttpRequest()) {
+            try{
+                $content = json_decode($request->getContent(),true);
+                $username = addslashes(htmlspecialchars((isset($content['username']))? $content['username'] : ''));
+                $category = addslashes(htmlspecialchars((isset($content['category']))? $content['category'] : ''));
+                $sline = addslashes(htmlspecialchars((isset($content['sLine']))? $content['sLine'] : ''));
+                if($username && $category && $sline){
+                    $duplicated = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->findBy(array('userUsername'=>$username, 'categoryId'=>$category, 'supportLineId'=>$sline));
+                    if(!$duplicated){
+                        $operator = new Operators();
+                        $operator->setUserUsername($username);
+                        $operator->setCategoryId($category);
+                        $operator->setSupportLineId($sline);
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($operator);
+                        $em->flush();
 
-                    $response['code'] = 1;
-                }else{
-                    $response['code'] = 0;
+                        $response['code'] = 1;
+                    }else{
+                        $response['code'] = 0;
+                    }
                 }
+            }catch(Exception $e){
+                $response['message'] =  $e->getMessage();
             }
-        }catch(Exception $e){
-            $response['message'] =  $e->getMessage();
-        }
 
-        $responseContainer = new JsonResponse();
-        $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
-        $responseContainer->setData(array('data'=>$response));
-        $responseContainer->headers->set('Content-Type', 'application/json');
-        return $responseContainer;
+            $responseContainer = new JsonResponse();
+            $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
+            $responseContainer->setData(array('data'=>$response));
+            $responseContainer->headers->set('Content-Type', 'application/json');
+            return $responseContainer;
+        }
+        die;
     }
 
     /**
      * @Route("/ajaxGetOperators", name="ajaxGetOperators")
      */
-    public function ajaxGetOperators()
+    public function ajaxGetOperators(Request $request)
     {
-        try{
-            $response = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->getOperatorsQuery();
-        }catch(Exception $e){
-            $response['message'] =  $e->getMessage();
-        }finally{
-          $responseContainer = new JsonResponse();
-          $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
-          $responseContainer->setData(array('data'=>$response));
-          $responseContainer->headers->set('Content-Type', 'application/json');
-          return $responseContainer;
+        if($request->isXmlHttpRequest()) {
+            try{
+                $response = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->getOperatorsQuery();
+            }catch(Exception $e){
+                $response['message'] =  $e->getMessage();
+            }finally{
+              $responseContainer = new JsonResponse();
+              $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
+              $responseContainer->setData(array('data'=>$response));
+              $responseContainer->headers->set('Content-Type', 'application/json');
+              return $responseContainer;
+            }
         }
+        die;
 
     }
 
@@ -109,32 +121,35 @@ class OperatorsController extends Controller
      */
     public function ajaxDeleteOperator(Request $request)
     {
-      $content = json_decode($request->getContent(),true);
-      $userUsername = $content['operatorUsername'];
-      $categoryId = $content['categoryId'];
-      $supportLineId = $content['supportLineId'];
-        try{
-          if($userUsername && $categoryId && $supportLineId){
-            $operator = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->findOneBy(array(
-              'userUsername'=>$userUsername,
-              'categoryId'=>$categoryId,
-              'supportLineId'=>$supportLineId
-            ));
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->remove($operator);
-            $em->flush();
-            $response['code'] = 1;
-          }
-        }catch(Exception $e){
-            $response['message'] =  $e->getMessage();
-            $response['code'] = 0;
-        }finally{
-          $responseContainer = new JsonResponse();
-          $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
-          $responseContainer->setData(array('data'=>$response));
-          $responseContainer->headers->set('Content-Type', 'application/json');
-          return $responseContainer;
+        if($request->isXmlHttpRequest()) {
+          $content = json_decode($request->getContent(),true);
+          $userUsername = $content['operatorUsername'];
+          $categoryId = $content['categoryId'];
+          $supportLineId = $content['supportLineId'];
+            try{
+              if($userUsername && $categoryId && $supportLineId){
+                $operator = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->findOneBy(array(
+                  'userUsername'=>$userUsername,
+                  'categoryId'=>$categoryId,
+                  'supportLineId'=>$supportLineId
+                ));
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->remove($operator);
+                $em->flush();
+                $response['code'] = 1;
+              }
+            }catch(Exception $e){
+                $response['message'] =  $e->getMessage();
+                $response['code'] = 0;
+            }finally{
+              $responseContainer = new JsonResponse();
+              $responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
+              $responseContainer->setData(array('data'=>$response));
+              $responseContainer->headers->set('Content-Type', 'application/json');
+              return $responseContainer;
+            }
         }
-
+        die;
     }
+
 }
