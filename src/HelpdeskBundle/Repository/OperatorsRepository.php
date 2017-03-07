@@ -12,40 +12,50 @@ use Doctrine\ORM\EntityRepository;
 */
 class OperatorsRepository extends EntityRepository
 {
-  public function getUsersByName($name){
-    $result = $this->getEntityManager()->getRepository("HelpdeskBundle:User")->createQueryBuilder('u')
-    ->andWhere('u.username LIKE :name')
-    ->orWhere('u.firstname LIKE :name')
-    ->orWhere('u.surname LIKE :name')
-    ->setParameter('name', '%'.$name. '%')
-    ->orderBy('u.firstname', 'ASC')
-    ->getQuery()
-    ->getResult(\Doctrine\ORM\AbstractQuery::HYDRATE_ARRAY);
 
-    return $result;
-  }
+	/**
+	* Get users for operators
+	*/
+	public function getUsersByName($name){
+		$result = $this->getEntityManager()->getRepository("HelpdeskBundle:User")->createQueryBuilder('u')
+		->andWhere('u.username LIKE :name')
+		->orWhere('u.firstname LIKE :name')
+		->orWhere('u.surname LIKE :name')
+		->setParameter('name', '%'.$name. '%')
+		->orderBy('u.firstname', 'ASC')
+		->getQuery()
+		->getResult(\Doctrine\ORM\AbstractQuery::HYDRATE_ARRAY);
 
-  public function getCategoriesForOperators(){
-    $result = $this->getEntityManager()->getRepository("HelpdeskBundle:Categories")->createQueryBuilder('u')
-    ->getQuery()
-    ->getResult(\Doctrine\ORM\AbstractQuery::HYDRATE_ARRAY);
+		return $result;
+	}
 
-    return $result;
-  }
+	/**
+	* Get categories for operators
+	*/
+	public function getCategoriesForOperators(){
+		$result = $this->getEntityManager()->getRepository("HelpdeskBundle:Categories")->createQueryBuilder('u')
+		->getQuery()
+		->getResult(\Doctrine\ORM\AbstractQuery::HYDRATE_ARRAY);
 
-  public function getOperatorsQuery(){
-    $conn = $this->getEntityManager()->getConnection();
-    $sql = 'SELECT fos_user.firstname, fos_user.surname, fos_user.username, categories.name, support_lines.line_name, operators.support_line_id, operators.category_id FROM operators
-     INNER JOIN fos_user
-     ON fos_user.username_canonical = operators.user_username
-     INNER JOIN categories
-     ON categories.id = operators.category_id
-     INNER JOIN support_lines
-     ON support_lines.id = operators.support_line_id
-     ';
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->fetchAll();
-    return $result;
-  }
+		return $result;
+	}
+
+	/**
+	* Get all operators
+	*/
+	public function getOperatorsQuery(){
+		$conn = $this->getEntityManager()->getConnection();
+		$sql = 'SELECT fos_user.firstname, fos_user.surname, fos_user.username, categories.name, support_lines.line_name, operators.support_line_id, operators.category_id FROM operators
+		INNER JOIN fos_user
+		ON fos_user.username_canonical = operators.user_username
+		INNER JOIN categories
+		ON categories.id = operators.category_id
+		INNER JOIN support_lines
+		ON support_lines.id = operators.support_line_id
+		';
+		$stmt = $conn->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		return $result;
+	}
 }

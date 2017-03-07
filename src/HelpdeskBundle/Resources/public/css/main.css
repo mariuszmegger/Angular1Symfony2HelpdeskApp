@@ -1,6 +1,6 @@
 /*
   Amigos Helpdesk
-  Authors: Mariusz Megger, Wojciech Placzek
+  Authors: Mariusz Megger
   Version: 1.0.0
 */
 /* BASE - Base styles, variables, mixins, etc. */
@@ -279,6 +279,8 @@
       margin-bottom: 20px; }
       .main .leftBox .contentBoxHeader h1 {
         font-size: 30px !important; }
+  .main .dashboardInfo li {
+    color: #0e0e5a; }
 
 .page-navbar.header-fixed {
   position: fixed; }

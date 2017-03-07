@@ -1,227 +1,227 @@
 {% extends 'HelpdeskBundle::layout.html.twig' %}
 
 {% block navbar %}
-  {{ parent() }}
-  <!-- .page-navbar -->
-  <div id="header" class="page-navbar header-fixed">
-      <!-- .navbar-brand -->
-      <a href="#/admin-dashboard" class="navbar-brand">
-        <i class="fa fa-bolt"></i>
-        <span>&nbsp; Amigos Helpdesk</span>
-      </a>
-      <!-- /.navbar-brand -->
-      <!-- .no-collapse -->
-      <div class="navbar-no-collapse">
-          <!-- top right nav -->
-          <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown">
-                  <a  data-toggle="dropdown">
-                      <i class="fa fa-bell-o"></i>
-                      <span class="sr-only">Notifications</span>
-                      <span class="badge">8</span>
-                  </a>
-                  <ul class="dropdown-menu">
-                      <li><a  class="dropdown-menu-header">Notifications</a>
-                      </li>
-                      <li>
-                        <a >
-                          <i class="fa fa-exclamation-circle text-danger">
-                          </i>&nbsp; Incidents expire <span class="badge">0</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a >
-                          <i class="fa fa-exclamation-triangle text-danger">
-                          </i>&nbsp; Requests expire <span class="badge">5</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a >
-                          <i class="fa fa-arrow-circle-o-down">
-                          </i>&nbsp; Incidents withdrawn <span class="badge">2</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a ><i class="fa fa-arrow-circle-down">
-                        </i>&nbsp; Request withdrawn <span class="badge">1</span>
-                      </a>
-                      </li>
-                      <li>
-                        <a ><i class="fa fa-user">
-                        </i>&nbsp; My new events  <span class="badge">1</span>
-                      </a>
-                      </li>
-                      <li>
-                        <a ><i class="fa fa-users">
-                        </i>&nbsp; New events of my group <span class="badge">1</span>
-                      </a>
-                      </li>
-                      <li>
-                        <a  class="view-all">
-                          <span>Show All</span>
-                        </a>
-                      </li>
-                  </ul>
-              </li>
-              <li class="dropdown">
-                  <a disabled  data-toggle="dropdown">
-                      <i class="fa fa-cog"></i>
-                      <span class="sr-only">Settings</span>
-                  </a>
-                  <ul class="dropdown-menu">
-                      <li><a  class="dropdown-menu-header">Place for settings</a>
-                      </li>
-                  </ul>
-              </li>
-              <li>
-                  <a href="/logout">
-                      <i class="fa fa-power-off"></i>
-                      <span class="sr-only">Logout</span>
-                  </a>
-              </li>
-          </ul>
-          <!-- / top right nav -->
-      </div>
-      <!-- /.no-collapse -->
-  </div>
-  <!-- / page-navbar -->
+{{ parent() }}
+<!-- .page-navbar -->
+<div id="header" class="page-navbar header-fixed">
+	<!-- .navbar-brand -->
+	<a href="#/admin-dashboard" class="navbar-brand">
+		<i class="fa fa-bolt"></i>
+		<span>&nbsp; Amigos Helpdesk</span>
+	</a>
+	<!-- /.navbar-brand -->
+	<!-- .no-collapse -->
+	<div class="navbar-no-collapse">
+		<!-- top right nav -->
+		<ul class="nav navbar-nav navbar-right">
+			<li class="dropdown">
+				<a  data-toggle="dropdown">
+					<i class="fa fa-bell-o"></i>
+					<span class="sr-only">Notifications</span>
+					<span class="badge">8</span>
+				</a>
+				<ul class="dropdown-menu">
+					<li><a  class="dropdown-menu-header">Notifications</a>
+					</li>
+					<li>
+						<a >
+							<i class="fa fa-exclamation-circle text-danger">
+							</i>&nbsp; Incidents expire <span class="badge">0</span>
+						</a>
+					</li>
+					<li>
+						<a >
+							<i class="fa fa-exclamation-triangle text-danger">
+							</i>&nbsp; Requests expire <span class="badge">5</span>
+						</a>
+					</li>
+					<li>
+						<a >
+							<i class="fa fa-arrow-circle-o-down">
+							</i>&nbsp; Incidents withdrawn <span class="badge">2</span>
+						</a>
+					</li>
+					<li>
+						<a ><i class="fa fa-arrow-circle-down">
+						</i>&nbsp; Request withdrawn <span class="badge">1</span>
+					</a>
+				</li>
+				<li>
+					<a ><i class="fa fa-user">
+					</i>&nbsp; My new events  <span class="badge">1</span>
+				</a>
+			</li>
+			<li>
+				<a ><i class="fa fa-users">
+				</i>&nbsp; New events of my group <span class="badge">1</span>
+			</a>
+		</li>
+		<li>
+			<a  class="view-all">
+				<span>Show All</span>
+			</a>
+		</li>
+	</ul>
+</li>
+<li class="dropdown">
+	<a disabled  data-toggle="dropdown">
+		<i class="fa fa-cog"></i>
+		<span class="sr-only">Settings</span>
+	</a>
+	<ul class="dropdown-menu">
+		<li><a  class="dropdown-menu-header">Place for settings</a>
+		</li>
+	</ul>
+</li>
+<li>
+	<a href="/logout">
+		<i class="fa fa-power-off"></i>
+		<span class="sr-only">Logout</span>
+	</a>
+</li>
+</ul>
+<!-- / top right nav -->
+</div>
+<!-- /.no-collapse -->
+</div>
+<!-- / page-navbar -->
 {% endblock %}
 
 {% block sidebar %}
 <!-- #wrapper -->
-  <div id="wrapper">
-    <aside id="sidebar" class="page-sidebar">
-        <!-- .sidebar-inner -->
-        <div class="sidebar-inner">
-                <!--  .sidebar-panel -->
-                <!-- / .sidebar-panel -->
-                <!--  .sidebar-panel -->
-                <div class="side-nav">
-                  <ul class="nav">
-                    <li class="hover-li">
-                      <a href="/#/admin-dashboard" >
-                        <span class="txt">Dashboard</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="side-nav">
-                  <ul class="nav">
-                    <li class="hover-li">
-                      <a href="/#/admin-users" class="active">
-                        <span class="txt">Users</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+<div id="wrapper">
+	<aside id="sidebar" class="page-sidebar">
+		<!-- .sidebar-inner -->
+		<div class="sidebar-inner">
+			<!--  .sidebar-panel -->
+			<!-- / .sidebar-panel -->
+			<!--  .sidebar-panel -->
+			<div class="side-nav">
+				<ul class="nav">
+					<li class="hover-li">
+						<a href="/#/admin-dashboard" >
+							<span class="txt">Dashboard</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="side-nav">
+				<ul class="nav">
+					<li class="hover-li">
+						<a href="/#/admin-users" class="active">
+							<span class="txt">Users</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="side-nav">
+				<ul class="nav">
+					<li class="hover-li">
+						<a href="/#/admin-categories" class="active">
+							<span class="txt">Categories</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="side-nav">
+				<ul class="nav">
+					<li class="hover-li">
+						<a href="/#/admin-operators" class="active">
+							<span class="txt">Operators</span>
+						</a>
+					</li>
+				</ul>
+			</div>
 
-                <div class="side-nav">
-                  <ul class="nav">
-                    <li class="hover-li">
-                      <a href="/#/admin-operators" class="active">
-                        <span class="txt">Operators</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="side-nav">
-                  <ul class="nav">
-                    <li class="hover-li">
-                      <a href="/#/admin-categories" class="active">
-                        <span class="txt">Categories</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="side-nav">
-                  <ul class="nav">
-                    <li disabled="disabled" class="hover-li">
-                      <a disabled="disabled"   class="disabled">
-                        <span class="txt">Units</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="side-nav">
-                  <ul class="nav">
-                    <li disabled="disabled" class="hover-li">
-                      <a disabled="disabled"   class="disabled">
-                        <span class="txt">Support Lines</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="side-nav">
-                  <ul class="nav">
-                    <li disabled="disabled" class="hover-li">
-                      <a disabled="disabled"  class="disabled">
-                        <span class="txt">Settings</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-        <!-- / .sidebar-inner -->
-    </aside>
-{% endblock %}
+			<div class="side-nav">
+				<ul class="nav">
+					<li disabled="disabled" class="hover-li">
+						<a disabled="disabled"   class="disabled">
+							<span class="txt">Units</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="side-nav">
+				<ul class="nav">
+					<li disabled="disabled" class="hover-li">
+						<a disabled="disabled"   class="disabled">
+							<span class="txt">Support Lines</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="side-nav">
+				<ul class="nav">
+					<li disabled="disabled" class="hover-li">
+						<a disabled="disabled"  class="disabled">
+							<span class="txt">Settings</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!-- / .sidebar-inner -->
+		</aside>
+		{% endblock %}
 
-{% block content %}
-    {{ parent() }}
-    <aside id="right-sidebar" class="right-sidebar sidebar-fixed">
-        <!-- .sidebar-inner -->
-        <div class="sidebar-inner">
-                <div class="tabs">
-                    <!-- .rs tabs -->
-                    <ul id="rstab" class="nav nav-tabs nav-justified">
-                        <li class="active">
-                            <a href="#activity" data-toggle="tab"><i class="glyphicon glyphicon-bullhorn"></i> </a>
-                        </li>
-                        <li>
-                            <a href="#users" data-toggle="tab"><i class="fa fa-comments"></i> </a>
-                        </li>
-                    </ul>
-                    <div id="rstab-content" class="tab-content">
-                        <div class="tab-pane fade active in" id="timeline">
-                          timeline
-                        </div>
-                        <div class="tab-pane fade" id="chat">
-                        <div class="chat">
-                              chat
-                        </div>
-                    </div>
-                </div>
-                <!-- / .rs tabs -->
-        </div>
-        <!-- / .sidebar-inner -->
-    </aside>
-    <!-- .page-content -->
-    <div class="page-content clearfix sidebar-page">
-        <!-- .page-content-wrapper -->
-        <div class="page-content-wrapper" >
-            <div class="page-content-inner">
-                <!-- .page-content-inner -->
-                <!-- TEST -->
-                <div class="container alertWrapper">
-                  <div class="row">
-                    <flash-message></flash-message>
-                  </div>
-                </div>
-                  <!-- verbatim  -->
-                  <!-- endverbatim  -->
-                <div class="main" ng-view>
+		{% block content %}
+		{{ parent() }}
+		<aside id="right-sidebar" class="right-sidebar sidebar-fixed">
+			<!-- .sidebar-inner -->
+			<div class="sidebar-inner">
+				<div class="tabs">
+					<!-- .rs tabs -->
+					<ul id="rstab" class="nav nav-tabs nav-justified">
+						<li class="active">
+							<a href="#activity" data-toggle="tab"><i class="glyphicon glyphicon-bullhorn"></i> </a>
+						</li>
+						<li>
+							<a href="#users" data-toggle="tab"><i class="fa fa-comments"></i> </a>
+						</li>
+					</ul>
+					<div id="rstab-content" class="tab-content">
+						<div class="tab-pane fade active in" id="timeline">
+							timeline
+						</div>
+						<div class="tab-pane fade" id="chat">
+							<div class="chat">
+								chat
+							</div>
+						</div>
+					</div>
+					<!-- / .rs tabs -->
+				</div>
+				<!-- / .sidebar-inner -->
+			</aside>
+			<!-- .page-content -->
+			<div class="page-content clearfix sidebar-page">
+				<!-- .page-content-wrapper -->
+				<div class="page-content-wrapper" >
+					<div class="page-content-inner">
+						<!-- .page-content-inner -->
+						<!-- TEST -->
+						<div class="container alertWrapper">
+							<div class="row">
+								<flash-message></flash-message>
+							</div>
+						</div>
+						<!-- verbatim  -->
+						<!-- endverbatim  -->
+						<div class="main" ng-view>
 
-                </div>
+						</div>
 
-                <!-- TEST -->
-            </div>
-            <!-- / .page-content-inner -->
-        </div>
-        <!-- / .page-content-wrapper -->
-    </div>
-    <!-- / .page-content -->
-{% endblock %}
+						<!-- TEST -->
+					</div>
+					<!-- / .page-content-inner -->
+				</div>
+				<!-- / .page-content-wrapper -->
+			</div>
+			<!-- / .page-content -->
+			{% endblock %}
 
-{% block footer %}
-    footer
-  </div>
-<!-- / #wrapper -->
-{% endblock %}
+			{% block footer %}
+			footer
+		</div>
+		<!-- / #wrapper -->
+	{% endblock %}
