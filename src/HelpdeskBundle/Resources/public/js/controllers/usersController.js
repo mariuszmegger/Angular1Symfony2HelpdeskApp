@@ -1,4 +1,4 @@
-angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', '$compile', 'confirmModal',  function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash, $compile, confirmModal) {
+angular.module('helpdeskModule').controller('UsersController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', '$compile', 'confirmModal',  function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, DTOptionsBuilder, DTColumnBuilder, Flash, $compile, confirmModal) {
 
 	//        authentication.auth()
 

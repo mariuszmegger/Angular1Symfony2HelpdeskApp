@@ -53,7 +53,8 @@ class UserRepository extends EntityRepository
 			$unit = $content['unit'];
 			$email = $content['email'];
 			$isActive  = (isset($content['isActive']) === true)? 1:0;
-
+// 			dump($isActive);
+// die;
 			$user = $userManager->createUser();
 			$user->setUsername(addslashes(htmlspecialchars($login)));
 			$user->setFirstname(addslashes(htmlspecialchars($firstName)));

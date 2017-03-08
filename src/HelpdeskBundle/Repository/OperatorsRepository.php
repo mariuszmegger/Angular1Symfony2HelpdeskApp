@@ -45,14 +45,13 @@ class OperatorsRepository extends EntityRepository
 	*/
 	public function getOperatorsQuery(){
 		$conn = $this->getEntityManager()->getConnection();
-		$sql = 'SELECT fos_user.firstname, fos_user.surname, fos_user.username, categories.name, support_lines.line_name, operators.support_line_id, operators.category_id FROM operators
-		INNER JOIN fos_user
-		ON fos_user.username_canonical = operators.user_username
-		INNER JOIN categories
-		ON categories.id = operators.category_id
-		INNER JOIN support_lines
-		ON support_lines.id = operators.support_line_id
-		';
+		$sql = 'SELECT fos_user.firstname, fos_user.surname, fos_user.username, categories.name, support_lines.line_name, operators.support_line_id, operators.category_id FROM operators';
+		$sql .= ' INNER JOIN fos_user';
+		$sql .= ' ON fos_user.username_canonical = operators.user_username';
+		$sql .= ' INNER JOIN categories';
+		$sql .= ' ON categories.id = operators.category_id';
+		$sql .= ' INNER JOIN support_lines';
+		$sql .= ' ON support_lines.id = operators.support_line_id';
 		$stmt = $conn->prepare($sql);
 		$stmt->execute();
 		$result = $stmt->fetchAll();

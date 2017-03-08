@@ -1,60 +1,66 @@
 <div class="container">
-    <div class="row " ng-controller="CategoriesController">
-        <div class="col-sm-6 leftBox mainSinglePanel">
-            <div class="col-md-12 mainSinglePanelHeader"><h4>Edit Category</h4></div>
-            <form name="editCategoryForm" class="form-horizontal" >
-                <div class="form-group">
-                    <div class="col-sm-2">
-                        <label for="categoryName" class=" control-label">Name: </label>
-                    </div>
-                    <div class="col-sm-10">
-                        <input ng-model="singleCategory.name" id="categoryName" name="categoryName" class="form-control" type="text" required="required" >
-                        <div class="formMessageWrapper" ng-show="editCategoryForm.categoryName.$touched">
-                          <span class="text-danger" ng-show="editCategoryForm.categoryName.$error.required">Category name is required</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <div class="checkbox">
-                            <label>
-                                <input ng-checked ="checkIsActive(singleCategory.is_active)" ng-model="singleCategory.isActive" type="checkbox"> Is Active
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button ng-click="editCategory()" ng-disabled="!editCategoryForm.$valid" type="submit" class="btn btn-primary">Edit Category</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="col-sm-6 rightBox mainSinglePanel">
-              <div class="col-md-12 mainSinglePanelHeader"><h4>Category Details</h4></div>
-            <div class="col-sm-12">
-              <table class="table table-bordered table-hovered">
-                <thead></thead>
-                  <tbody>
-                    <tr>
-                        <th>Category Name</th>
-                        <th>{{singleCategory.name}}</th>
-                    </tr>
-                    <tr>
-                        <th>Is Active</th>
-                        <th ng-class="(singleCategory.is_active == 1)? 'text-success':'text-danger'">{{singleCategory.is_active == "1"? "YES":"NO"}}</th>
-                    </tr>
-                    <tr>
-                        <th>Created By</th>
-                        <th>{{ singleCategory.created_by }}</th>
-                    </tr>
-                    <tr>
-                        <th>Created Date</th>
-                        <th>{{singleCategory.created_date}}</th>
-                    </tr>
-                  </tbody>
-              </table>
-            </div>
-        </div>
-    </div>
+	<div class="row " ng-controller="CategoriesController">
+		<div class="col-sm-6 leftBox mainSinglePanel"  ng-if="singleCategory.name">
+			<div class="col-md-12 mainSinglePanelHeader"><h4>Edit Category</h4></div>
+			<form name="editCategoryForm" class="form-horizontal" >
+				<div class="form-group">
+					<div class="col-sm-2">
+						<label for="categoryName" class=" control-label">Name: </label>
+					</div>
+					<div class="col-sm-10">
+						<input ng-model="singleCategory.name" id="categoryName" name="categoryName" class="form-control" type="text" required="required" >
+						<div class="formMessageWrapper" ng-show="editCategoryForm.categoryName.$touched">
+							<span class="text-danger" ng-show="editCategoryForm.categoryName.$error.required">Category name is required</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<div class="checkbox">
+							<label>
+								<input ng-checked ="checkIsActive(singleCategory.is_active)" ng-model="singleCategory.isActive" type="checkbox"> Is Active
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button ng-click="editCategory()" ng-disabled="!editCategoryForm.$valid" type="submit" class="btn btn-primary">Edit Category</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-sm-6 rightBox mainSinglePanel"  ng-if="singleCategory.name">
+			<div class="col-md-12 mainSinglePanelHeader"><h4>Category Details</h4></div>
+			<div class="col-sm-12">
+				<table class="table table-bordered table-hovered">
+					<thead></thead>
+					<tbody>
+						<tr>
+							<th>Category Name</th>
+							<th>{{singleCategory.name}}</th>
+						</tr>
+						<tr>
+							<th>Is Active</th>
+							<th ng-class="(singleCategory.is_active == 1)? 'text-success':'text-danger'">{{singleCategory.is_active == "1"? "YES":"NO"}}</th>
+						</tr>
+						<tr>
+							<th>Created By</th>
+							<th>{{ singleCategory.created_by }}</th>
+						</tr>
+						<tr>
+							<th>Created Date</th>
+							<th>{{singleCategory.created_date}}</th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="row" ng-if="singleCategory.name">
+		<div class="col-md-11"></div>
+		<div class="col-md-1">
+			<a href="#/admin-categories" class="btn btn-primary">Return</a>
+		</div>
+	</div>
 </div>

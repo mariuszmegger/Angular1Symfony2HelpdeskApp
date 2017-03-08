@@ -112,13 +112,13 @@ class OperatorsController extends Controller
 				$response = $this->getDoctrine()->getRepository('HelpdeskBundle:Operators')->getOperatorsQuery();
 			}catch(Exception $e){
 				$response['message'] =  $e->getMessage();
-			}finally{
-				$responseContainer = new JsonResponse();
-				$responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
-				$responseContainer->setData(array('data'=>$response));
-				$responseContainer->headers->set('Content-Type', 'application/json');
-				return $responseContainer;
 			}
+			$responseContainer = new JsonResponse();
+			$responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
+			$responseContainer->setData(array('data'=>$response));
+			$responseContainer->headers->set('Content-Type', 'application/json');
+			return $responseContainer;
+
 		}
 		die;
 
@@ -151,13 +151,13 @@ class OperatorsController extends Controller
 			}catch(Exception $e){
 				$response['message'] =  $e->getMessage();
 				$response['code'] = 0;
-			}finally{
-				$responseContainer = new JsonResponse();
-				$responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
-				$responseContainer->setData(array('data'=>$response));
-				$responseContainer->headers->set('Content-Type', 'application/json');
-				return $responseContainer;
 			}
+			$responseContainer = new JsonResponse();
+			$responseContainer->setEncodingOptions(JSON_NUMERIC_CHECK);
+			$responseContainer->setData(array('data'=>$response));
+			$responseContainer->headers->set('Content-Type', 'application/json');
+			return $responseContainer;
+
 		}
 		die;
 	}

@@ -20,33 +20,40 @@ angular.module('helpdeskModule').factory('ajaxLoader', ['$http', function ($http
 }])
 
 /**
-* Service used to autheticate user
+* Service used to autheticate user..
 */
 
-angular.module('helpdeskModule').factory('authentication', ['$location', function ($location) {
+angular.module('helpdeskModule').factory('authentication', ['$location', 'ajaxLoader', function ($location, ajaxLoader) {
 
-	var _auth = function(){
+	var _auth = function(user){
 		var authenticated = false;
-		for(var i = 0; i<=userData.user.length; i++ ){
-			if (userData.user[i] == 'ROLE_ADMIN'){
-				authenticated = true;
+		if(user.roles){
+			for(var i = 0; i < user.roles.length ; i++){
+				if (user.roles[i] === 'ROLE_ADMIN'){
+					var authenticated = true;
+				}
+			}
+			if(!authenticated){
+				$location.path('/login');
 			}
 		}
-		if (authenticated !== true){
-			$location.path('/');
-		}
-		return authenticated;
+	};
+
+	var _getUserData = function(){
+		var data = {}
+		return ajaxLoader.makeRequest('GET','/app_dev.php/getAjaxUserData', data);
 	}
 	return {
-		auth : _auth
-	}
+		auth : _auth,
+		getUserData: _getUserData
+	};
 }])
 
 /**
-* Service used to create confirm modals
+* Service used to create confirm modals..
 */
 
-angular.module('helpdeskModule').service('confirmModal', ['$uibModal', function ($uibModal) {
+angular.module('helpdeskModule').factory('confirmModal', ['$uibModal', function ($uibModal) {
 
 	var _open = function(options, text, callbackOnConfirm){
 		var tempOptions = {};
@@ -63,7 +70,7 @@ angular.module('helpdeskModule').service('confirmModal', ['$uibModal', function 
 			+'<button class="btn btn-primary" type="button" ng-click="modalOptions.ok(); modalOptions.close()">OK</button>'
 			+'<button class="btn btn-default" type="button" ng-click="modalOptions.close()">Cancel</button>'
 			+'</div>',
-			size:'md',
+			size:'md'
 		}
 		tempOptions = angular.extend(defaultOptions, options);
 

@@ -7,7 +7,6 @@ angular.module('helpdeskModule', []);
 angular.module('helpdeskModule', [
 	'ngRoute',
 	'datatables',
-	'datatables.light-columnfilter',
 	'datatables.bootstrap',
 	'ui.bootstrap',
 	'ngFlash',
@@ -38,7 +37,7 @@ angular.module('helpdeskModule').config(['$routeProvider', function ($routeProvi
 		controller: 'SupportLinesController'
 	})
 	.when('/admin-operators', {
-		templateUrl: 'bundles/templates/Operators/OperatorsList.html',
+		templateUrl: 'bundles/templates/Operators/operatorsList.html',
 		controller: 'OperatorsController',
 	})
 	.when('/admin-addOperators', {
@@ -68,7 +67,7 @@ angular.module('helpdeskModule').config(['$routeProvider', function ($routeProvi
 * Main controller with flash message using flash message angular plugin
 */
 
-angular.module('helpdeskModule').controller('MainController', ['$scope', 'Flash', '$timeout', function ($scope, Flash, $timeout) {
+angular.module('helpdeskModule').controller('MainController', ['$scope', 'Flash', '$timeout','authentication', function ($scope, Flash, $timeout, authentication) {
 
 	$scope.successAlert = function (message, type) {
 		var id = Flash.create(type, message, 0, {class: 'custom-class', id: 'custom-id'}, true);
@@ -78,4 +77,13 @@ angular.module('helpdeskModule').controller('MainController', ['$scope', 'Flash'
 			});
 		}, 5000);
 	}
+
+	var result = authentication.getUserData();
+	 result.then(function(response){
+		 if(response.data.user){
+			 $scope.oneUser = response.data.user;
+			//  authentication.auth($scope.oneUser);
+		 }
+	 })
+
 }]);

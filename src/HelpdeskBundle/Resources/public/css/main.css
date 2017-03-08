@@ -211,8 +211,9 @@
   .main .searchUserInput {
     margin-left: 120px; }
   .main .searchedUsersWrapper {
+    margin-left: 83px;
     position: absolute;
-    width: 93%;
+    width: 69%;
     max-height: 171px;
     overflow-y: auto; }
   .main .operatorsAddTable {
@@ -221,7 +222,7 @@
       font-size: 12px !important;
       color: black;
       cursor: pointer;
-      background-color: #eaeaea; }
+      background-color: white; }
   .main .operatorsAddResultTable select {
     width: 90% !important;
     float: left; }

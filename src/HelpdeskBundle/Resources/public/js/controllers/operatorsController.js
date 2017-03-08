@@ -1,4 +1,4 @@
-angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', '$filter', '$uibModal', 'confirmModal', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash, $filter, $uibModal, confirmModal) {
+angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', '$filter', 'confirmModal', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, DTOptionsBuilder, DTColumnBuilder, Flash, $filter, confirmModal) {
 	$scope.candidateTableCheck = false;
 	$scope.filterBy = {};
 	$scope.listLength = 10;
@@ -83,7 +83,7 @@ angular.module('helpdeskModule').controller('OperatorsController', ['$scope', '$
 	* Function for searching users by name on change the input filter
 	*/
 	$scope.searchUser = function(name){
-		if(name.length > 3 ){
+		if(name.length > 2 ){
 			$scope.candidateTableCheck = false;
 			if(name){
 				var data = {

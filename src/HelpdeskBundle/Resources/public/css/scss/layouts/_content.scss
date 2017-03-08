@@ -174,20 +174,20 @@
 		margin-left:120px;
 	}
 	.searchedUsersWrapper{
+		margin-left:83px;
 		position: absolute;
-		width:93%;
+		width:69%;
 		max-height:171px;
 		overflow-y:auto;
 	}
 	.operatorsAddTable{
 		border: 1px solid lightgrey;
 		tr{
-			// border:1px solid black;
 			td{
 				font-size: 12px !important;
 				color:black;
 				cursor:pointer;
-				background-color:#eaeaea;
+				background-color:white;
 			}
 		}
 	}

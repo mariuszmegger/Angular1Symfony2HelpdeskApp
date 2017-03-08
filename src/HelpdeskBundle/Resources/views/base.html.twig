@@ -8,10 +8,10 @@
 
 		{% block stylesheets %}
 			<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-			<link href="{{ asset('bundles/helpdesk/css/font-awesome.css') }}" type="text/css" rel="stylesheet" />
-			<link href="{{ asset('bundles/helpdesk/css/angular-datatables.css') }}" type="text/css" rel="stylesheet" />
-			<link type="text/css" rel="stylesheet" href="{{ asset('bundles/helpdesk/css/angular-flash.css') }}" />
-			<link href="{{ asset('bundles/helpdesk/css/main.css') }}" type="text/css" rel="stylesheet" />
+			<link href="{{ asset('bundles/helpdesk/css/font-awesome.min.css') }}" type="text/css" rel="stylesheet" />
+			<link href="{{ asset('bundles/helpdesk/css/libs/angular-datatables.css') }}" type="text/css" rel="stylesheet" />
+			<link type="text/css" rel="stylesheet" href="{{ asset('bundles/helpdesk/css/libs/angular-flash.css') }}" />
+			<link href="{{ asset('bundles/helpdesk/css/main.min.css') }}" type="text/css" rel="stylesheet" />
 		{% endblock %}
 
 	</head>
@@ -33,24 +33,13 @@
 			<script src="https://code.angularjs.org/1.4.7/angular.js"></script>
 			<script src="https://code.angularjs.org/1.4.7/angular-route.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-datatables/0.5.4/angular-datatables.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-datatables/0.5.4/plugins/light-columnfilter/angular-datatables.light-columnfilter.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-datatables/0.5.4/plugins/bootstrap/angular-datatables.bootstrap.js"></script>
 			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
 
 			<script src="{{ asset('bundles/helpdesk/js/libraries/angular-flash.js') }}"></script>
 			<script src="{{ asset('bundles/helpdesk/js/libraries/angular-animate.js') }}"></script>
 			<script src="{{ asset('bundles/helpdesk/js/libraries/ui-bootstrap.min.js') }}"></script>
-			<script src="{{ asset('bundles/helpdesk/js/app.js') }}"></script>
-			<script src="{{ asset('bundles/helpdesk/js/controllers/categoriesController.js') }}"></script>
-			<script src="{{ asset('bundles/helpdesk/js/controllers/usersController.js') }}"></script>
-			<script src="{{ asset('bundles/helpdesk/js/controllers/unitsController.js') }}"></script>
-			<script src="{{ asset('bundles/helpdesk/js/controllers/operatorsController.js') }}"></script>
-			<script src="{{ asset('bundles/helpdesk/js/controllers/dashboardController.js') }}"></script>
-			<script src="{{ asset('bundles/helpdesk/js/controllers/supportLinesController.js') }}"></script>
-			<script src="{{ asset('bundles/helpdesk/js/controllers/settingsController.js') }}"></script>
-			<script src="{{ asset('bundles/helpdesk/js/directives.js') }}"></script>
-			<script src="{{ asset('bundles/helpdesk/js/services.js') }}"></script>
-			<script src="{{ asset('bundles/helpdesk/js/filters.js') }}"></script>
+			<script src="{{ asset('bundles/helpdesk/js/application.min.js') }}"></script>
 		{% endblock %}
 	</body>
 </html>

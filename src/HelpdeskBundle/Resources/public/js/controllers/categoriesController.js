@@ -1,6 +1,4 @@
-angular.module('helpdeskModule').controller('CategoriesController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','authentication','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, authentication, DTOptionsBuilder, DTColumnBuilder, Flash) {
-
-	//    authentication.auth()
+angular.module('helpdeskModule').controller('CategoriesController', ['$scope', '$http', '$log', '$timeout', '$location','$routeParams', 'ajaxLoader','DTOptionsBuilder', 'DTColumnBuilder', 'Flash', 'authentication', function ($scope, $http, $log, $timeout, $location, $routeParams, ajaxLoader, DTOptionsBuilder, DTColumnBuilder, Flash, authentication) {
 
 	$scope.categories = false;
 	$scope.filterBy = {}
@@ -71,11 +69,10 @@ angular.module('helpdeskModule').controller('CategoriesController', ['$scope', '
 	* New category adding
 	*/
 	$scope.saveCategory = function () {
-
 		var data = {
 			'name': $scope.addCategoryName,
 			'isActive': $scope.addCategoryIsActive,
-			'createdBy':userData.userName
+			'createdBy':$scope.$parent.oneUser.login
 		}
 		var serviceResponse = ajaxLoader.makeRequest('POST','/app_dev.php/ajaxCategories', data);
 		serviceResponse.then(function (response) {
